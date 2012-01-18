@@ -1,0 +1,13 @@
+#!/bin/bash
+
+FILE_LOC=/tmp/problem_db2
+FILE_FTP=/srv/ftp/pub/lsb/updates/dist-checker-data/problem_db2
+FILE_SRC=http://dev.linuxbase.org/prdb/?export
+
+wget -O $FILE_LOC $FILE_SRC || exit $?
+
+if [ ! -f $FILE_FTP ] || ! diff -q $FILE_LOC $FILE_FTP
+then
+        echo Copy to $FILE_FTP
+        cp -f $FILE_LOC $FILE_FTP
+fi
