@@ -10,11 +10,11 @@ class apachehttpd {
     package { 'apache2': ensure => present; }
 
     file { '/etc/apache2/httpd.conf':
-        source  => [ "puppet:///modules/httpd/httpd.conf/$fqdn", "puppet:///modules/httpd/httpd.conf/$osdefault" ],
+        source  => [ "puppet:///modules/apachehttpd/httpd.conf/$fqdn", "puppet:///modules/apachehttpd/httpd.conf/$osdefault" ],
     }
 
     file { '/etc/sysconfig/apache2':
-        source => [ "puppet:///modules/httpd/sysconfig/$fqdn", 'puppet:///modules/httpd/sysconfig/$osdefault' ],
+        source => [ "puppet:///modules/apachehttpd/sysconfig/$fqdn", 'puppet:///modules/apachehttpd/sysconfig/$osdefault' ],
     }
 
 }
