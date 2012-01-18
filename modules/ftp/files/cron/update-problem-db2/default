@@ -2,9 +2,9 @@
 
 FILE_LOC=/tmp/problem_db2
 FILE_FTP=/srv/ftp/pub/lsb/updates/dist-checker-data/problem_db2
-FILE_SRC=http://dev.linuxbase.org/prdb/?export
+FILE_SRC=http://bzr.linuxfoundation.org/lsb/devel/problem_db/problem_db2
 
-wget -O $FILE_LOC $FILE_SRC || exit $?
+bzr cat $FILE_SRC > $FILE_LOC || exit $?
 
 if [ ! -f $FILE_FTP ] || ! diff -q $FILE_LOC $FILE_FTP
 then
