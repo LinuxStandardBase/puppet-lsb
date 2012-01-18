@@ -1,0 +1,41 @@
+Puppet Configuration for LSB Infrastructure
+===========================================
+
+This repository contains (most of) the configuration for the LSB's
+infrastructure.  We are moving to a devops model, where all server
+configuration is done here instead of logging into a server and
+munging configuration files.
+
+We use Puppet (http://puppetlabs.com) as the configuration tool.  The
+initial work done here was done with Puppet 2.6, and should remain
+compatible with that version for the foreseeable future.
+
+Configuration is defined per-service in Puppet modules, and per-node
+in the "nodes" directory.  Whenever possible, it's best to define
+services as modules, rather than include all the gory details in the
+per-node config.  This makes it easy to move services between nodes; a
+quick "include 'foo'" creates the service on the node and gets it
+working.
+
+The configuration will, in general, reflect a SUSE bias, as the
+initial node was a SLES 11 virtual machine.  However, we are trying to
+isolate SUSE-specific things as much as possible, so we should be able
+to accomodate nodes running other Linux distributions as well.  This
+will obviously not be foolproof, so sticking with SUSE may be the best
+bet for making things work well.  Although we're using SLES, OpenSUSE
+should also work.
+
+Please test configuration changes on a test node before pushing them
+into production!
+
+Please file bugs related to our configuration at the LSB bug tracker
+(http://bugs.linuxbase.org), in the Infrastructure section.  There is
+a DevOps component; this should be used only for bugs or request
+specifically aimed at Puppet itself.  Bugs in other components that
+happen to be configured in Puppet should be filed in that component,
+not in DevOps.  Patches or bzr merge directives against this
+repository are welcome to bugs in any Infrastructure component.
+
+Jeff Licquia
+licquia@linuxfoundation.org
+2012-01-18
