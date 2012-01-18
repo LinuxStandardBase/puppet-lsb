@@ -1,4 +1,4 @@
-class httpd {
+class apachehttpd {
 
     $osdefault = "default-sles11"
 

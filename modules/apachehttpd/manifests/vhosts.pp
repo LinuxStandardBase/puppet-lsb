@@ -1,4 +1,4 @@
-class httpd::vhosts inherits httpd {
+class apachehttpd::vhosts inherits apachehttpd {
 
     file { '/etc/apache2/vhosts.d':
         ensure => directory,
