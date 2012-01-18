@@ -36,6 +36,37 @@ happen to be configured in Puppet should be filed in that component,
 not in DevOps.  Patches or bzr merge directives against this
 repository are welcome to bugs in any Infrastructure component.
 
+Adding a node to Puppet
+-----------------------
+
+Adding a node to this Puppet configuration is pretty much standard
+Puppet, with only a few tweaks required for our local setup:
+
+ - Create a node configuration file in manifest/nodes.  It can be
+   blank initially.  The filename can be descriptive, but the actual
+   node name in the file must resolve to the IP address of the node.
+
+ - On the node, install puppet, and edit /etc/puppet/puppet.conf to
+   include "server = puppet.linuxbase.org" in the [main] section.
+
+ - On the node, run "puppet agent --waitforcert 60 --test".  Puppet
+   should report that it is creating a new key and cert request and
+   that the peer certificate won't be verified.  It should then wait,
+   reporting every so often that it can't receive the certificate.
+
+ - On the master, "puppet cert list" should report that a
+   certification request exists for the node.  Run "puppet cert sign
+   <hostname>" to sign the certificate.
+
+ - On the node, the running puppet agent should report within 60
+   seconds that it is caching the certificate, and should then
+   retrieve and apply the configuration without further errors.
+
+At this point, the agent can be set up to run in the background.
+Running "puppet agent -t" on the node tests the connection, and also
+can force the current configuration to apply immediately without
+waiting for the normal agent update interval.
+
 Jeff Licquia
 licquia@linuxfoundation.org
 2012-01-18
