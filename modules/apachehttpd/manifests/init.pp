@@ -14,7 +14,7 @@ class apachehttpd {
     }
 
     file { '/etc/sysconfig/apache2':
-        source => [ "puppet:///modules/apachehttpd/sysconfig/$fqdn", 'puppet:///modules/apachehttpd/sysconfig/$osdefault' ],
+        source => [ "puppet:///modules/apachehttpd/sysconfig/$fqdn", "puppet:///modules/apachehttpd/sysconfig/$osdefault" ],
     }
 
 }
