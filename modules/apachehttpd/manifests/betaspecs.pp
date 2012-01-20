@@ -10,8 +10,9 @@ class apachehttpd::betaspecs {
     }
 
     file { '/etc/cron.daily/update-betaspecs':
-        source => [ "puppet:///modules/betaspecs/update-betaspecs" ],
+        source => [ "puppet:///modules/apachehttpd/update-betaspecs" ],
         notify => Exec['do-update-betaspecs'],
+        mode => 0755,
     }
 
     exec { 'do-update-betaspecs':
