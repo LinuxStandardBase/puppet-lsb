@@ -1,0 +1,41 @@
+#!/bin/sh -e
+
+# Set up test environment for testing script changes
+if [ -d /srv/www/vhosts/linuxbase.org ]; then
+    BETASPECS_PATH=/srv/www/vhosts/linuxbase.org/betaspecs
+else
+    BETASPECS_PATH=/tmp/betaspecs_path
+fi
+
+BZR_PROGRESS_BAR=none
+export BZR_PROGRESS_BAR
+
+[ -d /tmp/fhs-spec ] && rm -rf /tmp/fhs-spec
+bzr export /tmp/fhs-spec http://bzr.linuxfoundation.org/lsb/devel/fhs-spec
+
+cd /tmp/fhs-spec
+make -s fhs.txt fhs.html 
+make -s fhs/index.html 2>/dev/null
+
+[ -d $BETASPECS_PATH/fhs ] && rm -rf $BETASPECS_PATH/fhs
+mkdir -p $BETASPECS_PATH/fhs
+cp -a fhs.txt fhs.html fhs $BETASPECS_PATH/fhs
+
+cat  > $BETASPECS_PATH/fhs/index.html <<EOF
+<html>
+<head>
+<title>FHS Beta Specification</title>
+</head>
+<body>
+<h1>Filesystem Hierarchy Specification - Beta</h1>
+<ul>
+<li><a href="fhs.txt">UTF-8 Text</a></li>
+<li><a href="fhs.html">HTML (one page)</a></li>
+<li><a href="fhs/index.html">HTML (multiple pages)</a></li>
+</ul>
+</body>
+</html>
+EOF
+
+cd /tmp
+rm -rf fhs-spec
