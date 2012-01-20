@@ -10,7 +10,7 @@
 # This allows you to add e.g. VirtualHost statements without touching 
 # /etc/apache2/httpd.conf itself, which makes upgrading easier. 
 #
-APACHE_CONF_INCLUDE_FILES=""
+APACHE_CONF_INCLUDE_FILES="/etc/apache2/local.conf"
 
 ## Type:	string
 ## Default:	""
