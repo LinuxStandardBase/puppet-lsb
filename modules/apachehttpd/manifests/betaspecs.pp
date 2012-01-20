@@ -15,6 +15,10 @@ class apachehttpd::betaspecs {
         mode => 0755,
     }
 
+    file { '/srv/www/vhosts/linuxbase.org/betaspecs/index.html':
+        source => "puppet:///modules/apachehttpd/content/betaspecs/index.html",
+    }
+
     exec { 'do-update-betaspecs':
         command => '/etc/cron.daily/update-betaspecs',
         path => [ '/usr/sbin', '/usr/bin', '/bin' ],
