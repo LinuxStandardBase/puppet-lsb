@@ -39,3 +39,32 @@ EOF
 
 cd /tmp
 rm -rf fhs-spec
+
+# grab the LSB specifications from booksets and books branches,
+# but only the directories that begin with LSB- are "published"
+
+branch=http://bzr.linuxfoundation.org/lsb/devel/booksets
+for path in $(bzr ls $branch)
+do
+    book=$(echo $path | sed "s,$branch/,,")
+    echo $book | grep -q "^LSB-"
+    if [ $? = 0 ]
+    then
+	[ -d $BETASPECS_PATH/$book ] && rm -rf $BETASPECS_PATH/$book
+	mkdir -p $BETASPECS_PATH/$book
+	bzr export $BETASPECS_PATH/$book $path
+    fi
+done
+
+branch=http://bzr.linuxfoundation.org/lsb/devel/books
+for path in $(bzr ls $branch)
+do
+    book=$(echo $path | sed "s,$branch/,,")
+    echo $book | grep -q "^LSB-"
+    if [ $? = 0 ]
+    then
+	[ -d $BETASPECS_PATH/$book ] && rm -rf $BETASPECS_PATH/$book
+	mkdir -p $BETASPECS_PATH/$book
+	bzr export $BETASPECS_PATH/$book $path
+    fi
+done
