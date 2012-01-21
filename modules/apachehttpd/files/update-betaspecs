@@ -1,11 +1,14 @@
 #!/bin/sh -e
 
 # Set up test environment for testing script changes
+
 if [ -d /srv/www/vhosts/linuxbase.org ]; then
     BETASPECS_PATH=/srv/www/vhosts/linuxbase.org/betaspecs
 else
     BETASPECS_PATH=/tmp/betaspecs_path
 fi
+
+# Export the current FHS spec.
 
 BZR_PROGRESS_BAR=none
 export BZR_PROGRESS_BAR
@@ -47,12 +50,11 @@ branch=http://bzr.linuxfoundation.org/lsb/devel/booksets
 for path in $(bzr ls $branch)
 do
     book=$(echo $path | sed "s,$branch/,,")
-    echo $book | grep -q "^LSB-"
-    if [ $? = 0 ]
+    if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
     then
-	[ -d $BETASPECS_PATH/$book ] && rm -rf $BETASPECS_PATH/$book
-	mkdir -p $BETASPECS_PATH/$book
-	bzr export $BETASPECS_PATH/$book $path
+	[ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
+	mkdir -p $BETASPECS_PATH/lsb/$book
+	bzr export $BETASPECS_PATH/lsb/$book $path
     fi
 done
 
@@ -60,11 +62,10 @@ branch=http://bzr.linuxfoundation.org/lsb/devel/books
 for path in $(bzr ls $branch)
 do
     book=$(echo $path | sed "s,$branch/,,")
-    echo $book | grep -q "^LSB-"
-    if [ $? = 0 ]
+    if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
     then
-	[ -d $BETASPECS_PATH/$book ] && rm -rf $BETASPECS_PATH/$book
-	mkdir -p $BETASPECS_PATH/$book
-	bzr export $BETASPECS_PATH/$book $path
+	[ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
+	mkdir -p $BETASPECS_PATH/lsb/$book
+	bzr export $BETASPECS_PATH/lsb/$book $path
     fi
 done
