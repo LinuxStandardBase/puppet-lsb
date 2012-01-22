@@ -16,7 +16,7 @@ class puppet::server inherits puppet {
         mode => 0755,
     }
 
-    mailalias ( 'puppet-notify':
+    mailalias { 'puppet-notify':
         recipient => '|/usr/local/bin/puppet-email-notify',
     }
 
