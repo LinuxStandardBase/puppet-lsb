@@ -41,4 +41,4 @@ Defaults	env_keep = "LANG LC_ADDRESS LC_CTYPE LC_COLLATE LC_IDENTIFICATION LC_ME
 root	ALL = (ALL) ALL
 lfadmin	ALL = (ALL) ALL 
 
-postfix ALL = (root) NOPASSWD: /usr/bin/bzr update -q
+nobody  ALL = (root) NOPASSWD: /usr/bin/bzr update -q
