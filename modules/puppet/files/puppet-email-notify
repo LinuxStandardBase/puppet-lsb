@@ -33,7 +33,7 @@ while read email_line; do
 done
 
 if [ $found_list_id = "yes" -a $found_subject = "yes" ]; then
-    logger -t puppet-update received puppet update notification email; updating
+    logger -t puppet-update received puppet update notification email
     cd /etc/puppet
     $ROOT_CMD $VC_UPDATE || \
       logger -t puppet-update error updating
