@@ -16,7 +16,7 @@ NOTIFY_SUBJECT=lsb/devel/puppet-lsb
 ROOT_CMD=sudo
 
 # Version control command to use for the update
-VC_UPDATE="bzr update -q"
+VC_UPDATE="/usr/bin/bzr update -q"
 
 # End of configuration
 
@@ -33,8 +33,10 @@ while read email_line; do
 done
 
 if [ $found_list_id = "yes" -a $found_subject = "yes" ]; then
+    logger -t puppet-update received puppet update notification email; updating
     cd /etc/puppet
-    $ROOT_CMD $VC_UPDATE
+    $ROOT_CMD $VC_UPDATE || \
+      logger -t puppet-update error updating
 fi
 
 exit 0
