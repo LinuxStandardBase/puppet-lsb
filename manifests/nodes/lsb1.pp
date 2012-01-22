@@ -4,4 +4,6 @@ node 'lsb1.linux-foundation.org' {
 
     include ftp
 
+    include mail::postfix
+
 }
