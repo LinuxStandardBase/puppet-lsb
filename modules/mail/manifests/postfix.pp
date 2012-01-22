@@ -4,9 +4,10 @@ class mail::postfix inherits mail {
         before => Service['mtadaemon'],
     }
 
-    package { 'make':
-        ensure => present,
-    }
+    # XXX: duplicate definition w/ apachehttpd::betaspecs
+    #package { 'make':
+    #    ensure => present,
+    #}
 
     Service['mtadaemon'] {
         restart => '/sbin/service postfix reload',
