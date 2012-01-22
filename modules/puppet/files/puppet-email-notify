@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# puppet-email-notify - script to update puppet config on notification
+#                       from a commit mailing list
+
+# Configuration
+
+# List-Id for the mailing list, escaped properly for use in a regex
+NOTIFY_LIST_ID=lsb-messages.lists.linux-foundation.org
+
+# Subject content to search for (usually a repository name)
+# Also escaped properly for use in a regex.
+NOTIFY_SUBJECT=lsb/devel/puppet-lsb
+
+# Command to gain root for the update
+ROOT_CMD=sudo
+
+# Version control command to use for the update
+VC_UPDATE="bzr update -q"
+
+# End of configuration
+
+found_list_id=no
+found_subject=no
+
+while read email_line; do
+    if [ $(echo $email_line | egrep "^List-Id:.*$NOTIFY_LIST_ID" | wc -l) -gt 0 ]; then
+        found_list_id=yes
+    fi
+    if [ $(echo $email_line | egrep "^Subject:.*$NOTIFY_SUBJECT" | wc -l) -gt 0 ]; then
+        found_subject=yes
+    fi
+done
+
+if [ $found_list_id = "yes" -a $found_subject = "yes" ]; then
+    cd /etc/puppet
+    $ROOT_CMD $VC_UPDATE
+fi
+
+exit 0
