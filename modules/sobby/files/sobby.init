@@ -1,0 +1,40 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          sobby
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      1
+# Short-Description: collaborative text editor server (gobby)
+# Description:       gobby is a collaborative text editor
+#                    sobby is the server which provides gobby connectivity
+### END INIT INFO
+
+set -e
+
+PRG=sobby
+DAEMON=/usr/bin/$PRG
+PIDFILE=/var/run/$PRG.pid
+OPTIONS="-c /etc/sobby.conf"
+
+test -x $DAEMON || exit 0
+
+. /etc/rc.d/init.d/functions
+
+case "$1" in
+  start)
+    echo -n "Starting $PRG: "
+    daemon --pidfile=$PIDFILE $DAEMON $OPTIONS
+    RETVAL=$?
+    echo
+    ;;
+  stop)
+    echo -n "Stopping $PRG: "
+    killproc -p $PIDFILE $DAEMON
+    RETVAL=$?
+    echo
+    ;;
+esac
+
+exit $RETVAL

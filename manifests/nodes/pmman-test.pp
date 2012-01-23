@@ -5,4 +5,6 @@ node 'vm178231179.pmman.net' {
 
     include puppet
 
+    include sobby
+
 }
