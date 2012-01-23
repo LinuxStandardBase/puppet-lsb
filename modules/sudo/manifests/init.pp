@@ -14,7 +14,7 @@ class sudo {
         group   => root,
         mode    => 0440,
         source  => [ "puppet:///modules/sudo/sudoers/$fqdn",
-                     "puppet:///modules/sudo/sudoers/default-$osdefault" ],
+                     "puppet:///modules/sudo/sudoers/$osdefault" ],
         require => Package["sudo"],
     }
 
