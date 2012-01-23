@@ -11,8 +11,6 @@
 #                    sobby is the server which provides gobby connectivity
 ### END INIT INFO
 
-set -e
-
 PRG=sobby
 DAEMON=/usr/bin/$PRG
 PIDFILE=/var/run/$PRG.pid
@@ -20,20 +18,18 @@ OPTIONS="-c /etc/sobby.conf"
 
 test -x $DAEMON || exit 0
 
-. /etc/rc.d/init.d/functions
-
 case "$1" in
   start)
     echo -n "Starting $PRG: "
-    daemon --pidfile=$PIDFILE $DAEMON $OPTIONS
+    $DAEMON $OPTIONS > /tmp/sobby.log 2>&1 &
     RETVAL=$?
-    echo
+    echo "done"
     ;;
   stop)
     echo -n "Stopping $PRG: "
-    killproc -p $PIDFILE $DAEMON
+    killall $DAEMON
     RETVAL=$?
-    echo
+    echo "done"
     ;;
 esac
 
