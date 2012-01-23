@@ -1,0 +1,9 @@
+[devel_tools_scm]
+name=Software configuration management (SLE_11_SP1)
+enabled=1
+autorefresh=1
+baseurl=http://download.opensuse.org/repositories/devel:/tools:/scm/SLE_11_SP1/
+type=rpm-md
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/devel:/tools:/scm/SLE_11_SP1/repodata/repomd.xml.key
+keeppackages=0
