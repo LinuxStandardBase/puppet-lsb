@@ -10,4 +10,6 @@ node 'lsb1.linux-foundation.org' {
 
     include mail::postfix
 
+    include python::virtualenv
+
 }
