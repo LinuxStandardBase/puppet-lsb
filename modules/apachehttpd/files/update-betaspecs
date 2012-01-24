@@ -1,6 +1,10 @@
 #!/bin/sh -e
-
-# Set up test environment for testing script changes
+#
+# populate the "betaspecs" website area with FHS, LSB specs
+#
+# TODO (see bug 3344) - need an index page for the top level
+# betaspecs should be exported by specific revision (probably tag)
+# snapshot specs can just be current head
 
 if [ -d /srv/www/vhosts/linuxbase.org ]; then
     BETASPECS_PATH=/srv/www/vhosts/linuxbase.org/betaspecs
@@ -8,13 +12,17 @@ else
     BETASPECS_PATH=/tmp/betaspecs_path
 fi
 
-# Export the current FHS spec.
+BRANCHURL=http://bzr.linuxfoundation.org/lsb/devel
 
 BZR_PROGRESS_BAR=none
 export BZR_PROGRESS_BAR
 
+# obtain the current FHS spec from bzr
+
 [ -d /tmp/fhs-spec ] && rm -rf /tmp/fhs-spec
-bzr export /tmp/fhs-spec http://bzr.linuxfoundation.org/lsb/devel/fhs-spec
+bzr export /tmp/fhs-spec $BRANCHURL/fhs-spec
+
+# built specs are not in bzr, have to build them here
 
 cd /tmp/fhs-spec
 make -s fhs.txt fhs.html 
@@ -43,29 +51,19 @@ EOF
 cd /tmp
 rm -rf fhs-spec
 
-# grab the LSB specifications from booksets and books branches,
+# LSB specs are already built. Grab them from booksets and books branches,
 # but only the directories that begin with LSB- are "published"
 
-branch=http://bzr.linuxfoundation.org/lsb/devel/booksets
-for path in $(bzr ls $branch)
+for branch in $BRANCHURL/booksets $BRANCHURL/books
 do
-    book=$(echo $path | sed "s,$branch/,,")
-    if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
-    then
-	[ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
-	mkdir -p $BETASPECS_PATH/lsb/$book
-	bzr export $BETASPECS_PATH/lsb/$book $path
-    fi
-done
-
-branch=http://bzr.linuxfoundation.org/lsb/devel/books
-for path in $(bzr ls $branch)
-do
-    book=$(echo $path | sed "s,$branch/,,")
-    if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
-    then
-	[ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
-	mkdir -p $BETASPECS_PATH/lsb/$book
-	bzr export $BETASPECS_PATH/lsb/$book $path
-    fi
+    for path in $(bzr ls $branch)
+    do
+	book=$(echo $path | sed "s,$branch/,,")
+	if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
+	then
+	    [ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
+	    mkdir -p $BETASPECS_PATH/lsb/$book
+	    bzr export $BETASPECS_PATH/lsb/$book $path
+	fi
+    done
 done
