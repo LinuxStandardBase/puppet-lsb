@@ -21,7 +21,7 @@ class python::virtualenv inherits python {
         path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         refreshonly => true,
         logoutput   => true,
-        before      => Package[ 'python-virtualenv', 'python-pip' ]
+        before      => Package[ 'python-virtualenv', 'python-pip' ],
         noop        => $skipsles11obs,
     }
 
