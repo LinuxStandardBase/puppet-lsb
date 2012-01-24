@@ -1,8 +1,11 @@
 class python::virtualenv inherits python {
 
-    package {
-        'python-virtualenv': ensure => present,
-        'python-pip':        ensure => present,
+    package { 'python-virtualenv': 
+        ensure => present,
+    }
+
+    package { 'python-pip':
+        ensure => present,
     }
 
     # These packages aren't available in SLES 11, so we'll need
