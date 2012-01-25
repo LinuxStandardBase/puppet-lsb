@@ -1,29 +1,33 @@
 class python::virtualenv inherits python {
 
+    # These packages aren't available in SLES 11, so we'll need
+    # to add the repos first.
+
+    $sles11obsrepo = "$operatingsystem-$operatingsystemrelease" ? {
+        /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/devel_languages_python.repo'],
+        default               => undef,
+    }
+
     package { 'python-virtualenv': 
-        ensure => present,
-        before => Exec['add-python-zypper-repo'],
+        ensure  => present,
+        require => $sles11obsrepo,
     }
 
     package { 'python-pip':
         ensure => present,
-        before => Exec['add-python-zypper-repo'],
+        require => $sles11obsrepo,
     }
 
-    # These packages aren't available in SLES 11, so we'll need
-    # to add the repos first.
-
-    $skipsles11obs = "$operatingsystem-$operatingsystemrelease" ? {
-        /^SLES-11(\.[0-9])?$/ => false,
-        default               => true,
+    file { "/etc/zypp/repos.d/devel_languages_python.repo":
+        source => "puppet:///modules/bzr/devel_languages_python.repo",
+        notify => Exec['refresh-zypper-keys'],
     }
 
-    exec { 'add-python-zypper-repo':
-        command     => 'zypper addrepo -f http://download.opensuse.org/repositories/devel:/languages:/python/SLE_11/devel:languages:python.repo && zypper --gpg-auto-import-keys refresh',
-        path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+    exec { 'refresh-zypper-keys-for-python':
+        command     => 'zypper --gpg-auto-import-keys refresh',
+        path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
         refreshonly => true,
         logoutput   => true,
-        noop        => $skipsles11obs,
     }
 
 }

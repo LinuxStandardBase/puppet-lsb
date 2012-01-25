@@ -1,0 +1,9 @@
+[devel_languages_python]
+name=Python and Python Modules (SLE_11)
+enabled=1
+autorefresh=1
+baseurl=http://download.opensuse.org/repositories/devel:/languages:/python/SLE_11/
+type=rpm-md
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/devel:/languages:/python/SLE_11/repodata/repomd.xml.key
+keeppackages=0
