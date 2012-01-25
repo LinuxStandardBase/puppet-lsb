@@ -2,10 +2,12 @@ class python::virtualenv inherits python {
 
     package { 'python-virtualenv': 
         ensure => present,
+        before => Exec['add-python-zypper-repo'],
     }
 
     package { 'python-pip':
         ensure => present,
+        before => Exec['add-python-zypper-repo'],
     }
 
     # These packages aren't available in SLES 11, so we'll need
@@ -21,7 +23,6 @@ class python::virtualenv inherits python {
         path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         refreshonly => true,
         logoutput   => true,
-        before      => Package[ 'python-virtualenv', 'python-pip' ],
         noop        => $skipsles11obs,
     }
 
