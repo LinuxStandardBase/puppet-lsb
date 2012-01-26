@@ -7,4 +7,11 @@ class buildbot::master inherits buildbot {
         require => File["/opt/buildbot/Makefile"],
     }
 
+    exec { "make buildbot-config":
+        cwd => "/opt/buildbot",
+        creates => "/opt/buildbot/buildbot-config",
+        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        require => File["/opt/buildbot/Makefile"],
+    }
+
 }

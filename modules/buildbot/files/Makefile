@@ -2,6 +2,7 @@
 
 # Makefile for buildbot setup on build systems.
 
+BUILDBOT_CONFIG_REPO = http://bzr.linuxfoundation.org/unofficial/buildbot-config
 TOPLEVEL = $(shell pwd)
 
 bin/python:
@@ -13,3 +14,5 @@ bin/buildslave: bin/python
 bin/buildbot: bin/python
 	bin/pip install buildbot
 
+buildbot-config:
+	bzr checkout $(BUILDBOT_CONFIG_REPO)
