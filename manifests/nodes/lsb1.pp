@@ -1,5 +1,7 @@
 node 'lsb1.linux-foundation.org' {
 
+    include user::lfadmin, user::licquia
+
     include sudo
 
     include puppet::server
