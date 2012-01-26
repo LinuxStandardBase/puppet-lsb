@@ -42,9 +42,20 @@ Adding a node to Puppet
 Adding a node to this Puppet configuration is pretty much standard
 Puppet, with only a few tweaks required for our local setup:
 
- - Create a node configuration file in manifest/nodes.  It can be
-   blank initially.  The filename can be descriptive, but the actual
-   node name in the file must resolve to the IP address of the node.
+ - Check out the puppet-lsb repository from version control.
+
+ - In puppet-lsb, create a node configuration file in manifest/nodes.
+   You can use one of the other node configuration files as a model.
+   It can be blank between the initial braces of the "node" line, like
+   this:
+
+   node 'my.host.name' {}
+
+   The filename can be descriptive, but the actual node name in the
+   file must resolve to the IP address of the node.
+
+ - Once the node file is in place, use version control to add the new
+   file, commit it, and push it.
 
  - On the node, install puppet, and edit /etc/puppet/puppet.conf to
    include "server = puppet.linuxbase.org" in the [main] section.
