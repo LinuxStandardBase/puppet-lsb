@@ -59,7 +59,7 @@ Puppet, with only a few tweaks required for our local setup:
 
  - On the node, install puppet, and run the following command as root:
 
-   puppet agent --server puppet.linuxbase.org --waitforcert 60 --test"
+   puppet agent --server puppet.linuxbase.org --waitforcert 60 --test
 
    Puppet should report that it is creating a new key and cert request
    and that the peer certificate won't be verified.  It should then
