@@ -1,14 +1,15 @@
 class buildbot::master inherits buildbot {
 
-    exec { "make bin/buildbot":
-        cwd => "/opt/buildbot",
+    exec { "make-buildbot":
+        command => "make bin/buildbot",
+        cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/bin/buildbot",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         require => File["/opt/buildbot/Makefile"],
     }
 
     exec { "make buildbot-config":
-        cwd => "/opt/buildbot",
+        cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/buildbot-config",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         require => File["/opt/buildbot/Makefile"],
@@ -18,7 +19,7 @@ class buildbot::master inherits buildbot {
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-master",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
-        require => File["/opt/buildbot/bin/buildbot"],
+        require => Exec["make-buildbot"],
     }
 
 }
