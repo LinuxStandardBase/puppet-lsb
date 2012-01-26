@@ -57,13 +57,14 @@ Puppet, with only a few tweaks required for our local setup:
  - Once the node file is in place, use version control to add the new
    file, commit it, and push it.
 
- - On the node, install puppet, and edit /etc/puppet/puppet.conf to
-   include "server = puppet.linuxbase.org" in the [main] section.
+ - On the node, install puppet, and run the following command as root:
 
- - On the node, run "puppet agent --waitforcert 60 --test".  Puppet
-   should report that it is creating a new key and cert request and
-   that the peer certificate won't be verified.  It should then wait,
-   reporting every so often that it can't receive the certificate.
+   puppet agent --server puppet.linuxbase.org --waitforcert 60 --test"
+
+   Puppet should report that it is creating a new key and cert request
+   and that the peer certificate won't be verified.  It should then
+   wait, reporting every so often that it can't receive the
+   certificate.
 
  - On the master, "puppet cert list" should report that a
    certification request exists for the node.  Run "puppet cert sign
@@ -71,7 +72,8 @@ Puppet, with only a few tweaks required for our local setup:
 
  - On the node, the running puppet agent should report within 60
    seconds that it is caching the certificate, and should then
-   retrieve and apply the configuration without further errors.
+   retrieve and apply the node's configuration (if any) without
+   further errors.
 
 At this point, the agent can be set up to run in the background.
 Running "puppet agent -t" on the node tests the connection, and also
