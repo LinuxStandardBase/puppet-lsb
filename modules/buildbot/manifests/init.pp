@@ -17,7 +17,6 @@ class buildbot {
 
     file { "/opt/buildbot":
         ensure => directory,
-        notify => Exec['setup-buildbot'],
     }
 
     file { "/opt/buildbot/Makefile":

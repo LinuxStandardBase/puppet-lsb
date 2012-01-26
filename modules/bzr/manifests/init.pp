@@ -8,8 +8,8 @@ class bzr {
         default               => undef,
     }
 
-    package {
-        'bzr': ensure => present;
+    package { 'bzr':
+        ensure => present,
         require => $sles11obsrepo,
     }
 

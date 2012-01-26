@@ -20,7 +20,7 @@ class python::virtualenv inherits python {
 
     file { "/etc/zypp/repos.d/devel_languages_python.repo":
         source => "puppet:///modules/python/devel_languages_python.repo",
-        notify => Exec['refresh-zypper-keys'],
+        notify => Exec['refresh-zypper-keys-for-python'],
     }
 
     exec { 'refresh-zypper-keys-for-python':
