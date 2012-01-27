@@ -12,11 +12,7 @@ class user::lfadmin inherits user::virtual {
     ssh_authorized_key { 'eric@linuxfoundation.org':
         ensure  => present,
         type    => 'ssh-rsa',
-        key     => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQCsQDo1VbGN5xrpT5nxZ/KCf1f1fgek
-vh1XK8CymAhrp0WDfBWv/A1fnfrvwA4I81BaFmTb9zt+tObmpOKdhLUaTEQPN5ev5tOuEdpXOAHa3uTX
-athW6g7jPOLLmg3mH04iLYn7E/1q0YQ3qeAZfra/rGA5RwBxNZPJF8Lo8XtUjX8qYl4XORoPsUk/yOKn
-noANRpFt8BqnwheRsrPMAApEZ9G4qKObq3ZJo+lVfb8IcFMulGPZG7ef2FTGsaRDaNxjxSQO0Y2jDqK/
-5eC+c9MvoNZfiUjlwyMDrQU8sTEWG3if+pbxL6eoQg7RQUyh2v10g0bYTnD5guni8HbWKtCUEoCk9wvhXH2V9XU+qxPbafBYa4VNNifL6eJ8vWCTRxj1mKiiZKcJZZxSbLY6Uo6QQ9KjBiGf7kuEUE8tzdeaYfUAIxoe44D0qD28pgpTWvBOh7Goio/l2g+bxbNCh9+2oR7p0///bQnUZUD9Od9eTcYRZ5wRnP57VncnfWT2j64DUll6ce4qVqonAb7T+QSRV7ppj9GoA5ksamjfBKR5FU1LgVuyMX2CirKdgGqkzW7DfTIlcelAoBArU504l/wmeR/kpzg2Yb5J+JxDXZMQCPH09As1wBNPEf/gUBQVt3AJwQEUfbEWQlrH8LF6/uBp6O3enpbuB5Ns8KTKgPB8xw==',
+        key     => 'AAAAB3NzaC1yc2EAAAADAQABAAACAQCsQDo1VbGN5xrpT5nxZ/KCf1f1fgekvh1XK8CymAhrp0WDfBWv/A1fnfrvwA4I81BaFmTb9zt+tObmpOKdhLUaTEQPN5ev5tOuEdpXOAHa3uTXathW6g7jPOLLmg3mH04iLYn7E/1q0YQ3qeAZfra/rGA5RwBxNZPJF8Lo8XtUjX8qYl4XORoPsUk/yOKnnoANRpFt8BqnwheRsrPMAApEZ9G4qKObq3ZJo+lVfb8IcFMulGPZG7ef2FTGsaRDaNxjxSQO0Y2jDqK/5eC+c9MvoNZfiUjlwyMDrQU8sTEWG3if+pbxL6eoQg7RQUyh2v10g0bYTnD5guni8HbWKtCUEoCk9wvhXH2V9XU+qxPbafBYa4VNNifL6eJ8vWCTRxj1mKiiZKcJZZxSbLY6Uo6QQ9KjBiGf7kuEUE8tzdeaYfUAIxoe44D0qD28pgpTWvBOh7Goio/l2g+bxbNCh9+2oR7p0///bQnUZUD9Od9eTcYRZ5wRnP57VncnfWT2j64DUll6ce4qVqonAb7T+QSRV7ppj9GoA5ksamjfBKR5FU1LgVuyMX2CirKdgGqkzW7DfTIlcelAoBArU504l/wmeR/kpzg2Yb5J+JxDXZMQCPH09As1wBNPEf/gUBQVt3AJwQEUfbEWQlrH8LF6/uBp6O3enpbuB5Ns8KTKgPB8xw==',
         user    => 'lfadmin',
     }
 
