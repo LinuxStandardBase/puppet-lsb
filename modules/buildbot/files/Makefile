@@ -2,7 +2,7 @@
 
 # Makefile for buildbot setup on build systems.
 
-BUILDBOT_CONFIG_REPO = http://bzr.linuxfoundation.org/unofficial/buildbot-config
+BUILDBOT_CONFIG_REPO = http://bzr.linuxfoundation.org/lsb/devel/buildbot-config
 BUILDBOT_VERSION = 0.8.5
 
 TOPLEVEL = $(shell pwd)
