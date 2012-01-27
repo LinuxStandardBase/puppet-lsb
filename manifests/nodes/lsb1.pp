@@ -1,6 +1,6 @@
 node 'lsb1.linux-foundation.org' {
 
-    include user::lfadmin, user::licquia
+    include user::lfadmin, user::licquia, user::stewb
 
     include sudo
 

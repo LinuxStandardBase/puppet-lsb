@@ -21,4 +21,14 @@ class user::virtual inherits user {
         managehome  => true,
     }
 
+    @user { 'stewb':
+        ensure      => present,
+        uid         => '1002',
+        gid         => '100',
+        comment     => 'Stew Benedict',
+        home        => '/home/stewb',
+        shell       => '/bin/bash',
+        managehome  => true,
+    }
+
 }
