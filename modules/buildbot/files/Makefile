@@ -8,7 +8,7 @@ BUILDBOT_VERSION = 0.8.5
 TOPLEVEL = $(shell pwd)
 
 bin/python:
-	virtualenv $(TOPLEVEL)
+	virtualenv --system-site-packages $(TOPLEVEL)
 
 bin/buildslave: bin/python
 	bin/pip install buildbot-slave==$(BUILDBOT_VERSION)
