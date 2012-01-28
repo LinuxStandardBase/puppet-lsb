@@ -3,7 +3,7 @@ class buildbot::master inherits buildbot {
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/bin/buildbot",
+        creates => "/opt/buildbot/lib/python2.6/site-packages/buildbot-$buildbotversion-py2.6.egg-info",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         require => Exec["make-buildbot-virtualenv"],
     }
