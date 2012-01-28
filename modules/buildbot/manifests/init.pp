@@ -6,11 +6,6 @@ class buildbot {
 
     $buildbotversion = '0.8.5'
 
-    # XXX: make needs to be its own module
-    #package { 'make':
-    #    ensure => present,
-    #}
-
     package { 'python-devel':
         ensure => present,
     }
