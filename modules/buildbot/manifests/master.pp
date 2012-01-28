@@ -42,4 +42,8 @@ class buildbot::master inherits buildbot {
         require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
     }
 
+    file ( "/opt/buildbot/htpasswd":
+        ensure => present,
+    }
+
 }
