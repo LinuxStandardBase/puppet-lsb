@@ -18,16 +18,18 @@ class python::virtualenv inherits python {
         require => $sles11obsrepo,
     }
 
-    file { "/etc/zypp/repos.d/devel_languages_python.repo":
-        source => "puppet:///modules/python/devel_languages_python.repo",
-        notify => Exec['refresh-zypper-keys-for-python'],
-    }
+    if $sles11obsrepo {
+        file { "/etc/zypp/repos.d/devel_languages_python.repo":
+            source => "puppet:///modules/python/devel_languages_python.repo",
+            notify => Exec['refresh-zypper-keys-for-python'],
+        }
 
-    exec { 'refresh-zypper-keys-for-python':
-        command     => 'zypper --gpg-auto-import-keys refresh',
-        path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
-        refreshonly => true,
-        logoutput   => true,
+        exec { 'refresh-zypper-keys-for-python':
+            command     => 'zypper --gpg-auto-import-keys refresh',
+            path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
+            refreshonly => true,
+            logoutput   => true,
+        }
     }
 
 }

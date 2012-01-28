@@ -13,18 +13,18 @@ class bzr {
         require => $sles11obsrepo,
     }
 
-    file { "/etc/zypp/repos.d/devel_tools_scm.repo":
-        noop   => $skipsles11obs,
-        source => "puppet:///modules/bzr/devel_tools_scm.repo",
-        notify => Exec['refresh-zypper-keys-for-bzr'],
-        before => Package['bzr'],
-    }
+    if $sles11obsrepo {
+        file { "/etc/zypp/repos.d/devel_tools_scm.repo":
+            source => "puppet:///modules/bzr/devel_tools_scm.repo",
+            notify => Exec['refresh-zypper-keys-for-bzr'],
+        }
 
-    exec { 'refresh-zypper-keys-for-bzr':
-        command     => 'zypper --gpg-auto-import-keys refresh',
-        path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
-        refreshonly => true,
-        logoutput   => true,
+        exec { 'refresh-zypper-keys-for-bzr':
+            command     => 'zypper --gpg-auto-import-keys refresh',
+            path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
+            refreshonly => true,
+            logoutput   => true,
+        }
     }
 
 }
