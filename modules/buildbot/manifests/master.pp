@@ -1,11 +1,11 @@
 class buildbot::master inherits buildbot {
 
     exec { "make-buildbot":
-        command => "make bin/buildbot",
+        command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/bin/buildbot",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
-        require => File["/opt/buildbot/Makefile"],
+        require => Exec["make-buildbot-virtualenv"],
     }
 
     exec { "make-buildbot-config":
