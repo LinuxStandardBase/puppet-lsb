@@ -9,11 +9,11 @@ class buildbot::master inherits buildbot {
     }
 
     exec { "make-buildbot-config":
-        command => "make buildbot-config",
+        command => "bzr checkout http://bzr.linuxfoundation.org/lsb/devel/buildbot-config",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/buildbot-config",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
-        require => File["/opt/buildbot/Makefile"],
+        require => File["/opt/buildbot"],
     }
 
     exec { "make-master":
