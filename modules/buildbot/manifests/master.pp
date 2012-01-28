@@ -24,7 +24,7 @@ class buildbot::master inherits buildbot {
     exec { "make-master":
         command => "/opt/buildbot/bin/buildbot create-master /opt/buildbot/lsb-master",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lsb-master",
+        creates => "/opt/buildbot/lsb-master/buildbot.tac",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         user    => 'buildbot',
         require => [ Exec["make-buildbot"], File["/opt/buildbot/lsb-master"] ],
