@@ -8,4 +8,19 @@ class buildbot::slave inherits buildbot {
         require => Exec["make-buildbot-virtualenv"],
     }
 
+    file { "/usr/local/bin/reset-sdk":
+        source => "puppet:///modules/buildbot/slavescripts/reset-sdk",
+        mode   => 0755,
+    }
+
+    file { "/usr/local/bin/update-sdk":
+        source => "puppet:///modules/buildbot/slavescripts/update-sdk",
+        mode   => 0755,
+    }
+
+    file { "/usr/local/bin/run-appbat-tests":
+        source => "puppet:///modules/buildbot/slavescripts/run-appbat-tests",
+        mode   => 0755,
+    }
+
 }
