@@ -38,6 +38,12 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
+    # Other packages needed by this puppet module.
+
+    package { 'wget':
+        ensure => present,
+    }
+
     # Set up the base infrastructure.    
 
     file { "/opt/buildbot/lsb-slave":
@@ -83,7 +89,7 @@ class buildbot::slave inherits buildbot {
         cwd     => '/opt/buildbot',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => "/opt/buildbot/$releasedsdk",
-        require => File['/opt/buildbot'],
+        require => [ Package['wget'], File['/opt/buildbot'] ],
         notify  => File['/opt/buildbot/lsb-released-sdk.tar.gz'],
     }
 
@@ -97,7 +103,7 @@ class buildbot::slave inherits buildbot {
         cwd     => '/opt/buildbot',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => "/opt/buildbot/$betasdk",
-        require => File['/opt/buildbot'],
+        require => [ Package['wget'], File['/opt/buildbot'] ],
         notify  => File['/opt/buildbot/lsb-beta-sdk.tar.gz'],
     }
 
