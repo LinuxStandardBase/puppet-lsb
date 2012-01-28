@@ -4,6 +4,7 @@ class user::virtual inherits user {
 
     @user { 'buildbot':
         ensure      => present,
+        home        => '/opt/buildbot',
     }
 
     @user { 'lfadmin':
