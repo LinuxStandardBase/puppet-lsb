@@ -21,12 +21,6 @@ class buildbot {
         ensure => directory,
     }
 
-    file { "/opt/buildbot/Makefile":
-        ensure  => present,
-        source  => "puppet:///modules/buildbot/Makefile",
-        require => File['/opt/buildbot'],
-    }
-
     exec { "make-buildbot-virtualenv":
         command => "virtualenv --system-site-packages /opt/buildbot",
         cwd     => "/opt/buildbot",
