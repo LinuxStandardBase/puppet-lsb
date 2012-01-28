@@ -54,8 +54,9 @@ class buildbot::slave inherits buildbot {
     exec { "make-buildslave":
         command => "/opt/buildbot/bin/pip install buildbot-slave==$buildbotversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lib/python2.6/site-packages/buildbot_slave-$buildbotversion-py2.6.egg-info",
-        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        creates => "/opt/buildbot/lib/python$pythonversion/site-packages/buildbot_slave-$buildbotversion-py$pythonversion.egg-info",
+        path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
+                     "/usr/sbin" ],
         require => Exec["make-buildbot-virtualenv"],
     }
 
@@ -63,8 +64,8 @@ class buildbot::slave inherits buildbot {
         command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave vm1.linuxbase.org $masteruser $masterpw",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-slave/buildbot.tac",
-        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin",
-                     "/usr/local/bin", "/opt/buildbot/bin" ],
+        path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
+                     "/usr/sbin", "/usr/local/bin" ],
         user    => 'buildbot',
         require => [ Exec["make-buildslave"], File["/opt/buildbot/lsb-slave"] ],
     }

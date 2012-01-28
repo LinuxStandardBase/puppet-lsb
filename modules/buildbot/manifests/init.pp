@@ -6,6 +6,11 @@ class buildbot {
 
     $buildbotversion = '0.8.5'
 
+    $pythonversion = "$operatingsystem-$operatingsystemrelease" ? {
+        /^Fedora-16$/ => '2.7',
+        default       => '2.6',
+    }
+
     package { 'python-devel':
         ensure => present,
     }

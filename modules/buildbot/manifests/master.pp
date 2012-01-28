@@ -3,8 +3,9 @@ class buildbot::master inherits buildbot {
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lib/python2.6/site-packages/buildbot-$buildbotversion-py2.6.egg-info",
-        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        creates => "/opt/buildbot/lib/python$pythonversion/site-packages/buildbot-$buildbotversion-py$pythonversion.egg-info",
+        path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
+                     "/usr/sbin" ],
         require => Exec["make-buildbot-virtualenv"],
     }
 
@@ -25,7 +26,8 @@ class buildbot::master inherits buildbot {
         command => "/opt/buildbot/bin/buildbot create-master /opt/buildbot/lsb-master",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-master/buildbot.tac",
-        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
+                     "/usr/sbin" ],
         user    => 'buildbot',
         require => [ Exec["make-buildbot"], File["/opt/buildbot/lsb-master"] ],
     }
