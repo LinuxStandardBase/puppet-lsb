@@ -46,4 +46,10 @@ class buildbot::master inherits buildbot {
         ensure => present,
     }
 
+    file { "/etc/init.d/buildbot":
+        ensure => present,
+        source => "puppet:///modules/buildbot/buildbot.init",
+        mode   => 0755,
+    }
+
 }
