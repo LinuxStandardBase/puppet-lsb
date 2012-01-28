@@ -2,6 +2,10 @@
 # individual user classes.
 class user::virtual inherits user {
 
+    @user { 'buildbot':
+        ensure      => present,
+    }
+
     @user { 'lfadmin':
         ensure      => present,
         uid         => '1000',

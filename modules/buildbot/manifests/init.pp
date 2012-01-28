@@ -2,6 +2,8 @@ class buildbot {
 
     include python::virtualenv
 
+    include user::buildbot
+
     $buildbotversion = '0.8.5'
 
     # XXX: make needs to be its own module

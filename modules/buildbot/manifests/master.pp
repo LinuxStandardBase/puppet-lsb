@@ -21,6 +21,7 @@ class buildbot::master inherits buildbot {
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-master",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        user    => 'buildbot',
         require => Exec["make-buildbot"],
     }
 
@@ -57,6 +58,7 @@ class buildbot::master inherits buildbot {
         ensure     => running,
         hasrestart => false,
         hasstatus  => false,
+        require    => User['buildbot'],
     }
 
 }

@@ -13,13 +13,14 @@
 
 PRG=buildbot
 DAEMON=/opt/buildbot/bin/$PRG
+USER=buildbot
 
 test -x $DAEMON || exit 0
 
 case "$1" in
   start)
     echo -n "Checking configuration for $PRG: "
-    $DAEMON checkconfig /opt/buildbot/lsb-master >> /tmp/buildbot-start.log 2>&1
+    /bin/su -c "$DAEMON checkconfig /opt/buildbot/lsb-master >> /tmp/buildbot-start.log 2>&1" $USER
     if [ $? -eq 0 ]; then
         echo "done"
     else
@@ -27,13 +28,13 @@ case "$1" in
         exit 1
     fi
     echo -n "Starting $PRG: "
-    $DAEMON start /opt/buildbot/lsb-master 2>>/tmp/buildbot-start.log >/dev/null
+    /bin/su -c "$DAEMON start /opt/buildbot/lsb-master 2>>/tmp/buildbot-start.log >/dev/null" $USER
     RETVAL=$?
     echo "done"
     ;;
   stop)
     echo -n "Stopping $PRG: "
-    $DAEMON stop /opt/buildbot/lsb-master >> /tmp/buildbot-start.log 2>&1
+    /bin/su -c "$DAEMON stop /opt/buildbot/lsb-master >> /tmp/buildbot-start.log 2>&1" $USER
     RETVAL=$?
     echo "done"
     ;;
