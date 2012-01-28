@@ -16,13 +16,18 @@ class buildbot::master inherits buildbot {
         require => File["/opt/buildbot"],
     }
 
+    file { "/opt/buildbot/lsb-master":
+        ensure => directory,
+        owner  => 'buildbot',
+    }
+
     exec { "make-master":
         command => "/opt/buildbot/bin/buildbot create-master /opt/buildbot/lsb-master",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-master",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         user    => 'buildbot',
-        require => Exec["make-buildbot"],
+        require => [ Exec["make-buildbot"], File["/opt/buildbot/lsb-master"] ],
     }
 
     file { "/opt/buildbot/lsb-master/master.cfg":
