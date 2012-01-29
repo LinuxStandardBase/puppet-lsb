@@ -1,14 +1,19 @@
 class buildbot::slave inherits buildbot {
 
     # Here, we figure out what user and password to use to log into the
-    # master.  This differs per-architecture.
+    # master.  This differs per-architecture.  The buildbotpw module
+    # is pulled in from puppet-secret, and just contains Puppet variables
+    # containing passwords.
+
+    include buildbotpw
 
     $masteruser = $architecture ? {
         /^i386$/ => 'lfbuild-x86',
     }
 
-    # XXX: need to set up secrets Puppet modules.
-    $masterpw = 'invalid'
+    $masterpw = $architecture ? {
+        /^i386$/ => $buildbotpw::x86password,
+    }
 
     # Which SDKs should we use for released and beta builds?
 
@@ -68,6 +73,16 @@ class buildbot::slave inherits buildbot {
                      "/usr/sbin", "/usr/local/bin" ],
         user    => 'buildbot',
         require => [ Exec["make-buildslave"], File["/opt/buildbot/lsb-slave"] ],
+    }
+
+    exec { "set-slave-pw":
+        command => "sed 's/^passwd[[:space:]]*=.*$/passwd = \"$masterpw\"/' < /opt/buildbot/lsb-slave/buildbot.tac > /opt/buildbot/lsb-slave/buildbot.tac.new && rm /opt/buildbot/lsb-slave/buildbot.tac && mv /opt/buildbot/lsb-slave/buildbot.tac.new /opt/buildbot/lsb-slave/buildbot.tac",
+        cwd     => '/opt/buildbot',
+        path    => [ '/opt/buildbot/bin', '/bin', '/sbin', '/usr/bin',
+                     '/usr/sbin' ],
+        user    => 'buildbot',
+        requre  => Exec['make-slave'],
+        onlyif  => "[ $(grep -c inlid /opt/buildbot/lsb-slave/buildbot.tac) -eq 0 ]",
     }
 
     file { "/usr/local/bin/reset-sdk":
