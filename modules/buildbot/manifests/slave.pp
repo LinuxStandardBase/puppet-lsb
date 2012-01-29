@@ -81,7 +81,7 @@ class buildbot::slave inherits buildbot {
         path    => [ '/opt/buildbot/bin', '/bin', '/sbin', '/usr/bin',
                      '/usr/sbin' ],
         user    => 'buildbot',
-        requre  => Exec['make-slave'],
+        require => Exec['make-slave'],
         onlyif  => "[ $(grep -c inlid /opt/buildbot/lsb-slave/buildbot.tac) -eq 0 ]",
     }
 
