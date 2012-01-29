@@ -80,6 +80,27 @@ Running "puppet agent -t" on the node tests the connection, and also
 can force the current configuration to apply immediately without
 waiting for the normal agent update interval.
 
+The puppet-secret modules
+-------------------------
+
+In a few cases, this configuration refers to modules that don't seem
+to exist.  These are from the "puppet-secret" area, and contain
+information that shouldn't be accessible to the public: passwords,
+secret keys, and so on.
+
+In all cases, puppet-secret contains modules which either expose
+variables to Puppet, or install files.  Someone with experience in
+Puppet should be able to recreate puppet-secret with nothing more than
+the information contained here, and thus create an independent
+working implementation.  Of course, the passwords, keys, etc. will be
+different than on the live production copy.
+
+It might be worth asking whether a "blank" public copy of
+puppet-secrets could be provided.  The worry is that the blank copy
+would get stale, and implementors would be forced to reverse-engineer
+the missing bits from this repository anyway.  Suggestions for fixing
+this problem are welcome.
+
 Jeff Licquia
 licquia@linuxfoundation.org
-2012-01-18
+2012-01-28

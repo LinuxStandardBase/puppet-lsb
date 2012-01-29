@@ -20,4 +20,14 @@ class puppet::server inherits puppet {
         recipient => '|/usr/local/bin/puppet-email-notify',
     }
 
+    # Update the secrets repository as well.  This is assumed to be
+    # checked out to /etc/puppet-secret; this is a manual step
+    # for setting up a puppet master.
+
+    cron { 'update-puppet-secret':
+        command => 'cd /etc/puppet-secret && bzr up -q',
+        user    => 'root',
+        minute  => '*/5',
+    }
+
 }
