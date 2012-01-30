@@ -1,0 +1,35 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          buildslave
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      1
+# Short-Description: buildbot slave daemon
+# Description:       Buildbot is a build system.  This script controls
+#                    the buildbot slave.
+### END INIT INFO
+
+PRG=buildslave
+DAEMON=/opt/buildbot/bin/$PRG
+USER=buildbot
+
+test -x $DAEMON || exit 0
+
+case "$1" in
+  start)
+    echo -n "Starting $PRG: "
+    /bin/su -c "$DAEMON start /opt/buildbot/lsb-slave 2>>/tmp/buildbot-start.log >/dev/null" $USER
+    RETVAL=$?
+    echo "done"
+    ;;
+  stop)
+    echo -n "Stopping $PRG: "
+    /bin/su -c "$DAEMON stop /opt/buildbot/lsb-slave >> /tmp/buildbot-start.log 2>&1" $USER
+    RETVAL=$?
+    echo "done"
+    ;;
+esac
+
+exit $RETVAL

@@ -83,6 +83,7 @@ class buildbot::slave inherits buildbot {
         user    => 'buildbot',
         require => Exec['make-slave'],
         onlyif  => "[ $(grep -c $masterpw /opt/buildbot/lsb-slave/buildbot.tac) -eq 0 ]",
+        notify  => Service['buildslave'],
     }
 
     file { "/usr/local/bin/reset-sdk":
@@ -126,6 +127,20 @@ class buildbot::slave inherits buildbot {
     file { '/opt/buildbot/lsb-beta-sdk.tar.gz':
         ensure => link,
         target => "/opt/buildbot/$betasdk",
+    }
+
+    file { "/etc/init.d/buildslave":
+        ensure => present,
+        source => "puppet:///modules/buildbot/buildslave.init",
+        mode   => 0755,
+        notify => Service['buildslave'],
+    }
+
+    service { "buildslave":
+        ensure     => running,
+        hasrestart => false,
+        hasstatus  => false,
+        require    => User['buildbot'],
     }
 
 }
