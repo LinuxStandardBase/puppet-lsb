@@ -137,7 +137,7 @@ class buildbot::slave inherits buildbot {
     }
 
     service { "buildslave":
-        ensure     => running,
+        ensure     => stopped,
         hasrestart => false,
         hasstatus  => false,
         require    => User['buildbot'],
