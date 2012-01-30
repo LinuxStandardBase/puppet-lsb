@@ -66,7 +66,7 @@ class buildbot::slave inherits buildbot {
     }
 
     exec { "make-slave":
-        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave vm1.linuxbase.org $masteruser $masterpw",
+        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave vm1.linuxbase.org:9989 $masteruser $masterpw",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-slave/buildbot.tac",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
