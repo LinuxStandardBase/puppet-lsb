@@ -82,7 +82,7 @@ class buildbot::slave inherits buildbot {
                      '/usr/sbin' ],
         user    => 'buildbot',
         require => Exec['make-slave'],
-        onlyif  => "[ $(grep -c inlid /opt/buildbot/lsb-slave/buildbot.tac) -eq 0 ]",
+        onlyif  => "[ $(grep -c $masterpw /opt/buildbot/lsb-slave/buildbot.tac) -eq 0 ]",
     }
 
     file { "/usr/local/bin/reset-sdk":
