@@ -54,6 +54,19 @@ class buildbot::master inherits buildbot {
         ensure => present,
     }
 
+    file { "/opt/buildbot/slave_pwds":
+        mode    => 0400,
+        owner   => 'buildbot',
+        content => "lfbuild-x86_64:$buildbotpw::x64password
+lfbuild-x86:$buildbotpw::x86password
+lfbuild-ia64:$buildbotpw::ia64password
+lfbuild-ppc32:$buildbotpw::ppc32password
+lfbuild-ppc64:$buildbotpw::ppc64password
+lfbuild-s390:$buildbotpw::s390password
+lfbuild-s390x:$buildbotpw::s390xpassword
+",
+    }
+
     file { "/etc/init.d/buildbot":
         ensure => present,
         source => "puppet:///modules/buildbot/buildbot.init",
