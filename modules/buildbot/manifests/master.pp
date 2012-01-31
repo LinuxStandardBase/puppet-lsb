@@ -1,5 +1,7 @@
 class buildbot::master inherits buildbot {
 
+    include buildbotpw
+
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
