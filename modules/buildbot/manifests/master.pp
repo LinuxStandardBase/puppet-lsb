@@ -2,6 +2,11 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
+    $htpasswd = "$operatingsystem-$operatingsystemrelease" ? {
+        /^SLES-11(\.[0-9])?$/ => 'htpasswd2',
+        default               => 'htpasswd',
+    }
+
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
@@ -53,7 +58,7 @@ class buildbot::master inherits buildbot {
     }
 
     exec { "make-htpasswd":
-        command => "htpasswd -cb /opt/buildbot/htpasswd buildbot $buildbotpw::web",
+        command => "$htpasswd -cb /opt/buildbot/htpasswd buildbot $buildbotpw::web",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         creates => '/opt/buildbot/htpasswd',
         require => File['/opt/buildbot'],
