@@ -69,6 +69,13 @@ lfbuild-s390x:$buildbotpw::s390xpassword
 ",
     }
 
+    file { "/opt/buildbot/jobdir":
+        ensure => directory,
+        group  => 'users',
+        owner  => 'buildbot',
+        mode   => 0775,
+    }
+
     file { "/etc/init.d/buildbot":
         ensure => present,
         source => "puppet:///modules/buildbot/buildbot.init",
