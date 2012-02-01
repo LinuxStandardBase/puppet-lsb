@@ -87,7 +87,12 @@ lfbuild-s390x:$buildbotpw::s390xpassword
         ensure     => running,
         hasrestart => false,
         hasstatus  => false,
-        require    => User['buildbot'],
+        require    => 
+            [ File['/etc/init.d/buildbot'], File['/opt/buildbot/slave_pwds'], 
+              File['/opt/buildbot/lsb-master/master.cfg'], 
+              File['/opt/buildbot/lsb-master/lfbuildbot.py'], 
+              File['/opt/buildbot/lsb-master/bzr_buildbot.py'],
+              User['buildbot'], Exec['make-master'] ],
     }
 
 }
