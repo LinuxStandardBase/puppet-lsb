@@ -52,8 +52,11 @@ class buildbot::master inherits buildbot {
         require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
     }
 
-    file { "/opt/buildbot/htpasswd":
-        ensure => present,
+    exec { "make-htpasswd":
+        command => "htpasswd -cb /opt/buildbot/htpasswd buildbot $buildbotpw::web",
+        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        creates => '/opt/buildbot/htpasswd',
+        require => File['/opt/buildbot'],
     }
 
     file { "/opt/buildbot/slave_pwds":
@@ -92,7 +95,7 @@ lfbuild-s390x:$buildbotpw::s390xpassword
               File['/opt/buildbot/lsb-master/master.cfg'], 
               File['/opt/buildbot/lsb-master/lfbuildbot.py'], 
               File['/opt/buildbot/lsb-master/bzr_buildbot.py'],
-              User['buildbot'], Exec['make-master'] ],
+              User['buildbot'], Exec['make-master'], Exec['make-htpasswd'] ],
     }
 
 }
