@@ -1,5 +1,10 @@
 class buildbot::slave inherits buildbot {
 
+    $lsbpkg = "$operatingsystem-$operatingsystemrelease" ? {
+        /^Fedora-.+$/ => 'redhat-lsb',
+        default       => 'lsb',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -39,7 +44,7 @@ class buildbot::slave inherits buildbot {
     #    ensure => present,
     #}
 
-    package { 'lsb':
+    package { "$lsbpkg":
         ensure => present,
     }
 
