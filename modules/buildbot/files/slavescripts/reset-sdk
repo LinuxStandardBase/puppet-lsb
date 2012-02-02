@@ -29,8 +29,11 @@ sudo rpm --nodeps --allmatches -e lsb-build-base || true
 
 (cd /tmp/sdk-install && zcat $HOME/lsb-$SDK_TYPE-sdk.tar.gz | tar xf -)
 
+set +e
 rpm -q lsb-setup > /dev/null 2>&1
-if [ $? -ne 0 ]; then
+retval=$?
+set -e
+if [ $retval -ne 0 ]; then
   sudo rpm -Uvh --force /tmp/sdk-install/lsb-sdk/lsb-setup*rpm
 fi
 

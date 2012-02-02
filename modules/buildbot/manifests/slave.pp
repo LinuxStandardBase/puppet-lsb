@@ -39,6 +39,10 @@ class buildbot::slave inherits buildbot {
     #    ensure => present,
     #}
 
+    package { 'lsb':
+        ensure => present,
+    }
+
     package { 'rpm-devel':
         ensure => present,
     }
