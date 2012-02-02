@@ -15,7 +15,7 @@ fi
 
 rm -f /tmp/last_installed_sdk
 
-mkdir -p $HOME/tmp
+mkdir -p /tmp/sdk-install
 [ -e $HOME/lsb-$SDK_TYPE-sdk.tar.gz ]
 
 # SDK packages besides lsb-build-base, which has to be handled specially.
@@ -27,17 +27,17 @@ done
 sudo rpm --nodeps --allmatches -e lsb-build-libbat || true
 sudo rpm --nodeps --allmatches -e lsb-build-base || true
 
-(cd $HOME/tmp && zcat $HOME/lsb-$SDK_TYPE-sdk.tar.gz | tar xf -)
+(cd /tmp/sdk-install && zcat $HOME/lsb-$SDK_TYPE-sdk.tar.gz | tar xf -)
 
 rpm -q lsb-setup > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-  sudo rpm -Uvh --force $HOME/tmp/lsb-sdk/lsb-setup*rpm
+  sudo rpm -Uvh --force /tmp/sdk-install/lsb-sdk/lsb-setup*rpm
 fi
 
-sudo rpm -Uvh --force $HOME/tmp/lsb-sdk/lsb-build-base*
+sudo rpm -Uvh --force /tmp/sdk-install/lsb-sdk/lsb-build-base*
 for pkg in $SDK_PKGS; do
-  sudo rpm -Uvh --force $HOME/tmp/lsb-sdk/$pkg*
+  sudo rpm -Uvh --force /tmp/sdk-install/lsb-sdk/$pkg*
 done
 
-rm -rf $HOME/tmp/lsb-sdk
+rm -rf /tmp/sdk-install
 echo $SDK_TYPE > /tmp/last_installed_sdk
