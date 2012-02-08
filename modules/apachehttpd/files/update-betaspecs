@@ -8,8 +8,10 @@
 
 if [ -d /srv/www/vhosts/linuxbase.org ]; then
     BETASPECS_PATH=/srv/www/vhosts/linuxbase.org/betaspecs
+    SNAPSHOTS_PATH=/srv/www/vhosts/linuxbase.org/snapshots
 else
     BETASPECS_PATH=/tmp/betaspecs_path
+    SNAPSHOTS_PATH=/tmp/snapshots_path
 fi
 
 BRANCHURL=http://bzr.linuxfoundation.org/lsb/devel
@@ -17,22 +19,55 @@ BRANCHURL=http://bzr.linuxfoundation.org/lsb/devel
 BZR_PROGRESS_BAR=none
 export BZR_PROGRESS_BAR
 
-# obtain the current FHS spec from bzr
+# the current tags to export from for "beta" versions:
+BETAFHS="-1"
+BETALSB=LSB-4.1
 
+# obtain the current FHS spec from bzr
 [ -d /tmp/fhs-spec ] && rm -rf /tmp/fhs-spec
 bzr export /tmp/fhs-spec $BRANCHURL/fhs-spec
 
-# built specs are not in bzr, have to build them here
+# only bother with the rest of FHS work if the export worked:
+if [ $? -eq 0 ]
+then
 
-cd /tmp/fhs-spec
-make -s fhs.txt fhs.html 
-make -s fhs/index.html 2>/dev/null
+    # built specs are not in bzr, have to build them here
+    cd /tmp/fhs-spec
+    make -s fhs.txt fhs.html 
+    make -s fhs/index.html 2>/dev/null
 
-[ -d $BETASPECS_PATH/fhs ] && rm -rf $BETASPECS_PATH/fhs
-mkdir -p $BETASPECS_PATH/fhs
-cp -a fhs.txt fhs.html fhs $BETASPECS_PATH/fhs
+    [ -d $SNAPSHOTS_PATH/fhs ] && rm -rf $SNAPSHOTS_PATH/fhs
+    mkdir -p $SNAPSHOTS_PATH/fhs
+    cp -a fhs.txt fhs.html fhs $SNAPSHOTS_PATH/fhs
 
-cat  > $BETASPECS_PATH/fhs/index.html <<EOF
+    cat  > $SNAPSHOTS_PATH/fhs/index.html <<EOF
+<html>
+<head>
+<title>FHS Snapshot Specification</title>
+</head>
+<body>
+<h1>Filesystem Hierarchy Specification - Beta</h1>
+<ul>
+<li><a href="fhs.txt">UTF-8 Text</a></li>
+<li><a href="fhs.html">HTML (one page)</a></li>
+<li><a href="fhs/index.html">HTML (multiple pages)</a></li>
+</ul>
+</body>
+</html>
+EOF
+
+    # now go do it again, but for beta
+    [ -d /tmp/fhs-spec ] && rm -rf /tmp/fhs-spec
+    bzr export -r $BETAFHS /tmp/fhs-spec $BRANCHURL/fhs-spec
+    cd /tmp/fhs-spec
+    make -s fhs.txt fhs.html 
+    make -s fhs/index.html 2>/dev/null
+
+    [ -d $BETASPECS_PATH/fhs ] && rm -rf $BETASPECS_PATH/fhs
+    mkdir -p $BETASPECS_PATH/fhs
+    cp -a fhs.txt fhs.html fhs $BETASPECS_PATH/fhs
+
+    cat  > $BETASPECS_PATH/fhs/index.html <<EOF
 <html>
 <head>
 <title>FHS Beta Specification</title>
@@ -48,12 +83,14 @@ cat  > $BETASPECS_PATH/fhs/index.html <<EOF
 </html>
 EOF
 
-cd /tmp
-rm -rf fhs-spec
+fi
+
+rm -rf /tmp/fhs-spec
 
 # LSB specs are already built. Grab them from booksets and books branches,
 # but only the directories that begin with LSB- are "published"
 
+# beta specs: export a specific tagged revision (tag set at top of this script)
 for branch in $BRANCHURL/booksets $BRANCHURL/books
 do
     for path in $(bzr ls $branch)
@@ -63,7 +100,22 @@ do
 	then
 	    [ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
 	    mkdir -p $BETASPECS_PATH/lsb/$book
-	    bzr export $BETASPECS_PATH/lsb/$book $path
+	    bzr export -r $BETALSB $BETASPECS_PATH/lsb/$book $path
+	fi
+    done
+done
+
+# snapshots: just take the top
+for branch in $BRANCHURL/booksets $BRANCHURL/books
+do
+    for path in $(bzr ls $branch)
+    do
+	book=$(echo $path | sed "s,$branch/,,")
+	if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
+	then
+	    [ -d $SNAPSHOTS_PATH/lsb/$book ] && rm -rf $SNAPSHOTS_PATH/lsb/$book
+	    mkdir -p $SNAPSHOTS_PATH/lsb/$book
+	    bzr export $SNAPSHOTS_PATH/lsb/$book $path
 	fi
     done
 done
