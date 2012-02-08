@@ -8,10 +8,10 @@
 
 if [ -d /srv/www/vhosts/linuxbase.org ]; then
     BETASPECS_PATH=/srv/www/vhosts/linuxbase.org/betaspecs
-    SNAPSHOTS_PATH=/srv/www/vhosts/linuxbase.org/snapshots
+    SNAPSHOTS_PATH=/srv/www/vhosts/linuxbase.org/snapshotspecs
 else
     BETASPECS_PATH=/tmp/betaspecs_path
-    SNAPSHOTS_PATH=/tmp/snapshots_path
+    SNAPSHOTS_PATH=/tmp/snapshotspecs_path
 fi
 
 BRANCHURL=http://bzr.linuxfoundation.org/lsb/devel

@@ -23,6 +23,14 @@ class apachehttpd::betaspecs {
         source => "puppet:///modules/apachehttpd/content/betaspecs/lsb/index.html",
     }
 
+    file { '/srv/www/vhosts/linuxbase.org/snapshotspecs/index.html':
+        source => "puppet:///modules/apachehttpd/content/snapshotspecs/index.html",
+    }
+
+    file { '/srv/www/vhosts/linuxbase.org/snapshotspecs/lsb/index.html':
+        source => "puppet:///modules/apachehttpd/content/snapshotspecs/lsb/index.html",
+    }
+
     exec { 'do-update-betaspecs':
         command => '/etc/cron.daily/update-betaspecs',
         path => [ '/usr/sbin', '/usr/bin', '/bin' ],
