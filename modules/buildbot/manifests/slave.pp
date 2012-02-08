@@ -5,6 +5,11 @@ class buildbot::slave inherits buildbot {
         default       => 'lsb',
     }
 
+    $rpmpkg = "$operatingsystem-$operatingsystemrelease" ? {
+        /^SLES-.+$/ => 'rpm',
+        default     => 'rpm-build',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -48,7 +53,7 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    package { 'rpm-devel':
+    package { "$rpmpkg":
         ensure => present,
     }
 
