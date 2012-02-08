@@ -21,6 +21,7 @@ class buildbot {
 
     file { "/opt/buildbot":
         ensure => directory,
+        owner  => 'buildbot',
     }
 
     exec { "make-buildbot-virtualenv":
