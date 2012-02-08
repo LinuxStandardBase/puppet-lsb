@@ -15,20 +15,42 @@ class apachehttpd::betaspecs {
         mode => 0755,
     }
 
+    file { '/srv/www/vhosts/linuxbase.org/betaspecs':
+        ensure => directory,
+    }
+
+    file { '/srv/www/vhosts/linuxbase.org/snapshotspecs':
+        ensure => directory,
+    }
+
+    file { '/srv/www/vhosts/linuxbase.org/betaspecs/lsb':
+        ensure => directory,
+        require => File['/srv/www/vhosts/linuxbase.org/betaspecs'],
+    }
+
+    file { '/srv/www/vhosts/linuxbase.org/snapshotspecs/lsb':
+        ensure => directory,
+        require => File['/srv/www/vhosts/linuxbase.org/snapshotspecs'],
+    }
+
     file { '/srv/www/vhosts/linuxbase.org/betaspecs/index.html':
         source => "puppet:///modules/apachehttpd/content/betaspecs/index.html",
+        require => File['/srv/www/vhosts/linuxbase.org/betaspecs'],
     }
 
     file { '/srv/www/vhosts/linuxbase.org/betaspecs/lsb/index.html':
         source => "puppet:///modules/apachehttpd/content/betaspecs/lsb/index.html",
+        require => File['/srv/www/vhosts/linuxbase.org/betaspecs/lsb'],
     }
 
     file { '/srv/www/vhosts/linuxbase.org/snapshotspecs/index.html':
         source => "puppet:///modules/apachehttpd/content/snapshotspecs/index.html",
+        require => File['/srv/www/vhosts/linuxbase.org/snapshotspecs'],
     }
 
     file { '/srv/www/vhosts/linuxbase.org/snapshotspecs/lsb/index.html':
         source => "puppet:///modules/apachehttpd/content/snapshotspecs/lsb/index.html",
+        require => File['/srv/www/vhosts/linuxbase.org/snapshotspecs/lsb'],
     }
 
     exec { 'do-update-betaspecs':
