@@ -18,17 +18,20 @@ class buildbot::slave inherits buildbot {
     include buildbotpw
 
     $masteruser = $architecture ? {
-        /^i386$/ => 'lfbuild-x86',
+        /^i386$/   => 'lfbuild-x86',
+        /^x86_64$/ => 'lfbuild-x86_64',
     }
 
     $masterpw = $architecture ? {
-        /^i386$/ => $buildbotpw::x86password,
+        /^i386$/   => $buildbotpw::x86password,
+        /^x86_64$/ => $buildbotpw::x64password,
     }
 
     # Which SDKs should we use for released and beta builds?
 
     $releasedsdk = $architecture ? {
-        /^i386$/ => 'lsb-sdk-4.1.2-1.ia32.tar.gz',
+        /^i386$/   => 'lsb-sdk-4.1.2-1.ia32.tar.gz',
+        /^x86_64$/ => 'lsb-sdk-4.1.2-1.x86_64.tar.gz',
     }
 
     $releasedsdkpath = 'bundles/released-4.1.0/sdk'
