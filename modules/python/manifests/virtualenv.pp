@@ -4,7 +4,8 @@ class python::virtualenv inherits python {
     # to add the repos first.
 
     $sles11obsrepo = "$operatingsystem-$operatingsystemrelease" ? {
-        /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/devel_languages_python.repo'],
+        /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/devel_languages_python_sles11.repo'],
+        /^OpenSuSE-11\.4$/    => File['/etc/zypp/repos.d/devel_languages_python_opensuse11.repo'],
         default               => undef,
     }
 

@@ -1,0 +1,7 @@
+[devel_languages_python]
+name=Python and Python Modules (openSUSE_11.4)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/devel:/languages:/python/openSUSE_11.4/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/devel:/languages:/python/openSUSE_11.4/repodata/repomd.xml.key
+enabled=1
