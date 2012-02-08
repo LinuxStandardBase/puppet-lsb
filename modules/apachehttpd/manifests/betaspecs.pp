@@ -56,6 +56,7 @@ class apachehttpd::betaspecs {
     exec { 'do-update-betaspecs':
         command => '/etc/cron.daily/update-betaspecs',
         path => [ '/usr/sbin', '/usr/bin', '/bin' ],
+        timeout => 600,
         refreshonly => true,
         logoutput => on_failure,
     }
