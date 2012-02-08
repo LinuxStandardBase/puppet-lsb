@@ -57,6 +57,10 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
+    package { 'g++':
+        ensure => present,
+    }
+
     # Other packages needed by this puppet module.
 
     package { 'wget':
