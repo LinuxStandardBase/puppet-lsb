@@ -13,7 +13,7 @@ class buildbot::slave inherits buildbot {
 
     $gpluspluspkg = $operatingsystem ? {
         /^SLES$/     => 'gcc-c++',
-        /^OpenSuSE$/ => 'gcc-c++,
+        /^OpenSuSE$/ => 'gcc-c++',
         default      => 'g++',
     }
 
