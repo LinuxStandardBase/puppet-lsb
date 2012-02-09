@@ -29,7 +29,7 @@ class buildbot {
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/bin/pip",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
-        require => File["/opt/buildbot"],
+        require => [ File["/opt/buildbot"], Package['python-virtualenv'] ],
     }
 
 }
