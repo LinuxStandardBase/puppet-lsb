@@ -38,6 +38,11 @@ class python::virtualenv inherits python {
             refreshonly => true,
             logoutput   => true,
         }
+
+        package { 'python-distribute':
+            ensure => present,
+        }
+
     }
 
 }
