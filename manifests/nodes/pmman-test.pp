@@ -1,5 +1,5 @@
 # Test VM on Russ Herrold's network.
-node 'vm178231179.pmman.net' {
+node 'vm049244134.pmman.net' {
 
     include user::licquia
 
