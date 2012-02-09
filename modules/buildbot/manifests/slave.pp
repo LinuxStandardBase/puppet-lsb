@@ -11,6 +11,12 @@ class buildbot::slave inherits buildbot {
         default         => 'rpm-build',
     }
 
+    $gpluspluspkg = $operatingsystem ? {
+        /^SLES$/     => 'gcc-c++',
+        /^OpenSuSE$/ => 'gcc-c++,
+        default      => 'g++',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -61,7 +67,7 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    package { 'gcc-c++':
+    package { "$gpluspluspkg":
         ensure => present,
     }
 
