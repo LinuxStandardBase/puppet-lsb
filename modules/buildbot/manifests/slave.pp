@@ -6,8 +6,9 @@ class buildbot::slave inherits buildbot {
     }
 
     $rpmpkg = "$operatingsystem-$operatingsystemrelease" ? {
-        /^SLES-.+$/ => 'rpm',
-        default     => 'rpm-build',
+        /^SLES-.+$/     => 'rpm',
+        /^OpenSuSE-.+$/ => 'rpm',
+        default         => 'rpm-build',
     }
 
     # Here, we figure out what user and password to use to log into the
@@ -60,7 +61,7 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    package { 'g++':
+    package { 'gcc-c++':
         ensure => present,
     }
 
