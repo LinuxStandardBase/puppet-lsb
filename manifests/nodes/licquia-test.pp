@@ -5,6 +5,4 @@ node 'virtpc-opensuse.internal.licquia.org' {
 
     include puppet
 
-    include buildbot::slave
-
 }
