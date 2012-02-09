@@ -46,13 +46,16 @@ Puppet, with only a few tweaks required for our local setup:
 
  - In puppet-lsb, create a node configuration file in manifest/nodes.
    You can use one of the other node configuration files as a model.
-   It can be blank between the initial braces of the "node" line, like
-   this:
+   Or, if you prefer, something like this is the minimum configuration
+   required for a node:
 
-   node 'my.host.name' {}
+   node 'my.host.name' { include puppet }
 
    The filename can be descriptive, but the actual node name in the
-   file must resolve to the IP address of the node.
+   file must correspond to the FQDN Puppet expects on the node.  You
+   can find this hostname via this command:
+
+   facter | grep fqdn
 
  - Once the node file is in place, use version control to add the new
    file, commit it, and push it.
