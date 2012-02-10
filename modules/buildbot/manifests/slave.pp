@@ -167,7 +167,8 @@ class buildbot::slave inherits buildbot {
         ensure     => running,
         hasrestart => false,
         hasstatus  => false,
-        require    => User['buildbot'],
+        require    => [ File['/etc/init.d/buildslave'], User['buildbot'],
+                        Exec['make-slave'] ],
     }
 
 }
