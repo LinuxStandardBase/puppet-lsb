@@ -14,6 +14,7 @@ class python::virtualenv inherits python {
     $susereposrc = "$osid" ? {
         /^SLES-11(\.[0-9])?$/ => "devel_languages_python_sles11.repo",
         /^OpenSuSE-11\.4$/    => "devel_languages_python_opensuse11.repo",
+        default               => undef,
     }
 
     package { 'python-virtualenv': 
