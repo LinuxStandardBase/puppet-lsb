@@ -7,6 +7,10 @@ class buildbot::master inherits buildbot {
         default               => 'htpasswd',
     }
 
+    package { 'createrepo':
+        ensure => present,
+    }
+
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
