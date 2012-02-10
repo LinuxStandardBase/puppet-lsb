@@ -7,4 +7,6 @@ node 'vm049244134.pmman.net' {
 
     include puppet
 
+    include buildbot::slave
+
 }
