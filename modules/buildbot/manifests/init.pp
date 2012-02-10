@@ -7,6 +7,7 @@ class buildbot {
     $buildbotversion = '0.8.5'
 
     $pythonversion = "$operatingsystem-$operatingsystemrelease" ? {
+        /^CentOS-5/   => '2.4',
         /^Fedora-16$/ => '2.7',
         default       => '2.6',
     }
