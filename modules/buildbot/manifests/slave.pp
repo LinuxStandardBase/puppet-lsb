@@ -70,6 +70,10 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
+    package { 'pkgconfig':
+        ensure => present,
+    }
+
     # Other packages needed by this puppet module.
 
     package { 'wget':
