@@ -1,8 +1,9 @@
 class buildbot::slave inherits buildbot {
 
-    $lsbpkg = "$operatingsystem-$operatingsystemrelease" ? {
-        /^Fedora-.+$/ => 'redhat-lsb',
-        default       => 'lsb',
+    $lsbpkg = $operatingsystem ? {
+        /^Fedora$/ => 'redhat-lsb',
+        /^CentOS$/ => 'redhat-lsb',
+        default    => 'lsb',
     }
 
     $rpmpkg = "$operatingsystem-$operatingsystemrelease" ? {
@@ -12,9 +13,7 @@ class buildbot::slave inherits buildbot {
     }
 
     $gpluspluspkg = $operatingsystem ? {
-        /^SLES$/     => 'gcc-c++',
-        /^OpenSuSE$/ => 'gcc-c++',
-        default      => 'g++',
+        default      => 'gcc-c++',
     }
 
     # Here, we figure out what user and password to use to log into the
