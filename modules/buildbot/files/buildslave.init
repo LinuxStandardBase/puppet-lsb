@@ -17,7 +17,7 @@ USER=buildbot
 
 test -x $DAEMON || exit 0
 
-PATH=/bin:/usr/bin:/usr/local/bin
+PATH=/bin:/usr/bin:/usr/local/bin:/opt/lsb/bin
 export PATH
 
 case "$1" in
