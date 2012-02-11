@@ -51,6 +51,13 @@ class buildbot::slave inherits buildbot {
 
     $betasdkpath = $releasedsdkpath
 
+    # Which lsb-python do we need?
+
+    $lsbpythonurl = $architecture ? {
+        /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-5.lsb4.i486.rpm',
+        /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
+    }
+
     # Include required packages for builds here.  Some of these
     # might be included from the base buildbot class; check init.pp
     # for those.
@@ -98,6 +105,24 @@ class buildbot::slave inherits buildbot {
     # XXX: Requiring this is a bug (#3385).
     package { 'ncurses-devel':
         ensure => present,
+    }
+
+    # Some builds need lsb-python.  For now, this is probably the
+    # best way to get lsb-python to the build slave.
+
+    exec { "download-lsb-python":
+        command => "wget -O lsb-python.rpm $lsbpythonurl",
+        cwd     => '/opt/buildbot',
+        creates => '/opt/buildbot/lsb-python.rpm',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Package['wget'],
+    }
+
+    exec { 'install-lsb-python':
+        command => 'rpm -Uvh /opt/buildbot/lsb-python.rpm',
+        creates => '/opt/lsb/bin/python',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Exec['download-lsb-python'],
     }
 
     # Other packages needed by this puppet module.
