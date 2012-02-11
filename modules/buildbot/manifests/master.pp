@@ -110,8 +110,7 @@ lfbuild-s390x:$buildbotpw::s390xpassword
     cron { 'update-snapshot':
         command => '/opt/buildbot/buildbot-config/update-snapshot',
         user    => 'root',
-        hour    => 6,
-        minute  => 0,
+        minute  => '*/5',
         require => Exec['make-buildbot-config'],
     }
 
