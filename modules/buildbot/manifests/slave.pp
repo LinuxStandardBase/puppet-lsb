@@ -120,7 +120,7 @@ class buildbot::slave inherits buildbot {
 
     exec { 'install-lsb-python':
         command => 'rpm -Uvh /opt/buildbot/lsb-python.rpm',
-        creates => '/opt/lsb/bin/python',
+        creates => '/opt/lsb/appbat/bin/python',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['download-lsb-python'],
     }
