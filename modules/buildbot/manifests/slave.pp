@@ -16,6 +16,11 @@ class buildbot::slave inherits buildbot {
         default      => 'gcc-c++',
     }
 
+    $javapkg = $operatingsystem ? {
+        /^CentOS/ => 'java-1.6.0-openjdk',
+        default   => 'openjdk',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -71,6 +76,10 @@ class buildbot::slave inherits buildbot {
     }
 
     package { 'pkgconfig':
+        ensure => present,
+    }
+
+    package { "$javapkg":
         ensure => present,
     }
 
