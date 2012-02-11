@@ -83,6 +83,18 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
+    package { 'autoconf':
+        ensure => present,
+    }
+
+    package { 'automake':
+        ensure => present,
+    }
+
+    package { 'libtool':
+        ensure => present,
+    }
+
     # Other packages needed by this puppet module.
 
     package { 'wget':
