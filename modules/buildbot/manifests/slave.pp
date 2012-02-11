@@ -51,11 +51,23 @@ class buildbot::slave inherits buildbot {
 
     $betasdkpath = $releasedsdkpath
 
-    # Which lsb-python do we need?
+    # Special downloaded packages needed for builds from the LSB.
+    # XXX: this should migrate to using package repositories and
+    #      the package resource in puppet.
 
     $lsbpythonurl = $architecture ? {
         /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-5.lsb4.i486.rpm',
         /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
+    }
+
+    $lsbteturl = $architecture ? {
+        /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-3.7-15.lsb4.i486.rpm',
+        /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-3.7-15.lsb4.x86_64.rpm',
+    }
+
+    $lsbtetdevelurl = $architecture ? {
+        /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-devel-3.7-15.lsb4.i486.rpm',
+        /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-devel-3.7-15.lsb4.x86_64.rpm',
     }
 
     # Include required packages for builds here.  Some of these
@@ -107,8 +119,7 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    # Some builds need lsb-python.  For now, this is probably the
-    # best way to get lsb-python to the build slave.
+    # Get special LSB packages needed for builds.
 
     exec { "download-lsb-python":
         command => "wget -O lsb-python.rpm $lsbpythonurl",
@@ -123,6 +134,36 @@ class buildbot::slave inherits buildbot {
         creates => '/opt/lsb/appbat/bin/python',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['download-lsb-python'],
+    }
+
+    exec { "download-lsb-tet":
+        command => "wget -O lsb-tet3-lite.rpm $lsbteturl",
+        cwd     => '/opt/buildbot',
+        creates => '/opt/buildbot/lsb-tet3-lite.rpm',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Package['wget'],
+    }
+
+    exec { 'install-lsb-tet':
+        command => 'rpm -Uvh /opt/buildbot/lsb-tet3-lite.rpm',
+        creates => '/opt/lsb/bin/tet',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Exec['download-lsb-tet'],
+    }
+
+    exec { "download-lsb-tet-devel":
+        command => "wget -O lsb-tet3-lite-devel.rpm $lsbtetdevelurl",
+        cwd     => '/opt/buildbot',
+        #creates => '/opt/buildbot/lsb-tet3-lite-devel.rpm',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Package['wget'],
+    }
+
+    exec { 'install-lsb-tet-devel':
+        command => 'rpm -Uvh /opt/buildbot/lsb-tet3-lite-devel.rpm',
+        #creates => '/opt/lsb/bin/tet-dev',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => [ Exec['download-lsb-python'], Exec['install-lsb-tet'] ],
     }
 
     # Other packages needed by this puppet module.
