@@ -95,6 +95,11 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
+    # XXX: Requiring this is a bug (#3385).
+    package { 'ncurses-devel':
+        ensure => present,
+    }
+
     # Other packages needed by this puppet module.
 
     package { 'wget':
