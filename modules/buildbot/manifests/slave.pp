@@ -146,7 +146,7 @@ class buildbot::slave inherits buildbot {
 
     exec { 'install-lsb-tet':
         command => 'rpm -Uvh /opt/buildbot/lsb-tet3-lite.rpm',
-        creates => '/opt/lsb/bin/tet',
+        creates => '/opt/lsb-tet3-lite/bin/tcc',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['download-lsb-tet'],
     }
@@ -154,14 +154,14 @@ class buildbot::slave inherits buildbot {
     exec { "download-lsb-tet-devel":
         command => "wget -O lsb-tet3-lite-devel.rpm $lsbtetdevelurl",
         cwd     => '/opt/buildbot',
-        #creates => '/opt/buildbot/lsb-tet3-lite-devel.rpm',
+        creates => '/opt/buildbot/lsb-tet3-lite-devel.rpm',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Package['wget'],
     }
 
     exec { 'install-lsb-tet-devel':
         command => 'rpm -Uvh /opt/buildbot/lsb-tet3-lite-devel.rpm',
-        #creates => '/opt/lsb/bin/tet-dev',
+        creates => '/opt/lsb-tet3-lite/inc',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => [ Exec['download-lsb-python'], Exec['install-lsb-tet'] ],
     }
