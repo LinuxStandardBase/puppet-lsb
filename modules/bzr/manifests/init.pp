@@ -8,9 +8,9 @@ class bzr {
         default               => undef,
     }
 
-    package { 'bzr':
-        ensure => present,
-        require => $sles11obsrepo,
+    $bzrversion = "$operatingsystem-$operatingsystemrelease" ? {
+        /^SLES-11(\.[0-9])?$/ => '2.4.1-18.1',
+        default               => present,
     }
 
     if $sles11obsrepo {
@@ -25,6 +25,11 @@ class bzr {
             refreshonly => true,
             logoutput   => true,
         }
+    }
+
+    package { 'bzr':
+        ensure => $bzrversion,
+        require => $sles11obsrepo,
     }
 
 }
