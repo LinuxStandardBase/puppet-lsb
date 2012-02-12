@@ -60,16 +60,6 @@ class buildbot::slave inherits buildbot {
         /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
     }
 
-    $lsbteturl = $architecture ? {
-        /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-3.7-15.lsb4.i486.rpm',
-        /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-3.7-15.lsb4.x86_64.rpm',
-    }
-
-    $lsbtetdevelurl = $architecture ? {
-        /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-devel-3.7-15.lsb4.i486.rpm',
-        /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/runtime/lsb-tet3-lite-devel-3.7-15.lsb4.x86_64.rpm',
-    }
-
     # Include required packages for builds here.  Some of these
     # might be included from the base buildbot class; check init.pp
     # for those.
@@ -134,36 +124,6 @@ class buildbot::slave inherits buildbot {
         creates => '/opt/lsb/appbat/bin/python',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['download-lsb-python'],
-    }
-
-    exec { "download-lsb-tet":
-        command => "wget -O lsb-tet3-lite.rpm $lsbteturl",
-        cwd     => '/opt/buildbot',
-        creates => '/opt/buildbot/lsb-tet3-lite.rpm',
-        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        require => Package['wget'],
-    }
-
-    exec { 'install-lsb-tet':
-        command => 'rpm -Uvh /opt/buildbot/lsb-tet3-lite.rpm',
-        creates => '/opt/lsb-tet3-lite/bin/tcc',
-        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        require => Exec['download-lsb-tet'],
-    }
-
-    exec { "download-lsb-tet-devel":
-        command => "wget -O lsb-tet3-lite-devel.rpm $lsbtetdevelurl",
-        cwd     => '/opt/buildbot',
-        creates => '/opt/buildbot/lsb-tet3-lite-devel.rpm',
-        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        require => Package['wget'],
-    }
-
-    exec { 'install-lsb-tet-devel':
-        command => 'rpm -Uvh /opt/buildbot/lsb-tet3-lite-devel.rpm',
-        creates => '/opt/lsb-tet3-lite/inc',
-        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        require => [ Exec['download-lsb-python'], Exec['install-lsb-tet'] ],
     }
 
     # Other packages needed by this puppet module.
