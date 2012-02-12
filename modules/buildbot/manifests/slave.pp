@@ -17,8 +17,14 @@ class buildbot::slave inherits buildbot {
     }
 
     $javapkg = $operatingsystem ? {
+        /^SLES/   => 'java-1_6_0-ibm',
         /^CentOS/ => 'java-1.6.0-openjdk',
         default   => 'openjdk',
+    }
+
+    $pkgconfigpkg = $operatingsystem ? {
+        /^SLES/ => 'pkg-config',
+        default => 'pkgconfig',
     }
 
     # Here, we figure out what user and password to use to log into the
@@ -84,7 +90,7 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    package { 'pkgconfig':
+    package { "$pkgconfigpkg":
         ensure => present,
     }
 
