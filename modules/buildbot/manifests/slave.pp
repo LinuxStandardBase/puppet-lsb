@@ -198,6 +198,16 @@ class buildbot::slave inherits buildbot {
         require => [ Exec["make-buildslave"], File["/opt/buildbot/lsb-slave"] ],
     }
 
+    file { "/opt/buildbot/lsb-slave/info/admin":
+        content => "LSB Workgroup <lsb-discuss@lists.linuxfoundation.org>",
+        require => Exec['make-slave'],
+    }
+
+    file { "/opt/buildbot/lsb-slave/info/host":
+        content => "Host $fqdn, running $operatingsystem $operationsystemrelease on $architecture.",
+        require => Exec['make-slave'],
+    }
+
     exec { "set-slave-pw":
         command => "sed 's/^passwd[[:space:]]*=.*$/passwd = \"$masterpw\"/' < /opt/buildbot/lsb-slave/buildbot.tac > /opt/buildbot/lsb-slave/buildbot.tac.new && rm /opt/buildbot/lsb-slave/buildbot.tac && mv /opt/buildbot/lsb-slave/buildbot.tac.new /opt/buildbot/lsb-slave/buildbot.tac",
         cwd     => '/opt/buildbot',
