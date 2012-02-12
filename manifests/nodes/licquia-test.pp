@@ -5,4 +5,6 @@ node 'virtpc-sles11-amd64.internal.licquia.org' {
 
     include puppet
 
+    include buildbot::slave
+
 }
