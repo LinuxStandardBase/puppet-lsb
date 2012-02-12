@@ -199,13 +199,15 @@ class buildbot::slave inherits buildbot {
     }
 
     file { "/opt/buildbot/lsb-slave/info/admin":
-        content => "LSB Workgroup <lsb-discuss@lists.linuxfoundation.org>",
+        content => "LSB Workgroup <lsb-discuss@lists.linuxfoundation.org>\n",
         require => Exec['make-slave'],
+        notify  => Service['buildslave'],
     }
 
     file { "/opt/buildbot/lsb-slave/info/host":
-        content => "Host $fqdn, running $operatingsystem $operationsystemrelease on $architecture.",
+        content => "Host $fqdn, running $operatingsystem $operationsystemrelease on $architecture.\n",
         require => Exec['make-slave'],
+        notify  => Service['buildslave'],
     }
 
     exec { "set-slave-pw":
