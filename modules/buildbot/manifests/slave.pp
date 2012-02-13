@@ -27,6 +27,11 @@ class buildbot::slave inherits buildbot {
         default => 'pkgconfig',
     }
 
+    $xgettextpkg = $operatingsystem ? {
+        /^SLES/ => 'gettext-tools',
+        default => 'gettext',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -116,6 +121,14 @@ class buildbot::slave inherits buildbot {
     }
 
     package { 'bison':
+        ensure => present,
+    }
+
+    package { 'flex':
+        ensure => present,
+    }
+
+    package { "$xgettextpkg":
         ensure => present,
     }
 
