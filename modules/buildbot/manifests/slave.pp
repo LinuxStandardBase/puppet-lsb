@@ -115,6 +115,10 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
+    package { 'bison':
+        ensure => present,
+    }
+
     # Get special LSB packages needed for builds.
 
     exec { "download-lsb-python":
