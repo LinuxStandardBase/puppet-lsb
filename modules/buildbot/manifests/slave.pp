@@ -32,6 +32,28 @@ class buildbot::slave inherits buildbot {
         default => 'gettext',
     }
 
+    # xts5 is no longer a pure LSB build, needs at least libXi
+    # probably more, the SLES package pulls in a bunch
+    $xdevelpkg = $operatingsystem ? {
+        /^Fedora$/ => 'libXi-devel',
+        /^SLES/ => 'xorg-x11-devel',
+        default => 'libxorg-x11-devel',
+    }
+
+    # this one for xts5 and lsb-xvfb
+    $bdftopcfpkg = $operatingsystem ? {
+        /^Fedora$/ => 'xorg-x11-font-utils',
+        /^SLES/ => 'xorg-x11',
+        default => 'bdftopcf',
+    }
+
+    # for lsb-xvfb
+    $ucs2anypkg = $operatingsystem ? {
+        /^Fedora$/ => 'xorg-x11-font-utils',
+        /^SLES/ => 'xorg-x11-fonts-devel',
+        default => 'x11-font-util',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -133,6 +155,18 @@ class buildbot::slave inherits buildbot {
     }
 
     package { 'rsync':
+        ensure => present,
+    }
+
+    package { "$xdevelpkg":
+        ensure => present,
+    }
+
+    package { "$bdftopcfpkg":
+        ensure => present,
+    }
+
+    package { "$ucs2anypkg":
         ensure => present,
     }
 
