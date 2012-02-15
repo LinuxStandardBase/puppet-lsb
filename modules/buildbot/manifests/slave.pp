@@ -44,6 +44,12 @@ class buildbot::slave inherits buildbot {
         default => 'glib2-devel',
     }
 
+    # for appbat - samba needs pam_modules.h
+    $pamdevelpkg = $operatingsystem ? {
+        /^SLES/ => 'pam-devel',
+        default => 'pam-devel',
+    }
+
     # xts5 is no longer a pure LSB build, needs at least libXi
     # probably more, the SLES package pulls in a bunch
     $xdevelpkg = $operatingsystem ? {
@@ -182,6 +188,10 @@ class buildbot::slave inherits buildbot {
     }
 
     package { "$glibdevelpkg":
+        ensure => present,
+    }
+
+    package { "$pamdevelpkg":
         ensure => present,
     }
 
