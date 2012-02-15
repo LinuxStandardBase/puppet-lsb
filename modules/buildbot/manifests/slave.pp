@@ -32,6 +32,18 @@ class buildbot::slave inherits buildbot {
         default => 'gettext',
     }
 
+    # for appbat
+    $intltoolpkg = $operatingsystem ? {
+        /^SLES/ => 'intltool',
+        default => 'intltool',
+    }
+
+    # for appbat - need glib-genmarshal
+    $glibdevelpkg = $operatingsystem ? {
+        /^SLES/ => 'glib2-devel',
+        default => 'glib2-devel',
+    }
+
     # xts5 is no longer a pure LSB build, needs at least libXi
     # probably more, the SLES package pulls in a bunch
     $xdevelpkg = $operatingsystem ? {
@@ -162,6 +174,14 @@ class buildbot::slave inherits buildbot {
     }
 
     package { "$ucs2anypkg":
+        ensure => present,
+    }
+
+    package { "$intltoolpkg":
+        ensure => present,
+    }
+
+    package { "$glibdevelpkg":
         ensure => present,
     }
 
