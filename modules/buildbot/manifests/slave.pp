@@ -137,11 +137,6 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    # XXX: Requiring this is a bug (#3385).
-    package { 'ncurses-devel':
-        ensure => present,
-    }
-
     package { 'bison':
         ensure => present,
     }
