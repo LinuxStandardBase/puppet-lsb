@@ -198,15 +198,6 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    # for lsbappchk-sh, doesn't seem to be a common package
-    # had 'special' builds in unofficial under the old setup
-    exec { "install-perl-Parse-Eyapp":
-        command => 'echo no | cpan -i Parse::Eyapp',
-        creates => '/usr/bin/eyapp',
-        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        require => Package['perl'],
-    }
-
     # Get special LSB packages needed for builds.
 
     exec { "download-lsb-python":
@@ -227,10 +218,6 @@ class buildbot::slave inherits buildbot {
     # Other packages needed by this puppet module.
 
     package { 'wget':
-        ensure => present,
-    }
-    
-    package { 'perl':
         ensure => present,
     }
 
