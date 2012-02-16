@@ -50,10 +50,11 @@ class buildbot::slave inherits buildbot {
         default => 'pam-devel',
     }
 
-    # xts5 is no longer a pure LSB build, needs at least libXi
+    # xts5 is no longer a pure LSB build, needs at least libXi, Xext, Xtst, Xt
     # probably more, the SLES package pulls in a bunch
     $xdevelpkg = $operatingsystem ? {
-        /^Fedora$/ => 'libXi-devel',
+        /^Fedora$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel'],
+        /^CentOS$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel'],
         /^SLES/ => 'xorg-x11-devel',
         default => 'libxorg-x11-devel',
     }
@@ -61,6 +62,7 @@ class buildbot::slave inherits buildbot {
     # this one for xts5 and lsb-xvfb
     $bdftopcfpkg = $operatingsystem ? {
         /^Fedora$/ => 'xorg-x11-font-utils',
+        /^CentOS$/ => 'xorg-x11-font-utils',
         /^SLES/ => 'xorg-x11',
         default => 'bdftopcf',
     }
@@ -68,6 +70,7 @@ class buildbot::slave inherits buildbot {
     # for lsb-xvfb
     $ucs2anypkg = $operatingsystem ? {
         /^Fedora$/ => 'xorg-x11-font-utils',
+        /^CentOS$/ => 'xorg-x11-font-utils',
         /^SLES/ => 'xorg-x11-fonts-devel',
         default => 'x11-font-util',
     }
