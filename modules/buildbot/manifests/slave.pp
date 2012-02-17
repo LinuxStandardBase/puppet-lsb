@@ -174,9 +174,11 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    package { "$xdevelpkg":
-        ensure => present,
+    define install-xdevel() {
+        package { "${name}": ensure => installed }
     }
+
+    install-xdevel { $xdevelpkg: }
 
     package { "$bdftopcfpkg":
         ensure => present,
