@@ -13,6 +13,10 @@ class apachehttpd {
         source  => [ "puppet:///modules/apachehttpd/httpd.conf/$fqdn", "puppet:///modules/apachehttpd/httpd.conf/$osdefault" ],
     }
 
+    file { '/etc/apache2/listen.conf':
+        source  => [ "puppet:///modules/apachehttpd/listen.conf/$fqdn", "puppet:///modules/apachehttpd/listen.conf/$osdefault" ],
+    }
+
     file { '/etc/apache2/local.conf':
         source  => [ "puppet:///modules/apachehttpd/local.conf/$fqdn", "puppet:///modules/apachehttpd/local.conf/$osdefault" ],
     }
