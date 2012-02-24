@@ -6,7 +6,8 @@ node 'lsb1.linux-foundation.org' {
 
     include puppet::server
 
-    include apachehttpd, apachehttpd::vhosts, apachehttpd::betaspecs
+    include apachehttpd, apachehttpd::vhosts, apachehttpd::betaspecs,
+            apachehttpd::modules
 
     include ftp
 
