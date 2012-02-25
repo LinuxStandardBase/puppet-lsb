@@ -16,7 +16,7 @@ class php {
 
             file { '/etc/php5/apache2/php.ini':
                 source  => [ "puppet:///modules/php/php.ini/$fqdn",
-                             "puppet:///moudles/php/php.ini/$osdefault" ],
+                             "puppet:///modules/php/php.ini/$osdefault" ],
                 require => Package['apache2-mod_php5'],
             }
         }
