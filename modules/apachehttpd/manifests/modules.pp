@@ -1,7 +1,6 @@
 class apachehttpd::modules {
 
-    # Pull in web database passwords.  These are actually used in the
-    # db config templates.
+    # Pull in web database passwords and other web passwords.
 
     include webdb
 
@@ -64,6 +63,39 @@ class apachehttpd::modules {
         command => "bzr update -r $prdbrev /srv/www/modules/prdb",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-prdb-module'],
+    }
+
+    # The prdb app needs a way to modify and commit to the
+    # problem_db bzr repository.
+
+    file { '/var/lib/wwwrun/.bazaar':
+        ensure => directory,
+        owner  => 'wwwrun',
+    }
+
+    file { '/var/lib/wwwrun/.bazaar/authentication.conf':
+        owner   => 'wwwrun',
+        require => File['/var/lib/wwwrun/.bazaar'],
+        content => "[lsb]
+scheme=https
+host=bzr.linuxfoundation.org
+user=autobuild
+password=$webdb::autobuild
+",
+    }
+
+    exec { 'checkout-problem-db':
+        command => 'bzr checkout https+urllib://bzr.linuxfoundation.org/lsb/devel/problem_db /var/lib/wwwrun/problem_db',
+        path    => [ '/bin', '/usr/bin' ],
+        creates => '/var/lib/wwwrun/problem_db',
+        user    => 'wwwrun',
+    }
+
+    exec { 'update-problem-db':
+        command => "bzr update /var/lib/wwwrun/problem_db",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        user    => 'wwwrun',
+        require => Exec['checkout-problem-db'],
     }
 
 }
