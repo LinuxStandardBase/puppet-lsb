@@ -11,7 +11,7 @@ $mysql_password = '<%= scope.lookupvar('webdb::lsbcert') %>';
 $mysql_db = 'cert';
 
 $ldap_name_symbols = '\\w\\.\\@ \\-'; // also in validate_user_id() in functions.inc.php
-$ldap_pattern_name = '/^['.$ldap_name_symbols.']+$/';
+$ldap_pattern_name = '/^(stewb|licquia)$/';
 $ldap_host = 'ldaps://ldap1.linuxfoundation.org';
 $ldap_base = 'dc=freestandards,dc=org';
 
