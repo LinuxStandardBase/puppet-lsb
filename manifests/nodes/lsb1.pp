@@ -9,6 +9,8 @@ node 'lsb1.linux-foundation.org' {
     include apachehttpd, apachehttpd::vhosts, apachehttpd::betaspecs,
             apachehttpd::modules
 
+    include php
+
     include ftp
 
     include mail::linuxbase
