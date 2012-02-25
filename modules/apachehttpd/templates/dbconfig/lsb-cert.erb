@@ -1,0 +1,227 @@
+<?
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# LSB Certification System
+#
+# Copyright (C) 2007-2008 The Linux Foundation. All rights reserved.
+#
+# This program has been developed by ISP RAS for LF.
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# version 2 as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Copy this file to config.inc.php, and change it to match your
+# configuration.
+
+if ( !defined ('LSBCERTSYSTEM') || constant('LSBCERTSYSTEM')!=true) {
+	die('Called from wrong scope.');
+}
+
+$debug = 1; # Produce debug messages
+
+# Development settings
+# Allow writing to LDAP (creating account and so on)
+$allow_ldap_wr = 0;
+
+$mediawiki_login = 0; # Mediawiki login integration mode
+$drupal_login = 0; # Drupal login integration mode
+
+
+# Set $tmla_autoconfirm to 1 if you trust in users and don't want 
+# to confirm each TMLA.
+$tmla_autoconfirm = 1;
+$tmla_autoconfirm_email_to_admin = 1;
+
+# Default certification program
+# Also, see the $cert_prog_values array in functions.inc.php!
+$default_cert_prog = '4.1';
+
+### Placement
+
+# "This" directory in the file system
+$certhome = '/srv/www/modules/lsb-cert'; // Excluding the trailing slash.
+
+
+# Global URL prefix
+$site_path = '/lsb-cert/'; // Including the opening and trailing slashes
+$site_domain = 'www.linuxbase.org';
+$base_url = 'https://'.$site_domain.$site_path;
+    
+if ( $drupal_login ) {
+    $cookie_domain = $site_domain;
+}
+
+### Uploads configuration
+
+# Directory for uploads. 
+# Files in this directory should not be accessible via HTTP.
+# Otherwise one could upload a PHP script and run it.
+$uploaddir = '/srv/lsb-cert-uploads'; // Absolute path.
+
+# Maximum size of a file that can be upload (in bytes).
+$MAX_UPLOAD_SIZE = 32*1024*1024;
+
+# Life time for different temporary files (in seconds):
+$unpack_lifetime = 60*60*3; // 3 hours
+$tmpfile_lifetime = 60*10; // 10 minutes
+
+### Ldap configuration
+$ldap_host = 'ldaps://ldap1.linux-foundation.org';
+$ldap_base = 'dc=freestandards,dc=org';
+
+$ldap_reader_dn = 'uid=bindsearch,'.$ldap_base;
+$ldap_rd_password = '<%= scope.lookupvar('webdb::ldap_bindsearch') %>';
+
+# How to construct a user DN.
+function getDN($uid) {
+    global $ldap_base;
+    return 'uid='.$uid.',ou=Users,'.$ldap_base;
+}
+
+if ( $allow_ldap_wr ) {
+    #$ldap_writer_dn = ',ou=Users'.$ldap_base;
+    #$ldap_wr_password = '';
+}
+
+
+### MySQL configuration
+$mysql_host = 'db21.linux-foundation.org';
+$mysql_user = 'lsbcert';
+$mysql_password = '<%= scope.lookupvar('webdb::lsbcert') %>';
+$mysql_db = 'cert';
+
+
+### Mediawiki location ###
+if ( $mediawiki_login ) {
+    $mediawiki_path = '/srv/www/mediawiki';
+    $mediawiki_login_page = 'https://www.linuxfoundation.org/index.php?title=Special:Userlogin';
+    $mediawiki_logout_page = 'https://www.linuxfoundation.org/index.php?title=Special:Userlogout';
+}
+if ( $drupal_login ) {
+    $drupal_path = '/srv/www/corp-prod';
+    $drupal_login_page = 'https://www.linuxfoundation.org/user?destination=lsb-cert';
+    $drupal_logout_page = 'http://www.linuxfoundation.org/logout';
+}
+
+### E-mails configuration
+
+// You can specify multiple e-mails separated with ', '.
+// E. g.  $some_email_setting = 'john@somehost, sam@otherhost';
+
+
+## Visible e-mails:
+
+# E-mail of the system administrator and maintainer that is displayed 
+# in the page footer and certain messages.
+$admin_email = 'linux@ispras.ru';
+
+# E-mail of the LS Certification Authority that will be displayed on the site.
+$lf_authority_email = 'lf_lsbcert@lists.linux-foundation.org';
+
+# E-mail which will be noted in the reply-to field of all automatically
+# sended e-mails. Anyway, users should not answer to any automatically sent e-mails.
+$default_from_email = $lf_authority_email;
+
+# This email is being refered to in payment issues.
+$lf_info_email = $lf_authority_email; # 'info@linuxfoundation.org';
+
+
+## E-mails for automatic notifications:
+
+# This E-mail is used for automatic e-mailing to the LF Certification Authority.
+$lf_authority_email_auto = $lf_authority_email;
+
+# E-mail for sending notifications about pending certifications:
+$notifications_email = $lf_authority_email_auto;
+
+# E-mail of the person responsible for confirming TMLAs.
+# Used for automatic mailing, and is never displayed on the site.
+$responsible_for_TMLAs_email = $lf_authority_email_auto;
+
+# E-mail of accounting
+$accounting_email = 'accounting@linuxfoundation.org';
+
+# E-mails lettering
+$lettering = "\n---\nSincerely yours,\nLSB Certification System\n";
+
+
+### Misc Defaults
+
+$homepage = 'welcome_cert.php';
+
+$register_page = 'account.php?new';
+$login_page = 'login.php';
+
+$login_success_return_page = 'status.php?follow=1';
+
+$nonregistered_user_start_page = $homepage;
+
+
+### External references
+
+$lf_link = 'https://www.linuxfoundation.org';
+
+# Link to the Main page of the Linux Foundation site.
+$lf_main_link = $lf_link;
+
+# Link to the LSB Trademark Usage Guidelines (is mentioned in TMLA)
+$trademark_usage_guidelines_link = $lf_link.'/en/Trademark_Usage_Guidelines';
+
+# Link to the list of outstanding problem reports
+$pr_link = 'http://bugs.linuxbase.org/query.cgi?format=specific&bug_status=__all__';
+
+# Link to the form for submitting problem reports
+$prsubmit_link = 'http://bugs.linuxbase.org/enter_bug.cgi?product=Certification%20Authority';
+
+$ispras_wiki_link = 'http://ispras.linuxfoundation.org/index.php';
+
+# Certification System home page
+$cert_sys_homepage_link = $ispras_wiki_link.'/LSB_Certification_System'; 
+
+# DTK Manager's page
+$dtkm_link = $ispras_wiki_link.'/LSB_DTK_Manager_Getting_Started'; 
+
+# ATK Manager's page
+$atkm_link = $ispras_wiki_link.'/LSB_ATK_Manager_Getting_Started';
+
+# LSB Navigator's page
+$lsb_navigator_link = $lf_link.'/navigator/commons/welcome.php';
+
+
+### Images
+
+# Certification System logo in header
+$img_certsyst_logo = 'images/masthead-text-lcertsyst.gif';
+
+# These icons are used to distinguish "action" buttons from "details" buttons.
+$action_icon = 'images/action2.png';
+$details_icon = 'images/details2.png';
+
+# Floppy icon is used at file uploading pages (integration mode).
+$floppy_icon = 'images/floppy.png';
+
+
+### 
+
+// invitation expire time (in seconds)
+$invitation_expire_time = 60*60*24*30;
+
+# Paging is not well implemented yet.
+$default_pagesize = 30; # Set 0 to disable 
+
+
+# To setup the fee schedule, take a look at file `fee.inc.php'.
+
+###
+?>

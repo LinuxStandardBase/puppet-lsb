@@ -1,0 +1,27 @@
+<?
+
+#$bzr_path = "/srv/www/bzr/lsb/devel/problem_db";
+$bzr_path = "/srv/www/bzr/unofficial/problem_db";
+$lock_file = $bzr_path."/.lock";
+$ftp_path = "/srv/ftp/pub/lsb/updates/dist-checker-data/problem_db2";
+
+### MySQL configuration
+$mysql_host = 'db21.linux-foundation.org';
+$mysql_user = 'lsbcert';
+$mysql_password = '<%= scope.lookupvar('webdb::lsbcert') %>';
+$mysql_db = 'cert';
+
+$ldap_name_symbols = '\\w\\.\\@ \\-'; // also in validate_user_id() in functions.inc.php
+$ldap_pattern_name = '/^['.$ldap_name_symbols.']+$/';
+$ldap_host = 'ldaps://ldap.linuxfoundation.org';
+$ldap_base = 'dc=freestandards,dc=org';
+
+# How to construct a user DN.
+function getDN($uid) {
+    global $ldap_base;
+    return 'uid='.$uid.',ou=Users,'.$ldap_base;
+}
+
+$testsuites = array('alsa-t2c', 'apache', 'cmdchk', 'core', 'core-t2c', 'cpp-t2c', 'desktop', 'desktop-t2c', 'expect', 'groff', 'libchk', 'libstdcpp', 'olver', 'perl', 'printing', 'python', 'python_app', 'qt3-azov', 'qt4-azov', 'raptor', 'rsync', 'samba', 'tcl', 'vsw4', 'xml2-azov', 'xpdf', 'xts5');
+
+?>
