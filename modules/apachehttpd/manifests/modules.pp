@@ -85,22 +85,24 @@ password=$webdb::autobuild
     }
 
     exec { 'checkout-problem-db':
-        command   => 'bzr checkout https+urllib://bzr.linuxfoundation.org/lsb/devel/problem_db /var/lib/wwwrun/problem_db',
-        cwd       => '/var/lib/wwwrun',
-        path      => [ '/bin', '/usr/bin' ],
-        creates   => '/var/lib/wwwrun/problem_db',
-        user      => 'wwwrun',
-        require   => File['/var/lib/wwwrun/.bazaar/authentication.conf'],
-        logoutput => on_failure,
+        command     => 'bzr checkout https+urllib://bzr.linuxfoundation.org/lsb/devel/problem_db /var/lib/wwwrun/problem_db',
+        cwd         => '/var/lib/wwwrun',
+        path        => [ '/bin', '/usr/bin' ],
+        environment => 'BZR_HOME=/var/lib/wwwrun',
+        creates     => '/var/lib/wwwrun/problem_db',
+        user        => 'wwwrun',
+        require     => File['/var/lib/wwwrun/.bazaar/authentication.conf'],
+        logoutput   => on_failure,
     }
 
     exec { 'update-problem-db':
-        command   => "bzr update /var/lib/wwwrun/problem_db",
-        cwd       => '/var/lib/wwwrun/problem_db',
-        path      => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        user      => 'wwwrun',
-        require   => Exec['checkout-problem-db'],
-        logoutput => on_failure,
+        command     => "bzr update /var/lib/wwwrun/problem_db",
+        cwd         => '/var/lib/wwwrun/problem_db',
+        path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        environment => 'BZR_HOME=/var/lib/wwwrun',
+        user        => 'wwwrun',
+        require     => Exec['checkout-problem-db'],
+        logoutput   => on_failure,
     }
 
 }
