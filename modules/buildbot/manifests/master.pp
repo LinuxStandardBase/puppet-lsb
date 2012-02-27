@@ -114,4 +114,12 @@ lfbuild-s390x:$buildbotpw::s390xpassword
         require => Exec['make-buildbot-config'],
     }
 
+    cron { 'weekly-rebuild':
+        command => 'cp /opt/buildbot/buildbot-config/weekly-jobfile /opt/buildbot/jobdir',
+        user    => 'buildbot',
+        hour    => '6',
+        minute  => '0',
+        weekday => 'Saturday',
+    }
+
 }
