@@ -73,8 +73,17 @@ class apachehttpd::modules {
         owner  => 'wwwrun',
     }
 
+    file { '/var/lib/wwwrun/.bazaar/bazaar.conf':
+        owner   => 'wwwrun',
+        require => File['/var/lib/wwwrun/.bazaar'],
+        content => '[DEFAULT]
+email = Automatic Commit <lsb-discuss@lists.linuxfoundation.org>
+',
+    }
+
     file { '/var/lib/wwwrun/.bazaar/authentication.conf':
         owner   => 'wwwrun',
+        mode    => 0640,
         require => File['/var/lib/wwwrun/.bazaar'],
         content => "[lsb]
 scheme=https
@@ -91,7 +100,8 @@ password=$webdb::autobuild
         environment => 'BZR_HOME=/var/lib/wwwrun',
         creates     => '/var/lib/wwwrun/problem_db',
         user        => 'wwwrun',
-        require     => File['/var/lib/wwwrun/.bazaar/authentication.conf'],
+        require     => [ File['/var/lib/wwwrun/.bazaar/authentication.conf'],
+                         File['/var/lib/wwwrun/.bazaar/bazaar.conf'] ],
         logoutput   => on_failure,
     }
 
