@@ -78,7 +78,11 @@ Puppet, with only a few tweaks required for our local setup:
    retrieve and apply the node's configuration (if any) without
    further errors.
 
-At this point, the agent can be set up to run in the background.
+ - Since puppet resets things like sudo, it's possible to lose access
+   to root after puppet has run.  We therefore recommend setting the
+   password for the user 'lfadmin' and starting the puppet service
+   manually once the puppet agent succeeds.
+
 Running "puppet agent -t" on the node tests the connection, and also
 can force the current configuration to apply immediately without
 waiting for the normal agent update interval.
