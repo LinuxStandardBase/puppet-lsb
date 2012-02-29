@@ -6,4 +6,6 @@ node 'lfdev-ia64.linux-foundation.org' {
 
     include puppet
 
+    include buildbot::slave
+
 }

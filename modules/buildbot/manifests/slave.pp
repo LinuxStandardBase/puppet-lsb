@@ -85,11 +85,13 @@ class buildbot::slave inherits buildbot {
     $masteruser = $architecture ? {
         /^i386$/   => 'lfbuild-x86',
         /^x86_64$/ => 'lfbuild-x86_64',
+        /^ia64$/   => 'lfbuild-ia64',
     }
 
     $masterpw = $architecture ? {
         /^i386$/   => $buildbotpw::x86password,
         /^x86_64$/ => $buildbotpw::x64password,
+        /^ia64$/   => $buildbotpw::ia64password,
     }
 
     # Which SDKs should we use for released and beta builds?
@@ -97,6 +99,7 @@ class buildbot::slave inherits buildbot {
     $releasedsdk = $architecture ? {
         /^i386$/   => 'lsb-sdk-4.1.2-1.ia32.tar.gz',
         /^x86_64$/ => 'lsb-sdk-4.1.2-1.x86_64.tar.gz',
+        /^ia64$/   => 'lsb-sdk-4.1.2-1.ia64.tar.gz',
     }
 
     $releasedsdkpath = 'bundles/released-4.1.0/sdk'
@@ -112,6 +115,7 @@ class buildbot::slave inherits buildbot {
     $lsbpythonurl = $architecture ? {
         /^i386$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-5.lsb4.i486.rpm',
         /^x86_64$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
+        /^ia64$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia64/lsb-python-2.4.6-5.lsb4.ia64.rpm',
     }
 
     # Include required packages for builds here.  Some of these
