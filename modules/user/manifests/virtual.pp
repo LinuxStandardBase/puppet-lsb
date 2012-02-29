@@ -9,7 +9,6 @@ class user::virtual inherits user {
 
     @user { 'lfadmin':
         ensure      => present,
-        uid         => '1000',
         comment     => 'Linux Foundation IT',
         home        => '/home/lfadmin',
         shell       => '/bin/bash',
@@ -18,8 +17,7 @@ class user::virtual inherits user {
 
     @user { 'licquia':
         ensure      => present,
-        uid         => '1001',
-        gid         => '100',
+        gid         => 'users',
         comment     => 'Jeff Licquia',
         home        => '/home/licquia',
         shell       => '/bin/bash',
@@ -28,8 +26,7 @@ class user::virtual inherits user {
 
     @user { 'stewb':
         ensure      => present,
-        uid         => '1002',
-        gid         => '100',
+        gid         => 'users',
         comment     => 'Stew Benedict',
         home        => '/home/stewb',
         shell       => '/bin/bash',
@@ -38,8 +35,7 @@ class user::virtual inherits user {
 
     @user { 'mats':
         ensure      => present,
-        uid         => '1003',
-        gid         => '100',
+        gid         => 'users',
         comment     => 'Mats Wichmann',
         home        => '/home/mats',
         shell       => '/bin/bash',
