@@ -75,6 +75,12 @@ class buildbot::slave inherits buildbot {
         default => 'x11-font-util',
     }
 
+    # runtime-test for 4.0 still uses expect
+    $expectpkg = $operatingsystem ? {
+        /^SLES/   => 'expect',
+        default   => 'expect',
+    }
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
@@ -201,6 +207,10 @@ class buildbot::slave inherits buildbot {
     }
 
     package { "$pamdevelpkg":
+        ensure => present,
+    }
+
+    package { "$expectpkg":
         ensure => present,
     }
 
