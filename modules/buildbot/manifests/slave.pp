@@ -194,11 +194,10 @@ class buildbot::slave inherits buildbot {
         ensure => present,
     }
 
-    package { "$ucs2anypkg":
-        # On Red Hat systems, this is the same package as $bdftocfpkg.
-        ensure => $operatingsystem ? {
-            /^(Fedora|CentOS)$/ => undef,
-            default             => present,
+    # On Red Hat systems, this is the same package as $bdftocfpkg.
+    if $operatingsystem !~ /^(Fedora|CentOS)$/ {
+        package { "$ucs2anypkg":
+            ensure => present,
         }
     }
 
