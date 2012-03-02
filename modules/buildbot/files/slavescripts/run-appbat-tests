@@ -54,35 +54,40 @@ def run_appchk(resultdir):
 
     # Run appchk.
 
-    for pkgrootdir in os.listdir("pkgroot"):
-        prjname = os.path.basename(pkgrootdir).replace("lsb-", "")
-        if prjname in project_exe:
-            appchk_out = open(
-                os.path.join(resultdir, "lsb-%s.output" % prjname), "w")
-            appchk_journalpath = \
-                os.path.join(resultdir, "journal.appchk.%s" % prjname)
-            appchk_exe = os.path.join("pkgroot", pkgrootdir, 
-                                      "opt", "lsb", "appbat", 
-                                      project_exe[prjname])
-            appchk_cmdline = \
-                "/opt/lsb/bin/lsbappchk -j -o %s -D pkgroot/%s/opt/lsb/appbat/%s %s" % \
-                (appchk_journalpath, pkgrootdir, libdir, appchk_exe)
+    if os.path.isdir("pkgroot"):
+        for pkgrootdir in os.listdir("pkgroot"):
+            prjname = os.path.basename(pkgrootdir).replace("lsb-", "")
+            if prjname in project_exe:
+                appchk_out = open(
+                    os.path.join(resultdir, "lsb-%s.output" % prjname), "w")
+                appchk_journalpath = \
+                    os.path.join(resultdir, "journal.appchk.%s" % prjname)
+                appchk_exe = os.path.join("pkgroot", pkgrootdir, 
+                                          "opt", "lsb", "appbat", 
+                                          project_exe[prjname])
+                appchk_cmdline = \
+                    "/opt/lsb/bin/lsbappchk -j -o %s -D pkgroot/%s/opt/lsb/appbat/%s %s" % \
+                    (appchk_journalpath, pkgrootdir, libdir, appchk_exe)
 
-            appchk_process = subprocess.Popen(appchk_cmdline, shell=True, 
-                                              stdout=appchk_out, 
-                                              stderr=subprocess.STDOUT)
-            appchk_process.wait()
-            appchk_out.close()
+                appchk_process = subprocess.Popen(appchk_cmdline, shell=True, 
+                                                  stdout=appchk_out, 
+                                                  stderr=subprocess.STDOUT)
+                appchk_process.wait()
+                appchk_out.close()
 
-            if appchk_process.returncode != 0:
-                sys.stdout.write("appchk failed on %s\n" % prjname)
-            else:
-                tjreport_out = open(
-                    os.path.join(resultdir, "tjreport.%s.txt" % prjname), "w")
-                subprocess.call(
-                    "/opt/lsb-tet3-lite/bin/tjreport %s" % appchk_journalpath,
-                    stdout=tjreport_out, stderr=subprocess.STDOUT, shell=True)
-                tjreport_out.close()
+                if appchk_process.returncode != 0:
+                    sys.stdout.write("appchk failed on %s\n" % prjname)
+                else:
+                    tjreport_out = open(
+                        os.path.join(resultdir, "tjreport.%s.txt" % prjname), "w")
+                    subprocess.call(
+                        "/opt/lsb-tet3-lite/bin/tjreport %s" % appchk_journalpath,
+                        stdout=tjreport_out, stderr=subprocess.STDOUT, shell=True)
+                    tjreport_out.close()
+    else: # so, not os.path.isdir("pkgroot")
+        f = open(os.path.join(resultdir, "noresult-appchk.txt"))
+        f.write("No results - pkgroot path not found.\n")
+        f.close()
 
 def run_pkgchk(pkgdir, resultdir):
     for pkg in os.listdir(pkgdir):
