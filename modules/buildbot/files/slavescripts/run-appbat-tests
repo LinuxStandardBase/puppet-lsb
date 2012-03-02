@@ -85,7 +85,7 @@ def run_appchk(resultdir):
                         stdout=tjreport_out, stderr=subprocess.STDOUT, shell=True)
                     tjreport_out.close()
     else: # so, not os.path.isdir("pkgroot")
-        f = open(os.path.join(resultdir, "noresult-appchk.txt"))
+        f = open(os.path.join(resultdir, "noresult-appchk.txt"), "w")
         f.write("No results - pkgroot path not found.\n")
         f.close()
 
