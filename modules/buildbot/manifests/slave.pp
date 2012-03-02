@@ -124,6 +124,8 @@ class buildbot::slave inherits buildbot {
         /^ia64$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia64/lsb-python-2.4.6-5.lsb4.ia64.rpm',
     }
 
+    $appchkpyurl = 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/application/lsb-appchk-python-4.1.0-1.noarch.rpm'
+
     # Include required packages for builds here.  Some of these
     # might be included from the base buildbot class; check init.pp
     # for those.
@@ -237,6 +239,21 @@ class buildbot::slave inherits buildbot {
         creates => '/opt/lsb/appbat/bin/python',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['download-lsb-python'],
+    }
+
+    exec { "download-lsbappchk-python":
+        command => "wget -O lsbappchk-python.rpm $appchkpyurl",
+        cwd     => '/opt/buildbot',
+        creates => '/opt/buildbot/lsbappchk-python.rpm',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Package['wget'],
+    }
+
+    exec { 'install-lsbappchk-python':
+        command => 'rpm -Uvh /opt/buildbot/lsbappchk-python.rpm',
+        creates => '/opt/lsb/bin/lsbappchk.py',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Exec['download-lsbappchk-python'],
     }
 
     # Other packages needed by this puppet module.
