@@ -16,8 +16,9 @@ class buildbot::slave inherits buildbot {
         default      => 'gcc-c++',
     }
 
-    $javapkg = $operatingsystem ? {
-        /^SLES/   => 'java-1_6_0-ibm',
+    $javapkg = "$operatingsystem-$architecture" ? {
+        /^SLES-x86_64$/ => 'java-1_6_0-ibm',
+        /^SLES-ia64$/   => 'java-1_4_2-ibm',
         /^CentOS/ => 'java-1.6.0-openjdk',
         default   => 'openjdk',
     }
