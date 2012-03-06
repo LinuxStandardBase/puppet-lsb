@@ -1,7 +1,7 @@
 class buildbot::slave inherits buildbot {
 
     # Slave package info has its own module.
-    include buildbot:slavepkgs
+    include buildbot::slavepkgs
 
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
