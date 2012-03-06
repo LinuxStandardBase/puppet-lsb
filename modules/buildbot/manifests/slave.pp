@@ -1,86 +1,7 @@
 class buildbot::slave inherits buildbot {
 
-    $lsbpkg = $operatingsystem ? {
-        /^Fedora$/ => 'redhat-lsb',
-        /^CentOS$/ => 'redhat-lsb',
-        default    => 'lsb',
-    }
-
-    $rpmpkg = "$operatingsystem-$operatingsystemrelease" ? {
-        /^SLES-.+$/     => 'rpm',
-        /^OpenSuSE-.+$/ => 'rpm',
-        default         => 'rpm-build',
-    }
-
-    $gpluspluspkg = $operatingsystem ? {
-        default      => 'gcc-c++',
-    }
-
-    $javapkg = "$operatingsystem-$architecture" ? {
-        /^SLES-x86_64$/ => 'java-1_6_0-ibm',
-        /^SLES-ia64$/   => 'java-1_4_2-ibm',
-        /^CentOS/ => 'java-1.6.0-openjdk',
-        default   => 'openjdk',
-    }
-
-    $pkgconfigpkg = $operatingsystem ? {
-        /^SLES/ => 'pkg-config',
-        default => 'pkgconfig',
-    }
-
-    $xgettextpkg = $operatingsystem ? {
-        /^SLES/ => 'gettext-tools',
-        default => 'gettext',
-    }
-
-    # for appbat
-    $intltoolpkg = $operatingsystem ? {
-        /^SLES/ => 'intltool',
-        default => 'intltool',
-    }
-
-    # for appbat - need glib-genmarshal
-    $glibdevelpkg = $operatingsystem ? {
-        /^SLES/ => 'glib2-devel',
-        default => 'glib2-devel',
-    }
-
-    # for appbat - samba needs pam_modules.h
-    $pamdevelpkg = $operatingsystem ? {
-        /^SLES/ => 'pam-devel',
-        default => 'pam-devel',
-    }
-
-    # xts5 is no longer a pure LSB build, needs at least libXi, Xext, Xtst, Xt
-    # probably more, the SLES package pulls in a bunch
-    $xdevelpkg = $operatingsystem ? {
-        /^Fedora$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel'],
-        /^CentOS$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel'],
-        /^SLES/ => 'xorg-x11-devel',
-        default => 'libxorg-x11-devel',
-    }
-
-    # this one for xts5 and lsb-xvfb
-    $bdftopcfpkg = $operatingsystem ? {
-        /^Fedora$/ => 'xorg-x11-font-utils',
-        /^CentOS$/ => 'xorg-x11-font-utils',
-        /^SLES/ => 'xorg-x11',
-        default => 'bdftopcf',
-    }
-
-    # for lsb-xvfb
-    $ucs2anypkg = $operatingsystem ? {
-        /^Fedora$/ => 'xorg-x11-font-utils',
-        /^CentOS$/ => 'xorg-x11-font-utils',
-        /^SLES/ => 'xorg-x11-fonts-devel',
-        default => 'x11-font-util',
-    }
-
-    # runtime-test for 4.0 still uses expect
-    $expectpkg = $operatingsystem ? {
-        /^SLES/   => 'expect',
-        default   => 'expect',
-    }
+    # Slave package info has its own module.
+    include buildbot:slavepkgs
 
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
@@ -139,89 +60,23 @@ class buildbot::slave inherits buildbot {
     #    ensure => present,
     #}
 
-    package { "$lsbpkg":
-        ensure => present,
-    }
-
-    package { "$rpmpkg":
-        ensure => present,
-    }
-
-    package { "$gpluspluspkg":
-        ensure => present,
-    }
-
-    package { "$pkgconfigpkg":
-        ensure => present,
-    }
-
-    package { "$javapkg":
-        ensure => present,
-    }
-
-    package { 'autoconf':
-        ensure => present,
-    }
-
-    package { 'automake':
-        ensure => present,
-    }
-
-    package { 'libtool':
-        ensure => present,
-    }
-
-    package { 'bison':
-        ensure => present,
-    }
-
-    package { 'flex':
-        ensure => present,
-    }
-
-    package { "$xgettextpkg":
-        ensure => present,
-    }
-
-    package { 'rsync':
-        ensure => present,
-    }
-
     define install-xdevel() {
         package { "${name}": ensure => installed }
     }
 
-    install-xdevel { $xdevelpkg: }
-
-    package { "$bdftopcfpkg":
-        ensure => present,
-    }
+    install-xdevel { $buildbot::slavepkgs::xdevelpkg: }
 
     # On Red Hat systems, this is the same package as $bdftocfpkg.
     if $operatingsystem !~ /^(Fedora|CentOS)$/ {
-        package { "$ucs2anypkg":
+        package { "$buildbot::slavepkgs::ucs2anypkg":
             ensure => present,
         }
     }
 
-    package { "$intltoolpkg":
-        ensure => present,
-    }
+    # Declare most of the package dependencies from buildbot::slavepkgs
+    # in one fell swoop.
 
-    package { "$glibdevelpkg":
-        ensure => present,
-    }
-
-    package { "$pamdevelpkg":
-        ensure => present,
-    }
-
-    package { "$expectpkg":
-        ensure => present,
-    }
-
-    # for lsbappchk-sh build
-    package { 'perl':
+    package { $buildbot::slavepkgs::pkglist:
         ensure => present,
     }
 
