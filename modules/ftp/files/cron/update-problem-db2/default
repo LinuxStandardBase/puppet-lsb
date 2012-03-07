@@ -1,13 +1,17 @@
 #!/bin/bash
 
-FILE_LOC=/tmp/problem_db2
-FILE_FTP=/srv/ftp/pub/lsb/updates/dist-checker-data/problem_db2
-FILE_SRC=http://bzr.linuxfoundation.org/lsb/devel/problem_db/problem_db2
+FILE_NAME=problem_db2
+FILE_LOC=/tmp/$FILE_NAME
+FTP_DIR=/srv/ftp/pub/lsb/updates/dist-checker-data/
+FILE_FTP=$FTP_DIR/$FILE_NAME
+FILE_SRC=http://bzr.linuxfoundation.org/lsb/devel/problem_db/$FILE_NAME
 
 bzr cat $FILE_SRC > $FILE_LOC || exit $?
+cd /tmp && md5sum $FILE_NAME > $FILE_NAME.md5 || exit $?
 
 if [ ! -f $FILE_FTP ] || ! diff -q $FILE_LOC $FILE_FTP
 then
         echo Copy to $FILE_FTP
         cp -f $FILE_LOC $FILE_FTP
+        cp -f $FILE_LOC.md5 $FTP_DIR
 fi
