@@ -9,7 +9,7 @@ class apachehttpd::modules {
 
     $dbadminrev = 'revid:licquia@linuxfoundation.org-20120222174745-komaytu3rpkmyd5k'
     $certrev = 'revid:licquia@licquia.org-20111228203501-46t7fzgrf3q2166n'
-    $prdbrev = 'revid:licquia@linuxfoundation.org-20120225020936-u3fbaj4ecvxllpee'
+    $prdbrev = 'revid:stewb@linux-foundation.org-20120308195539-lgg7p3y6ooby0age'
 
     # Do initial checkouts of modules.
 
