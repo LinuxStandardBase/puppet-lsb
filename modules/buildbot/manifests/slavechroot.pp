@@ -29,19 +29,28 @@ class buildbot::slavechroot inherits buildbot {
         '/etc/puppet-chroot/modules/buildbotpw/manifests': ensure => directory;
     }
 
+    File['/etc/puppet-chroot'] -> File['/etc/puppet-chroot/modules']
+    File['/etc/puppet-chroot/modules'] -> File['/etc/puppet-chroot/modules/buildbot']
+    File['/etc/puppet-chroot/modules'] -> File['/etc/puppet-chroot/modules/buildbotpw']
+    File['/etc/puppet-chroot/modules/buildbot'] -> File['/etc/puppet-chroot/modules/buildbot/manifests']
+    File['/etc/puppet-chroot/modules/buildbotpw'] -> File['/etc/puppet-chroot/modules/buildbotpw/manifests']
+
     # These module files should be exactly the same as the buildbot
     # module manifests in regular Puppet.
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/init.pp':
-        source => 'puppet:///modules/buildbot/chroot/module-init.pp',
+        source  => 'puppet:///modules/buildbot/chroot/module-init.pp',
+        require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/slavepkgs.pp':
-        source => 'puppet:///modules/buildbot/chroot/module-slavepkgs.pp',
+        source  => 'puppet:///modules/buildbot/chroot/module-slavepkgs.pp',
+        require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/slave.pp':
-        source => 'puppet:///modules/buildbot/chroot/module-slave.pp',
+        source  => 'puppet:///modules/buildbot/chroot/module-slave.pp',
+        require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     # For password information, we mock up a buildbotpw module as
@@ -70,20 +79,24 @@ class buildbot::slavechroot inherits buildbot {
 
     file { '/etc/puppet-chroot/modules/buildbotpw/manifests/init_smallword.pp':
         content => template('buildbot/buildbotpw-init-smallword.pp.erb'),
+        require => File['/etc/puppet-chroot/modules/buildbotpw/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbotpw/manifests/init_bigword.pp':
         content => template('buildbot/buildbotpw-init-bigword.pp.erb'),
+        require => File['/etc/puppet-chroot/modules/buildbotpw/manifests'],
     }
 
     # Actually apply the config to the chroot.
 
     exec { 'puppet-update-smallword-chroot':
         command => "rsync -a /etc/puppet-chroot $smallwordchroot/tmp && ln -sf init_smallword.pp $smallwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $smallwordchroot puppet apply --modulepath=/tmp/puppet-chroot -e 'include buildbot::slave'",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
     }
 
     exec { 'puppet-update-bigword-chroot':
         command => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot -e 'include buildbot::slave'",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
     }
 
 }
