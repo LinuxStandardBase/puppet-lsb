@@ -49,22 +49,22 @@ class buildbot::slavechroot inherits buildbot {
     # user info.
 
     $smallworduser = $architecture ? {
-        '390x'  => 'lfbuild-s390',
+        's390x' => 'lfbuild-s390',
         'ppc64' => 'lfbuild-ppc32',
     }
 
     $smallwordpass = $architecture ? {
-        '390x'  => $buildbotpw::s390password,
+        's390x' => $buildbotpw::s390password,
         'ppc64' => $buildbotpw::ppc32password,
     }    
 
     $bigworduser = $architecture ? {
-        '390x'  => 'lfbuild-s390x',
+        's390x' => 'lfbuild-s390x',
         'ppc64' => 'lfbuild-ppc64',
     }
 
     $bigwordpass = $architecture ? {
-        '390x'  => $buildbotpw::s390xpassword,
+        's390x' => $buildbotpw::s390xpassword,
         'ppc64' => $buildbotpw::ppc64password,
     }    
 
