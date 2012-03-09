@@ -6,4 +6,6 @@ node 'etpglr3.dal-ebis.ihost.com' {
 
     include puppet
 
+    include buildbot::slavechroot
+
 }

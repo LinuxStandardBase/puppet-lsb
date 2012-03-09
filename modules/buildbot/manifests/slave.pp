@@ -6,7 +6,9 @@ class buildbot::slave inherits buildbot {
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
-    # containing passwords.
+    # containing passwords.  The defaults are used by chroot build slaves,
+    # which are managed differently (see the manifest for the class
+    # buildbot::slavechroot).
 
     include buildbotpw
 
@@ -14,12 +16,14 @@ class buildbot::slave inherits buildbot {
         /^i386$/   => 'lfbuild-x86',
         /^x86_64$/ => 'lfbuild-x86_64',
         /^ia64$/   => 'lfbuild-ia64',
+        default    => $buildbotpw::masteruser,
     }
 
     $masterpw = $architecture ? {
         /^i386$/   => $buildbotpw::x86password,
         /^x86_64$/ => $buildbotpw::x64password,
         /^ia64$/   => $buildbotpw::ia64password,
+        default    => $buildbotpw::masterpw,
     }
 
     # Which SDKs should we use for released and beta builds?
