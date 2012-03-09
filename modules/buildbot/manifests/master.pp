@@ -1,5 +1,7 @@
 class buildbot::master inherits buildbot {
 
+    include buildbot::virtualenv
+
     include buildbotpw
 
     $htpasswd = "$operatingsystem-$operatingsystemrelease" ? {

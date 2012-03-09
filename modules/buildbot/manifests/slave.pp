@@ -1,5 +1,7 @@
 class buildbot::slave inherits buildbot {
 
+    include buildbot::virtualenv
+
     # Slave package info has its own module.
     include buildbot::slavepkgs
 
