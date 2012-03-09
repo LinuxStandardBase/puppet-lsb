@@ -7,6 +7,12 @@ FILE_FTP=$FTP_DIR/$FILE_NAME
 FILE_SRC=http://bzr.linuxfoundation.org/lsb/devel/problem_db/$FILE_NAME
 
 bzr cat $FILE_SRC > $FILE_LOC || exit $?
+CSTART=`grep '^### Problem Record' $FILE_LOC | wc -l`
+CEND=`egrep '(^#END|^END)' $FILE_LOC | wc -l`
+if [ "$CSTART" -ne "$CEND" ];then 
+        echo "Invalid $FILE_NAME content, record start ($CSTART) != record end ($CEND)"
+        exit 1
+fi
 cd /tmp && md5sum $FILE_NAME > $FILE_NAME.md5 || exit $?
 
 if [ ! -f $FILE_FTP ] || ! diff -q $FILE_LOC $FILE_FTP
