@@ -53,12 +53,23 @@ class buildbot::slavechroot inherits buildbot {
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
+    file { '/etc/puppet-chroot/modules/buildbot/manifests/virtualenv.pp':
+        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/virtualenv.pp',
+        require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
+    }
+
     # Other modules.  The way that works here: we link to the general
     # modules directory, and pull in modules explicitly here.
 
     file { '/etc/puppet-chroot/modules/user':
         ensure  => directory,
         source  => 'puppet:///modules/buildbot/chroot/modules/user',
+        recurse => true,
+    }
+
+    file { '/etc/puppet-chroot/modules/python':
+        ensure  => directory,
+        source  => 'puppet:///modules/buildbot/chroot/modules/python',
         recurse => true,
     }
 
