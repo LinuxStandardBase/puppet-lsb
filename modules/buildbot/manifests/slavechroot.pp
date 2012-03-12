@@ -53,6 +53,15 @@ class buildbot::slavechroot inherits buildbot {
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
+    # Other modules.  The way that works here: we link to the general
+    # modules directory, and pull in modules explicitly here.
+
+    file { '/etc/puppet-chroot/modules/user':
+        ensure  => directory,
+        source  => 'puppet:///modules/buildbot/chroot/modules/user',
+        recurse => true,
+    }
+
     # For password information, we mock up a buildbotpw module as
     # if from puppet-secrets, but we only include the appropriate
     # user info.
@@ -90,13 +99,13 @@ class buildbot::slavechroot inherits buildbot {
     # Actually apply the config to the chroot.
 
     exec { 'puppet-update-smallword-chroot':
-        command   => "rsync -a /etc/puppet-chroot $smallwordchroot/tmp && ln -sf init_smallword.pp $smallwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $smallwordchroot puppet apply --modulepath=/tmp/puppet-chroot -e 'include buildbot::slave'",
+        command   => "rsync -a /etc/puppet-chroot $smallwordchroot/tmp && ln -sf init_smallword.pp $smallwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $smallwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e 'include buildbot::slave'",
         path      => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         logoutput => on_failure,
     }
 
     exec { 'puppet-update-bigword-chroot':
-        command   => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot -e 'include buildbot::slave'",
+        command   => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e 'include buildbot::slave'",
         path      => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         logoutput => on_failure,
     }
