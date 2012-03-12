@@ -39,17 +39,17 @@ class buildbot::slavechroot inherits buildbot {
     # module manifests in regular Puppet.
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/init.pp':
-        source  => 'puppet:///modules/buildbot/chroot/module-init.pp',
+        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/init.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/slavepkgs.pp':
-        source  => 'puppet:///modules/buildbot/chroot/module-slavepkgs.pp',
+        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/slavepkgs.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/slave.pp':
-        source  => 'puppet:///modules/buildbot/chroot/module-slave.pp',
+        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/slave.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 

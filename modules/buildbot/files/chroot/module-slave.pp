@@ -1,1 +1,0 @@
-../../manifests/slave.pp
