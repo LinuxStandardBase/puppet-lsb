@@ -59,6 +59,11 @@ class buildbot::slavechroot inherits buildbot {
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
+    file { '/etc/puppet-chroot/modules/buildbot/files/buildslave.init':
+        source  => 'puppet:///modules/buildbot/buildslave.init',
+        require => File['/etc/puppet-chroot/modules/buildbot/files'],
+    }
+
     file { '/etc/puppet-chroot/modules/buildbot/files/slavescripts':
         ensure  => directory,
         source  => 'puppet:///modules/buildbot/slavescripts',
