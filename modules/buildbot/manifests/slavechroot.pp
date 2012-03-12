@@ -25,6 +25,7 @@ class buildbot::slavechroot inherits buildbot {
         '/etc/puppet-chroot/modules': ensure => directory;
         '/etc/puppet-chroot/modules/buildbot': ensure => directory;
         '/etc/puppet-chroot/modules/buildbot/manifests': ensure => directory;
+        '/etc/puppet-chroot/modules/buildbot/files': ensure => directory;
         '/etc/puppet-chroot/modules/buildbotpw': ensure => directory;
         '/etc/puppet-chroot/modules/buildbotpw/manifests': ensure => directory;
     }
@@ -39,23 +40,30 @@ class buildbot::slavechroot inherits buildbot {
     # module manifests in regular Puppet.
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/init.pp':
-        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/init.pp',
+        source  => 'puppet:///modules/buildbot/chroot/modules/buildbot/manifests/init.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/slavepkgs.pp':
-        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/slavepkgs.pp',
+        source  => 'puppet:///modules/buildbot/chroot/modules/buildbot/manifests/slavepkgs.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/slave.pp':
-        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/slave.pp',
+        source  => 'puppet:///modules/buildbot/chroot/modules/buildbot/manifests/slave.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/manifests/virtualenv.pp':
-        source  => 'puppet:///modules/buildbot/chroot/buildbot-manifests/virtualenv.pp',
+        source  => 'puppet:///modules/buildbot/chroot/modules/buildbot/manifests/virtualenv.pp',
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
+    }
+
+    file { '/etc/puppet-chroot/modules/buildbot/files/slavescripts':
+        ensure  => directory,
+        source  => 'puppet:///modules/buildbot/slavescripts',
+        recurse => true,
+        require => File['/etc/puppet-chroot/modules/buildbot/files'],
     }
 
     # Other modules.  The way that works here: we link to the general
@@ -70,6 +78,12 @@ class buildbot::slavechroot inherits buildbot {
     file { '/etc/puppet-chroot/modules/python':
         ensure  => directory,
         source  => 'puppet:///modules/buildbot/chroot/modules/python',
+        recurse => true,
+    }
+
+    file { '/etc/puppet-chroot/modules/bzr':
+        ensure  => directory,
+        source  => 'puppet:///modules/buildbot/chroot/modules/bzr',
         recurse => true,
     }
 
