@@ -110,13 +110,13 @@ class buildbot::slavechroot inherits buildbot {
     # Actually apply the config to the chroot.
 
     exec { 'puppet-update-smallword-chroot':
-        command   => "rsync -a /etc/puppet-chroot $smallwordchroot/tmp && ln -sf init_smallword.pp $smallwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $smallwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e 'include buildbot::slave'",
+        command   => "rsync -a /etc/puppet-chroot $smallwordchroot/tmp && ln -sf init_smallword.pp $smallwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $smallwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e '\$chroot = 'small' include buildbot::slave'",
         path      => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         logoutput => on_failure,
     }
 
     exec { 'puppet-update-bigword-chroot':
-        command   => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e 'include buildbot::slave'",
+        command   => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e '\$chroot = 'small' include buildbot::slave'",
         path      => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         logoutput => on_failure,
     }
