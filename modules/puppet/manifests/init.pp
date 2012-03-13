@@ -2,6 +2,7 @@ class puppet {
 
     $osdefault = "$operatingsystem-$operatingsystem" ? {
         /^SLES-11/ => 'default-sles11',
+        /^Debian/  => 'default-debian',
         default    => 'default-sles11',
     }
 
@@ -26,6 +27,13 @@ class puppet {
         file { '/etc/sysconfig/puppet':
             source => [ "puppet:///modules/puppet/sysconfig/$fqdn",
                         "puppet:///modules/puppet/sysconfig/$osdefault" ],
+        }
+    }
+
+    if $operatingsystem == "Debian" {
+        file { '/etc/default/puppet':
+            source => [ "puppet:///modules/puppet/etcdefault/$fqdn",
+                        "puppet:///modules/puppet/etcdefault/$osdefault" ],
         }
     }
 
