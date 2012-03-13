@@ -3,4 +3,6 @@ node 'pmac.internal.licquia.org' {
 
     include puppet
 
+    include buildbot::slavechroot
+
 }
