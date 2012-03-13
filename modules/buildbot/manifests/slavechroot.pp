@@ -92,6 +92,12 @@ class buildbot::slavechroot inherits buildbot {
         recurse => true,
     }
 
+    file { '/etc/puppet-chroot/modules/sudo':
+        ensure  => directory,
+        source  => 'puppet:///modules/buildbot/chroot/modules/sudo',
+        recurse => true,
+    }
+
     # For password information, we mock up a buildbotpw module as
     # if from puppet-secrets, but we only include the appropriate
     # user info.

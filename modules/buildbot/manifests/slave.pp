@@ -5,6 +5,9 @@ class buildbot::slave inherits buildbot {
     # Slave package info has its own module.
     include buildbot::slavepkgs
 
+    # We need the sudo setup for buildbot
+    include sudo
+
     # Here, we figure out what user and password to use to log into the
     # master.  This differs per-architecture.  The buildbotpw module
     # is pulled in from puppet-secret, and just contains Puppet variables
