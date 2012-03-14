@@ -141,7 +141,7 @@ class buildbot::slavechroot inherits buildbot {
     }
 
     exec { 'puppet-update-bigword-chroot':
-        command   => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e '\$chroot = 'small' include buildbot::slave'",
+        command   => "rsync -a /etc/puppet-chroot $bigwordchroot/tmp && ln -sf init_bigword.pp $bigwordchroot/tmp/puppet-chroot/modules/buildbotpw/manifests/init.pp && chroot $bigwordchroot puppet apply --modulepath=/tmp/puppet-chroot/modules -e '\$chroot = 'big' include buildbot::slave'",
         path      => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         logoutput => true,
     }
