@@ -14,7 +14,7 @@
 PRG=buildslave
 DAEMON=/opt/buildbot/bin/$PRG
 USER=buildbot
-<% if chroot == "small" then -%>
+<% if scope.lookupvar("::chroot") == "small" then -%>
 SMALLWORDRUN=<%= smallwordcmd %>
 <% end -%>
 

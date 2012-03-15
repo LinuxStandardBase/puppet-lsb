@@ -65,6 +65,16 @@ class buildbot::slave inherits buildbot {
 
     $appchkpyurl = 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/application/lsb-appchk-python-4.1.0-1.noarch.rpm'
 
+    # For small-word build slave chroots.
+    if $chroot == 'small' {
+
+        $smallwordcmd = $architecture ? {
+            's390x' => 's390',
+            'ppc64' => 'powerpc32',
+        }
+
+    }
+
     # Include required packages for builds here.  Some of these
     # might be included from the base buildbot class; check init.pp
     # for those.
@@ -248,12 +258,7 @@ class buildbot::slave inherits buildbot {
 
     if $chroot == 'small' {
 
-        $smallwordcmd = $architecture ? {
-            's390x' => 's390',
-            'ppc64' => 'powerpc32',
-        }
-
-        package { $smallwordpkg: ensure => present }
+        package { $slavepkgs::smallwordpkg: ensure => present }
 
         file { '/usr/bin/gcc-wrapper':
             source => 'puppet:///modules/buildbot/gcc-wrapper',
