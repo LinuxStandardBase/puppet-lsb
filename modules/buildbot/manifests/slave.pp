@@ -228,10 +228,10 @@ class buildbot::slave inherits buildbot {
     }
 
     file { "/etc/init.d/buildslave":
-        ensure => present,
-        source => "puppet:///modules/buildbot/buildslave.init",
-        mode   => 0755,
-        notify => Service['buildslave'],
+        ensure  => present,
+        content => template("buildbot/buildslave.init.erb"),
+        mode    => 0755,
+        notify  => Service['buildslave'],
     }
 
     service { "buildslave":
@@ -247,6 +247,13 @@ class buildbot::slave inherits buildbot {
     # is actually created by buildbot::slavechroot; see its definition there.
 
     if $chroot == 'small' {
+
+        $smallwordcmd = $architecture ? {
+            's390x' => 's390',
+            'ppc64' => 'powerpc32',
+        }
+
+        package { $smallwordpkg: ensure => present }
 
         file { '/usr/bin/gcc-wrapper':
             source => 'puppet:///modules/buildbot/gcc-wrapper',

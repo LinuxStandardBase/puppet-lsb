@@ -88,6 +88,13 @@ class buildbot::slavepkgs {
         default   => 'expect',
     }
 
+    # command for forcing the small-word environment
+    $smallwordpkg = $architecture ? {
+        's390x' => 's390-32',
+        'ppc64' => 'powerpc32',
+        default => '',
+    }
+
     # Most packages needed for a typical slave; see the definitions
     # above for $ucs2anypkg and $xdevelpkg for the interesting ones.
     $pkglist = [ "$lsbpkg", "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg",

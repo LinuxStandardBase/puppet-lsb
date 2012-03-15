@@ -38,6 +38,7 @@ class buildbot::slavechroot inherits buildbot {
         '/etc/puppet-chroot/modules/buildbot': ensure => directory;
         '/etc/puppet-chroot/modules/buildbot/manifests': ensure => directory;
         '/etc/puppet-chroot/modules/buildbot/files': ensure => directory;
+        '/etc/puppet-chroot/modules/buildbot/templates': ensure => directory;
         '/etc/puppet-chroot/modules/buildbotpw': ensure => directory;
         '/etc/puppet-chroot/modules/buildbotpw/manifests': ensure => directory;
     }
@@ -71,9 +72,9 @@ class buildbot::slavechroot inherits buildbot {
         require => File['/etc/puppet-chroot/modules/buildbot/manifests'],
     }
 
-    file { '/etc/puppet-chroot/modules/buildbot/files/buildslave.init':
-        source  => 'puppet:///modules/buildbot/buildslave.init',
-        require => File['/etc/puppet-chroot/modules/buildbot/files'],
+    file { '/etc/puppet-chroot/modules/buildbot/templates/buildslave.init.erb':
+        source  => 'puppet:///modules/buildbot/chroot/modules/buildbot/templates/buildslave.init.erb',
+        require => File['/etc/puppet-chroot/modules/buildbot/templates'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbot/files/slavescripts':
@@ -137,7 +138,7 @@ class buildbot::slavechroot inherits buildbot {
     $bigwordpass = $architecture ? {
         's390x' => $buildbotpw::s390xpassword,
         'ppc64' => $buildbotpw::ppc64password,
-    }    
+    }
 
     file { '/etc/puppet-chroot/modules/buildbotpw/manifests/init_smallword.pp':
         content => template('buildbot/buildbotpw-init-smallword.pp.erb'),
