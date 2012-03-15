@@ -253,26 +253,16 @@ class buildbot::slave inherits buildbot {
             mode   => 0755,
         }
 
-        exec { 'move-gcc':
-            command => '[ -f /usr/bin/gcc ] && mv /usr/bin/gcc /usr/bin/gcc.REAL',
-            path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        }
-
-        exec { 'move-g++':
-            command => '[ -f /usr/bin/g++ ] && mv /usr/bin/gcc /usr/bin/g++.REAL',
-            path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        }
-
         file { '/usr/bin/gcc':
             ensure  => link,
             target  => 'gcc-wrapper',
-            require => [ File['/usr/bin/gcc-wrapper'], Exec['move-gcc'] ],
+            require => File['/usr/bin/gcc-wrapper'],
         }
 
         file { '/usr/bin/g++':
             ensure  => link,
             target  => 'gcc-wrapper',
-            require => [ File['/usr/bin/gcc-wrapper'], Exec['move-g++'] ],
+            require => File['/usr/bin/gcc-wrapper'],
         }
 
     }
