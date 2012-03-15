@@ -11,7 +11,7 @@ node 'etpglr3.dal-ebis.ihost.com' {
     # These are special entries for monitoring workload on the IBM server.
 
     cron { 's390x-weekly-work-report':
-        command => '/opt/wureport/wureport | mail -s "Weekly work report for lfdev-s390x" licquia@linuxfoundation.org',
+        command => '/opt/wureport/wureport $(date +%m/01/%y) $(date +%m/%d/%y) | mail -s "Weekly work report for lfdev-s390x" licquia@linuxfoundation.org',
         hour    => '20',
         minute  => '0',
         weekday => 'Sunday',
