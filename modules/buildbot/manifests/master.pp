@@ -4,6 +4,8 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
+    $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
+
     $htpasswd = "$operatingsystem-$operatingsystemrelease" ? {
         /^SLES-11(\.[0-9])?$/ => 'htpasswd2',
         default               => 'htpasswd',
@@ -117,7 +119,7 @@ lfbuild-s390x:$buildbotpw::s390xpassword
     }
 
     cron { 'weekly-rebuild':
-        command => 'cp /opt/buildbot/buildbot-config/weekly-jobfile /opt/buildbot/jobdir',
+        command => "echo architectures=$weeklyrebuildarchs | cat /opt/buildbot/buildbot-config/weekly-jobfile - > /opt/buildbot/jobdir",
         user    => 'buildbot',
         hour    => '6',
         minute  => '0',
