@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ `arch` == "<%= smallwordarch %>" ]; then
+        ${0##/*/}.REAL <%= gccsmallword %> "$@"
+else
+        ${0##/*/}.REAL "$@"
+fi

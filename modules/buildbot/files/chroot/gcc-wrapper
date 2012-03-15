@@ -1,7 +1,0 @@
-#!/bin/bash
-
-if [ `arch` == "s390" ]; then
-        ${0##/*/}.REAL -m31 "$@"
-else
-        ${0##/*/}.REAL "$@"
-fi

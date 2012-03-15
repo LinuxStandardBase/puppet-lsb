@@ -242,4 +242,39 @@ class buildbot::slave inherits buildbot {
                         Exec['make-slave'] ],
     }
 
+    # Special: for small-word chroot build slaves, we need to force
+    # small-word builds (31- or 32-bit builds).  The source for gcc-wrapper
+    # is actually created by buildbot::slavechroot; see its definition there.
+
+    if $chroot == 'small' {
+
+        file { '/usr/bin/gcc-wrapper':
+            source => 'puppet:///modules/buildbot/gcc-wrapper',
+            mode   => 0755,
+        }
+
+        exec { 'move-gcc':
+            command => '[ -f /usr/bin/gcc ] && mv /usr/bin/gcc /usr/bin/gcc.REAL',
+            path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        }
+
+        exec { 'move-g++':
+            command => '[ -f /usr/bin/g++ ] && mv /usr/bin/gcc /usr/bin/g++.REAL',
+            path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        }
+
+        file { '/usr/bin/gcc':
+            ensure  => link,
+            target  => 'gcc-wrapper',
+            require => [ File['/usr/bin/gcc-wrapper'], Exec['move-gcc'] ],
+        }
+
+        file { '/usr/bin/g++':
+            ensure  => link,
+            target  => 'gcc-wrapper',
+            require => [ File['/usr/bin/gcc-wrapper'], Exec['move-g++'] ],
+        }
+
+    }
+
 }

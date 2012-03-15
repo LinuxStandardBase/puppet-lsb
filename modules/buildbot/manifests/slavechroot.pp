@@ -14,6 +14,18 @@ class buildbot::slavechroot inherits buildbot {
 
     $bigwordchroot = '/data/chroots/sles11-64bit'
 
+    # We need to force small-word builds on the small-word chroots.
+
+    $smallwordarch = $architecture ? {
+        's390x' => 's390',
+        'ppc64' => 'ppc32',
+    }
+
+    $gccsmallword = $architecture ? {
+        's390x' => '-m31',
+        'ppc64' => '-m32',
+    }
+
     # Within a chroot, we do the chroot setup by copying a
     # Puppet config into it and using "puppet apply" to apply
     # it.  We do this b/c the Puppet master/agent setup
@@ -68,6 +80,11 @@ class buildbot::slavechroot inherits buildbot {
         ensure  => directory,
         source  => 'puppet:///modules/buildbot/slavescripts',
         recurse => true,
+        require => File['/etc/puppet-chroot/modules/buildbot/files'],
+    }
+
+    file { '/etc/puppet-chroot/modules/buildbot/files/gcc-wrapper':
+        content => template('buildbot/gcc-wrapper.erb'),
         require => File['/etc/puppet-chroot/modules/buildbot/files'],
     }
 
