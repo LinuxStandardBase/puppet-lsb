@@ -26,6 +26,11 @@ class buildbot::slavechroot inherits buildbot {
         'ppc64' => '-m32',
     }
 
+    $ldsmallword = $architecture ? {
+        's390x' => '-melf_s390',
+        'ppc64' => '',
+    }
+
     # Within a chroot, we do the chroot setup by copying a
     # Puppet config into it and using "puppet apply" to apply
     # it.  We do this b/c the Puppet master/agent setup
@@ -86,6 +91,11 @@ class buildbot::slavechroot inherits buildbot {
 
     file { '/etc/puppet-chroot/modules/buildbot/files/gcc-wrapper':
         content => template('buildbot/gcc-wrapper.erb'),
+        require => File['/etc/puppet-chroot/modules/buildbot/files'],
+    }
+
+    file { '/etc/puppet-chroot/modules/buildbot/files/ld-wrapper':
+        content => template('buildbot/ld-wrapper.erb'),
         require => File['/etc/puppet-chroot/modules/buildbot/files'],
     }
 

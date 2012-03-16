@@ -265,6 +265,11 @@ class buildbot::slave inherits buildbot {
             mode   => 0755,
         }
 
+        file { '/usr/bin/ld-wrapper':
+            source => 'puppet:///modules/buildbot/ld-wrapper',
+            mode   => 0755,
+        }
+
         file { '/usr/bin/gcc':
             ensure  => link,
             target  => 'gcc-wrapper',
@@ -281,6 +286,17 @@ class buildbot::slave inherits buildbot {
             ensure  => link,
             target  => 'gcc-wrapper',
             require => File['/usr/bin/gcc-wrapper'],
+        }
+
+        exec { 'move-ld':
+            command => '[ -f /usr/bin/ld ] && mv -f /usr/bin/ld /usr/bin/ld.REAL',
+            path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        }
+
+        file { '/usr/bin/ld':
+            ensure  => link,
+            target  => 'ld-wrapper',
+            require => [ Exec['move-ld'], File['/usr/bin/ld-wrapper'] ],
         }
 
     }
