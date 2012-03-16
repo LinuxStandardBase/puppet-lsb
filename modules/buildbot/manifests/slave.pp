@@ -288,6 +288,16 @@ class buildbot::slave inherits buildbot {
             require => File['/usr/bin/gcc-wrapper'],
         }
 
+        file { '/usr/bin/cc-4.3':
+            ensure => link,
+            target => 'gcc-4.3',
+        }
+
+        file { '/usr/bin/c++-4.3':
+            ensure => link,
+            target => 'g++-4.3',
+        }
+
         exec { 'move-ld':
             command => '[ -f /usr/bin/ld ] && mv -f /usr/bin/ld /usr/bin/ld.REAL',
             path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
