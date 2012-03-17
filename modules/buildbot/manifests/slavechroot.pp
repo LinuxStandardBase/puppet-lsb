@@ -160,6 +160,15 @@ class buildbot::slavechroot inherits buildbot {
         require => File['/etc/puppet-chroot/modules/buildbotpw/manifests'],
     }
 
+    # Set up the chroots properly.
+
+    mount { [ "$smallwordchroot/proc", "$bigwordchroot/proc" ]:
+        ensure  => mounted,
+        fstype  => 'proc',
+        device  => 'proc',
+        options => 'defaults',
+    }
+
     # Actually apply the config to the chroot.
 
     exec { 'puppet-update-smallword-chroot':
