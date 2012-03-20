@@ -289,6 +289,12 @@ class buildbot::slave inherits buildbot {
             require => File['/usr/bin/gcc-wrapper'],
         }
 
+        file { '/usr/bin/c++':
+            ensure  => link,
+            target  => 'gcc-wrapper',
+            require => File['/usr/bin/gcc-wrapper'],
+        }
+
         file { '/usr/bin/cc-4.3':
             ensure => link,
             target => 'gcc-4.3',
