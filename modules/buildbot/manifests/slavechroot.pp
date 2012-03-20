@@ -18,7 +18,7 @@ class buildbot::slavechroot inherits buildbot {
 
     $smallwordarch = $architecture ? {
         's390x' => 's390',
-        'ppc64' => 'ppc32',
+        'ppc64' => 'ppc',
     }
 
     $gccsmallword = $architecture ? {
