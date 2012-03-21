@@ -2,6 +2,22 @@ class ftp {
 
     include bzr
 
+    package { 'vsftpd': ensure => present }
+
+    file { '/etc/vsftpd.conf':
+        source  => 'puppet:///modules/ftp/vsftpd.conf',
+        mode    => 0600,
+        require => Package['vsftpd'],
+        notify  => Service['vsftpd'],
+    }
+
+    service { 'vsftpd':
+        ensure     => running,
+        hasstatus  => true,
+        hasrestart => true,
+        require    => [ Package['vsftpd'], File['/etc/vsftpd.conf'] ],
+    }
+
     file { '/etc/cron.daily/update-manifests':
         source => [ "puppet:///modules/ftp/cron/update-manifests/$fqdn",
                     "puppet:///modules/ftp/cron/update-manifests/default" ],
