@@ -18,6 +18,13 @@ class ftp {
         require    => [ Package['vsftpd'], File['/etc/vsftpd.conf'] ],
     }
 
+    file { '/srv/ftp/incoming':
+        ensure => directory,
+        mode   => 0777,
+    }
+
+    # Scripts for updating information on the FTP server.
+
     file { '/etc/cron.daily/update-manifests':
         source => [ "puppet:///modules/ftp/cron/update-manifests/$fqdn",
                     "puppet:///modules/ftp/cron/update-manifests/default" ],
