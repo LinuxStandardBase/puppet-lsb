@@ -82,6 +82,13 @@ class buildbot::slavepkgs {
         default => 'pam-devel',
     }
 
+    # expat - needed for old builds of libbat/appbat
+    $expatdevelpkg = $operatingsystem ? {
+        /^SLES/   => 'libexpat-devel',
+        /^CentOS/ => 'expat-devel',
+        default   => 'libexpat-dev',
+    }
+
     # runtime-test for 4.0 still uses expect
     $expectpkg = $operatingsystem ? {
         /^SLES/   => 'expect',
@@ -101,6 +108,6 @@ class buildbot::slavepkgs {
                  "$javapkg", 'autoconf', 'automake', 'libtool', 'bison',
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
-                 "$expectpkg", 'perl' ]
+                 "$expectpkg", "$expatdevelpkg", 'perl' ]
 
 }
