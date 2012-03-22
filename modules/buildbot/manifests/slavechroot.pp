@@ -28,7 +28,7 @@ class buildbot::slavechroot inherits buildbot {
 
     $ldsmallword = $architecture ? {
         's390x' => '-melf_s390',
-        'ppc64' => '',
+        'ppc64' => '-melf32ppc',
     }
 
     # Within a chroot, we do the chroot setup by copying a
