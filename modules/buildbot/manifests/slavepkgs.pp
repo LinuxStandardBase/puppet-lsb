@@ -108,6 +108,6 @@ class buildbot::slavepkgs {
                  "$javapkg", 'autoconf', 'automake', 'libtool', 'bison',
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
-                 "$expectpkg", "$expatdevelpkg", 'perl' ]
+                 "$expectpkg", "$expatdevelpkg", 'perl', 'ncurses-devel' ]
 
 }
