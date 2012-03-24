@@ -45,13 +45,16 @@ class buildbot::slavepkgs {
         default      => 'gcc-c++',
     }
 
+    # Java package, needed by OLVER.  On ia64, SuSE does not ship a
+    # decent JRE, so you have to download the ia64 JRE directly from
+    # Oracle.
     $javapkg = "$operatingsystem-$architecture" ? {
         /^SLES-x86_64$/ => 'java-1_6_0-ibm',
         /^SLES-s390x$/  => 'java-1_6_0-ibm',
         /^SLES-ppc64$/  => 'java-1_6_0-ibm',
-        /^SLES-ia64$/   => 'java-1_5_0-bea',
-        /^CentOS/ => 'java-1.6.0-openjdk',
-        default   => 'openjdk',
+        /^SLES-ia64$/   => 'jre',
+        /^CentOS/       => 'java-1.6.0-openjdk',
+        default         => 'openjdk',
     }
 
     $pkgconfigpkg = $operatingsystem ? {
