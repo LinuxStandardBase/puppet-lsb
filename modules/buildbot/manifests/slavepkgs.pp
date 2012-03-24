@@ -49,7 +49,7 @@ class buildbot::slavepkgs {
         /^SLES-x86_64$/ => 'java-1_6_0-ibm',
         /^SLES-s390x$/  => 'java-1_6_0-ibm',
         /^SLES-ppc64$/  => 'java-1_6_0-ibm',
-        /^SLES-ia64$/   => 'java-1_4_2-ibm',
+        /^SLES-ia64$/   => 'java-1_5_0-bea',
         /^CentOS/ => 'java-1.6.0-openjdk',
         default   => 'openjdk',
     }
