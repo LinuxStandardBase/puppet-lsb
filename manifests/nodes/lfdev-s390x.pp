@@ -14,7 +14,7 @@ node 'etpglr3.dal-ebis.ihost.com' {
         command => '/opt/wureport/wureport $(date +%m/01/%y) $(date +%m/%d/%y) | mail -s "Weekly work report for lfdev-s390x" licquia@linuxfoundation.org',
         hour    => '20',
         minute  => '0',
-        weekday => 'Sunday',
+        weekday => 'Monday',
     }
 
     cron { 's390x-monthly-work-report':
