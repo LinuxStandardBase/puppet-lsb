@@ -238,7 +238,7 @@ class buildbot::slave inherits buildbot {
     }
 
     exec { 'invalidate-installed-sdk':
-        command     => [ 'rm', '-f', '/tmp/last_installed_sdk' ],
+        command     => '/bin/rm -f /tmp/last_installed_sdk',
         refreshonly => true,
         subscribe   => [ File['/opt/buildbot/lsb-released-sdk.tar.gz'],
                          File['/opt/buildbot/lsb-beta-sdk.tar.gz'] ],
