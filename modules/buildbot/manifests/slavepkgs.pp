@@ -30,8 +30,8 @@ class buildbot::slavepkgs {
     }
 
     $lsbpkg = $operatingsystem ? {
-        /^Fedora$/ => 'redhat-lsb',
-        /^CentOS$/ => 'redhat-lsb',
+        /^Fedora$/ => ['redhat-lsb', 'qt'],
+        /^CentOS$/ => ['redhat-lsb', 'qt'],
         default    => 'lsb',
     }
 
