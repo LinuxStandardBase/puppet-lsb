@@ -119,7 +119,7 @@ lfbuild-s390x:$buildbotpw::s390xpassword
     }
 
     cron { 'weekly-rebuild':
-        command => "echo architectures=$weeklyrebuildarchs | cat /opt/buildbot/buildbot-config/weekly-jobfile - > /opt/buildbot/jobdir",
+        command => "echo architectures=$weeklyrebuildarchs | cat /opt/buildbot/buildbot-config/weekly-jobfile - > /opt/buildbot/jobdir/weekly-jobfile",
         user    => 'buildbot',
         hour    => '6',
         minute  => '0',
