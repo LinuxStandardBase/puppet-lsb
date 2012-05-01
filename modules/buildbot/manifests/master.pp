@@ -99,6 +99,11 @@ lfbuild-s390x:$buildbotpw::s390xpassword
         notify => Service['buildbot'],
     }
 
+    file { "/usr/local/bin/start_lsb_build":
+        ensure => link,
+        target => "/opt/buildbot/buildbot-config/cmdline/start_lsb_build",
+    }
+
     service { "buildbot":
         ensure     => running,
         hasrestart => false,
