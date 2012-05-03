@@ -65,6 +65,12 @@ class buildbot::master inherits buildbot {
         require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
     }
 
+    file { "/opt/buildbot/lsb-master/templates":
+        ensure => link,
+        target => "../buildbot-config/templates",
+        require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
+    }
+
     exec { "make-htpasswd":
         command => "$htpasswd -cb /opt/buildbot/htpasswd buildbot $buildbotpw::web",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
