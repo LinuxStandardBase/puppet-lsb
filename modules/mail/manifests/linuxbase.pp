@@ -6,4 +6,8 @@ class mail::linuxbase inherits mail::postfix {
         recipient => 'lsb-discuss@lists.linux-foundation.org',
     }
 
+    mailalias { 'buildbot':
+        recipient => 'licquia@linuxfoundation.org',
+    }
+
 }
