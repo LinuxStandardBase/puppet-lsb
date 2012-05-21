@@ -1,5 +1,16 @@
 class buildbot::slavepkgs {
 
+    # How to add packages to LSB build slaves:
+
+    # For easy packages, where there is a single package that provides
+    # what you need, just add the package name to $pkglist at the bottom.
+    # For slightly more complicated packages, create a variable that's
+    # defined by a conditional based on OS name, and add that variable
+    # to $pkglist.  If more than one package is needed (even if that's
+    # for just one OS), create a new list here, and use the macro in
+    # buildbot::slave to install the new list.  See $lsbpkg here and in
+    # buildbot::slave to see an example of defining your own list.
+
     # First, some variable-name packages.
 
     # xts5 is no longer a pure LSB build, needs at least libXi, Xext, Xtst, Xt
@@ -200,11 +211,11 @@ class buildbot::slavepkgs {
 
     # Most packages needed for a typical slave; see the definitions
     # above for $ucs2anypkg and $xdevelpkg for the interesting ones.
-    $pkglist = [ "$lsbpkg", "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg",
+    $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg",
                  "$javapkg", 'autoconf', 'automake', 'libtool', 'bison',
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
                  "$expectpkg", "$expatdevelpkg", 'perl', 
-                 'ncurses-devel', "$devchklist" ]
+                 'ncurses-devel' ]
 
 }

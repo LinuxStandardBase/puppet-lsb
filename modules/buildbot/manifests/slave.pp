@@ -87,11 +87,9 @@ class buildbot::slave inherits buildbot {
     #    ensure => present,
     #}
 
-    define install-xdevel() {
+    define install-pkglist() {
         package { "${name}": ensure => installed }
     }
-
-    install-xdevel { $buildbot::slavepkgs::xdevelpkg: }
 
     # On Red Hat systems, this is the same package as $bdftocfpkg.
     if $operatingsystem !~ /^(Fedora|CentOS)$/ {
@@ -103,9 +101,13 @@ class buildbot::slave inherits buildbot {
     # Declare most of the package dependencies from buildbot::slavepkgs
     # in one fell swoop.
 
-    package { $buildbot::slavepkgs::pkglist:
-        ensure => present,
-    }
+    install-pkglist { $buildbot::slavepkgs::lsbpkg: }
+
+    install-pkglist { $buildbot::slavepkgs::xdevelpkg: }
+
+    install-pkglist { $buildbot::slavepkgs::pkglist: }
+
+    install-pkglist { $buildbot::slavepkgs::devchklist: }    
 
     # Get special LSB packages needed for builds.
 
