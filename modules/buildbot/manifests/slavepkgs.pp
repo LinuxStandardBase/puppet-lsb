@@ -180,7 +180,7 @@ class buildbot::slavepkgs {
         default   => 'linux-kernel-headers',
     }
     $sanepkg = $operatingsystem ? {
-        /^SLES/   => 'libsane1-devel',
+        /^SLES/   => 'sane-backends',
         default   => 'libsane1-devel',
     }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
