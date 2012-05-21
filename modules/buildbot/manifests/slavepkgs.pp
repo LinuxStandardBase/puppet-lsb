@@ -150,10 +150,6 @@ class buildbot::slavepkgs {
         /^SLES/   => 'MesaGLw-devel',
         default   => 'Mesa-devel',
     }
-    $xmlpkg = $operatingsystem ? {
-        /^SLES/   => 'xml2-devel',
-        default   => 'xml2-devel',
-    }
     $nsprpkg = $operatingsystem ? {
         /^SLES/   => 'mozilla-nspr-devel',
         default   => 'nspr-devel',
@@ -193,7 +189,7 @@ class buildbot::slavepkgs {
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
                     "$gtkpkg", "$jpegpkg", "$GLpkg",
-                    "$xmlpkg", "$nsprpkg", "$nsspkg", "$pangopkg",
+                    'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg" ]
     # end devchk
