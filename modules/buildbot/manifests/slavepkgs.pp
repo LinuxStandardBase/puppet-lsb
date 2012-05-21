@@ -138,10 +138,6 @@ class buildbot::slavepkgs {
         /^SLES/   => 'freetype2-devel',
         default   => 'freetype2-devel',
     }
-    $glibpkg = $operatingsystem ? {
-        /^SLES/   => 'glib2-devel',
-        default   => 'glib2-devel',
-    }
     $gtkpkg = $operatingsystem ? {
         /^SLES/   => 'gtk2-devel',
         default   => 'gtk2-devel',
@@ -196,7 +192,7 @@ class buildbot::slavepkgs {
     }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
-                    "$glibpkg", "$gtkpkg", "$jpegpkg", "$GLpkg",
+                    "$gtkpkg", "$jpegpkg", "$GLpkg",
                     "$xmlpkg", "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg" ]
