@@ -98,6 +98,90 @@ class buildbot::slavepkgs {
         default   => 'expect',
     }
 
+    # devchk needs
+    $qt4pkg = $operatingsystem ? {
+        /^SLES/   => 'libqt4-devel',
+        default   => 'libqt4-devel',
+    }
+    $alsapkg = $operatingsystem ? {
+        /^SLES/   => 'alsa-devel',
+        default   => 'alsa-devel',
+    }
+    $atkpkg = $operatingsystem ? {
+        /^SLES/   => 'atk-devel',
+        default   => 'atk-devel',
+    }
+    $cairopkg = $operatingsystem ? {
+        /^SLES/   => 'cairo-devel',
+        default   => 'cairo-devel',
+    }
+    $cupspkg = $operatingsystem ? {
+        /^SLES/   => 'cups-devel',
+        default   => 'cups-devel',
+    }
+    $fontconfigpkg = $operatingsystem ? {
+        /^SLES/   => 'fontconfig-devel',
+        default   => 'fontconfig-devel',
+    }
+    $freetypepkg = $operatingsystem ? {
+        /^SLES/   => 'freetype2-devel',
+        default   => 'freetype2-devel',
+    }
+    $glibpkg = $operatingsystem ? {
+        /^SLES/   => 'glib2-devel',
+        default   => 'glib2-devel',
+    }
+    $gtkpkg = $operatingsystem ? {
+        /^SLES/   => 'gtk2-devel',
+        default   => 'gtk2-devel',
+    }
+    $jpegpkg = $operatingsystem ? {
+        /^SLES/   => 'libjpeg-devel',
+        default   => 'libjpeg-devel',
+    }
+    $GLpkg = $operatingsystem ? {
+        /^SLES/   => 'MesaGLw-devel',
+        default   => 'Mesa-devel',
+    }
+    $xmlpkg = $operatingsystem ? {
+        /^SLES/   => 'xml2-devel',
+        default   => 'xml2-devel',
+    }
+    $nsprpkg = $operatingsystem ? {
+        /^SLES/   => 'mozilla-nspr-devel',
+        default   => 'nspr-devel',
+    }
+    $nsspkg = $operatingsystem ? {
+        /^SLES/   => 'mozilla-nss-devel',
+        default   => 'nss-devel',
+    }
+    $pangopkg = $operatingsystem ? {
+        /^SLES/   => 'pango-devel',
+        default   => 'pango-devel',
+    }
+    $pngpkg = $operatingsystem ? {
+        /^SLES/   => 'libpng-devel',
+        default   => 'libpng-devel',
+    }
+    $zlibpkg = $operatingsystem ? {
+        /^SLES/   => 'zlib-devel',
+        default   => 'zlib-devel',
+    }
+    $xprotopkg = $operatingsystem ? {
+        /^SLES/   => 'xorg-x11-proto-devel',
+        default   => 'xorg-x11-proto-devel',
+    }
+    $xrenderpkg = $operatingsystem ? {
+        /^SLES/   => 'xorg-x11-libXrender-devel',
+        default   => 'xorg-x11-libXrender-devel',
+    }
+    $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
+                    "$cupspkg", "$fontconfigpkg", "$freetypepkg",
+                    "$glibpkg", "$gtkpkg", "$jpegpkg", "$GLpkg",
+                    "$xmlpkg", "$nsprpkg", "$nsspkg", "$pangopkg",
+                    "$pngpkg", "$zlibpkg", "$xprotopkg", $xrenderpkg" ]
+    # end devchk
+    
     # command for forcing the small-word environment
     $smallwordpkg = $architecture ? {
         's390x' => 's390-32',
@@ -111,6 +195,7 @@ class buildbot::slavepkgs {
                  "$javapkg", 'autoconf', 'automake', 'libtool', 'bison',
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
-                 "$expectpkg", "$expatdevelpkg", 'perl', 'ncurses-devel' ]
+                 "$expectpkg", "$expatdevelpkg", 'perl', 
+                 'ncurses-devel', "$devchklist" ]
 
 }
