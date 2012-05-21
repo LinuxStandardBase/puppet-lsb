@@ -198,7 +198,7 @@ class buildbot::slavepkgs {
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
                     "$glibpkg", "$gtkpkg", "$jpegpkg", "$GLpkg",
                     "$xmlpkg", "$nsprpkg", "$nsspkg", "$pangopkg",
-                    "$pngpkg", "$zlibpkg", "$xprotopkg", $xrenderpkg",
+                    "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg" ]
     # end devchk
     
