@@ -175,11 +175,20 @@ class buildbot::slavepkgs {
         /^SLES/   => 'xorg-x11-libXrender-devel',
         default   => 'xorg-x11-libXrender-devel',
     }
+    $kernelpkg = $operatingsystem ? {
+        /^SLES/   => 'linux-kernel-headers',
+        default   => 'linux-kernel-headers',
+    }
+    $sanepkg = $operatingsystem ? {
+        /^SLES/   => 'libsane1-devel',
+        default   => 'libsane1-devel',
+    }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
                     "$glibpkg", "$gtkpkg", "$jpegpkg", "$GLpkg",
                     "$xmlpkg", "$nsprpkg", "$nsspkg", "$pangopkg",
-                    "$pngpkg", "$zlibpkg", "$xprotopkg", $xrenderpkg" ]
+                    "$pngpkg", "$zlibpkg", "$xprotopkg", $xrenderpkg",
+                    "$kernelpkg", "$sanepkg" ]
     # end devchk
     
     # command for forcing the small-word environment
