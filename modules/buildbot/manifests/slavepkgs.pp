@@ -112,10 +112,12 @@ class buildbot::slavepkgs {
     # devchk needs
     $qt4pkg = $operatingsystem ? {
         /^SLES/   => 'libqt4-devel',
+        /^CentOS/ => 'qt4-devel',
         default   => 'libqt4-devel',
     }
     $alsapkg = $operatingsystem ? {
         /^SLES/   => 'alsa-devel',
+        /^CentOS/ => 'alsa-lib-devel',
         default   => 'alsa-devel',
     }
     $atkpkg = $operatingsystem ? {
@@ -147,7 +149,8 @@ class buildbot::slavepkgs {
         default   => 'libjpeg-devel',
     }
     $GLpkg = $operatingsystem ? {
-        /^SLES/   => 'MesaGLw-devel',
+        /^SLES/   => 'Mesa-devel',
+        /^CentOS/ => 'mesa-libGLU-devel',
         default   => 'Mesa-devel',
     }
     $nsprpkg = $operatingsystem ? {
@@ -184,6 +187,7 @@ class buildbot::slavepkgs {
     }
     $sanepkg = $operatingsystem ? {
         /^SLES/   => 'sane-backends',
+        /^CentOS/ => 'sane-backends-devel',
         default   => 'libsane1-devel',
     }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
