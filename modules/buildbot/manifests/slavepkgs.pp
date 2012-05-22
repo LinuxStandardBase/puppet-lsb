@@ -138,6 +138,7 @@ class buildbot::slavepkgs {
     }
     $freetypepkg = $operatingsystem ? {
         /^SLES/   => 'freetype2-devel',
+        /^CentOS/ => 'freetype-devel',
         default   => 'freetype2-devel',
     }
     $gtkpkg = $operatingsystem ? {
@@ -179,10 +180,12 @@ class buildbot::slavepkgs {
     }
     $xrenderpkg = $operatingsystem ? {
         /^SLES/   => 'xorg-x11-libXrender-devel',
+        /^CentOS/ => 'libXrender-devel',
         default   => 'xorg-x11-libXrender-devel',
     }
     $kernelpkg = $operatingsystem ? {
         /^SLES/   => 'linux-kernel-headers',
+        /^CentOS/ => 'kernel-headers',
         default   => 'linux-kernel-headers',
     }
     $sanepkg = $operatingsystem ? {
