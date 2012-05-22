@@ -178,6 +178,11 @@ class buildbot::slavepkgs {
         /^SLES/   => 'xorg-x11-proto-devel',
         default   => 'xorg-x11-proto-devel',
     }
+    $xkbpkg = $operatingsystem ? {
+        /^SLES/   => 'xorg-x11-libxkbfile-devel',
+        /^CentOS/ => 'libxkbfile-devel',
+        default   => 'xorg-x11-libxkbfile-devel',
+    }
     $xrenderpkg = $operatingsystem ? {
         /^SLES/   => 'xorg-x11-libXrender-devel',
         /^CentOS/ => 'libXrender-devel',
@@ -198,7 +203,7 @@ class buildbot::slavepkgs {
                     "$gtkpkg", "$jpegpkg", "$GLpkg",
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
-                    "$kernelpkg", "$sanepkg" ]
+                    "$kernelpkg", "$sanepkg", "$xkbpkg",  ]
     # end devchk
     
     # command for forcing the small-word environment
