@@ -7,7 +7,7 @@ class apachehttpd::modules {
     # Revisions we want for each module.  This is just passed to -r,
     # so any bzr revisionspec is allowed (revnos, tags, revids, etc.).
 
-    $dbadminrev = 'revid:denis.silakov@rosalab.ru-20120323123745-0mo880oepi3oy94q'
+    $dbadminrev = 'revid:denis.silakov@rosalab.ru-20120522154120-vjkrzkaphnthx9bd'
 
     $certrev = 'revid:licquia@linuxfoundation.org-20120327170504-zkg8g6i20hanae3a'
     $prdbrev = 'revid:stewb@linux-foundation.org-20120308195539-lgg7p3y6ooby0age'
