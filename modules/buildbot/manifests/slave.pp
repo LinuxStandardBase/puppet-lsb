@@ -87,6 +87,12 @@ class buildbot::slave inherits buildbot {
     #    ensure => present,
     #}
 
+    # Packages that need to be absent on slaves.
+
+    package {
+        'lsb-build-libbat': ensure => absent;
+    }
+
     define install-pkglist() {
         package { "${name}": ensure => installed }
     }
