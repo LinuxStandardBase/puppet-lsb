@@ -41,6 +41,7 @@ Defaults	env_keep = "LANG LC_ADDRESS LC_CTYPE LC_COLLATE LC_IDENTIFICATION LC_ME
 root	ALL = (ALL) ALL
 lfadmin	ALL = (ALL) ALL 
 licquia ALL = (ALL) ALL
+stewb	ALL = (ALL) ALL
 
 # Buildbot: allow the buildbot user to install packages
 buildbot ALL=NOPASSWD: /bin/rpm
