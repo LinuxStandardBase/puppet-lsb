@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# validate - check for syntax errors in puppet manifests
+
+# This short script runs the parser on all manifests found in this
+# repository.  This isn't a comprehensive error checker, but it
+# can serve to catch some of the more common errors when editing
+# Puppet manifests.
+
+find . -name \*.pp -print | xargs puppet parser validate
