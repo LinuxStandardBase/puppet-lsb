@@ -3,6 +3,7 @@ class buildbot {
     include user::buildbot
 
     $buildbotversion = '0.8.5'
+    $twistedversion = '8.2.0'
 
     $pythonversion = "$operatingsystem-$operatingsystemrelease" ? {
         /^CentOS-5/   => '2.4',

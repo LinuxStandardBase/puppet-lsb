@@ -160,13 +160,22 @@ class buildbot::slave inherits buildbot {
         owner  => 'buildbot',
     }
 
-    exec { "make-buildslave":
+    exec { "install-twisted":
+        command => "/opt/buildbot/bin/pip install Twisted==$twistedversion",
+        cwd     => "/opt/buildbot",
+        creates => "/opt/buildbot/lib/python$pythonversion/site-packages/twisted/__init__.py",
+        path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
+                     "/usr/sbin" ],
+        require => Exec["make-buildbot-virtualenv"],
+    }
+
+    exec { "install-buildslave":
         command => "/opt/buildbot/bin/pip install buildbot-slave==$buildbotversion",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lib/python$pythonversion/site-packages/buildbot_slave-$buildbotversion-py$pythonversion.egg-info",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
-        require => Exec["make-buildbot-virtualenv"],
+        require => Exec["install-twisted"],
     }
 
     exec { "make-slave":
