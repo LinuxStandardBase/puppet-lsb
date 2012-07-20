@@ -186,7 +186,8 @@ class buildbot::slave inherits buildbot {
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin", "/usr/local/bin" ],
         user    => 'buildbot',
-        require => [ Exec["make-buildslave"], File["/opt/buildbot/lsb-slave"] ],
+        require => [ Exec["install-buildslave"],
+                     File["/opt/buildbot/lsb-slave"] ],
     }
 
     file { "/opt/buildbot/lsb-slave/info/admin":
