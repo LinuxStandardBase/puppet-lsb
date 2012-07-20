@@ -91,6 +91,7 @@ class buildbot::slave inherits buildbot {
 
     package {
         'lsb-build-libbat': ensure => absent;
+        'sqlite3-devel': ensure => absent;
     }
 
     define install-pkglist() {
