@@ -7,14 +7,14 @@ class alien {
         default               => undef,
     }
 
-    file { '/opt/zypper/alien':
+    file { commit: '/opt/zypper', '/opt/zypper/alien':
         ensure => directory,
         mode   => 0777,
     }
 
     if $sles11alienrepo {
         file { "/etc/zypp/repos.d/alien_for_sles11.repo":
-            source => "puppet:///modules/bzr/alien_for_sles11.repo",
+            source => "puppet:///modules/alien/alien_for_sles11.repo",
         }
     }
     
@@ -23,7 +23,7 @@ class alien {
     package { 'zlib-devel':
         ensure => present,
     }
-    package { 'perl-SGML5':
+    package { 'perl-SGMLS':
         ensure => present,
     }
     package { 'perl-Text-CharWidth':
