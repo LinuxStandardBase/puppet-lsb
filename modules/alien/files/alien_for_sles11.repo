@@ -1,0 +1,8 @@
+[alien_for_sles11]
+name=SLES11 Pkgs for Alien
+enabled=1
+autorefresh=1
+baseurl=dir:/opt/zypper/alien_for_sles11
+type=plaindir
+gpgcheck=0
+keeppackages=0
