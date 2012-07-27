@@ -7,9 +7,9 @@ class alien {
         default               => undef,
     }
 
-    file { commit: '/opt/zypper', '/opt/zypper/alien':
+    file { ['/opt/zypper', '/opt/zypper/alien']:
         ensure => directory,
-        mode   => 0777,
+        mode   => 0755,
     }
 
     if $sles11alienrepo {
