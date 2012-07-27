@@ -7,7 +7,7 @@ class alien {
         default               => undef,
     }
 
-    file { ['/opt/zypper', '/opt/zypper/alien']:
+    file { ['/opt/zypper', '/opt/zypper/alien_for_sles11']:
         ensure => directory,
         mode   => 0755,
     }
@@ -30,19 +30,17 @@ class alien {
         ensure => present,
     }
 
-/*
+    # custom-built packages - src.rpms are in
+    # http://bzr.linuxfoundation.org/lsb/devel/src_rpms_for_alien 
+
     # more build dependencies, had to build/provide these
-    package { 'perl-Text-WrapI18N':
-        ensure => present,
-    }
-    package { 'po4a':
+    package { ['perl-Text-WrapI18N', 'po4a']:
         ensure => present,
     }
 
     # the bits we really want
-    package { 'alien':
+    package { ['alien', 'dpkg', 'perl-Dpkg']:
         ensure => present,
         require => $sles11alienrepo,
     }
-*/
 }
