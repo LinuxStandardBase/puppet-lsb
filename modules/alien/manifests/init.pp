@@ -13,7 +13,7 @@ class alien {
     }
 
     if $sles11alienrepo {
-        file { "/etc/zypp/repos.d/devel_tools_scm.repo":
+        file { "/etc/zypp/repos.d/alien_for_sles11.repo":
             source => "puppet:///modules/bzr/alien_for_sles11.repo",
         }
     }
