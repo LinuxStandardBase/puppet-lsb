@@ -331,7 +331,7 @@ class buildbot::slave inherits buildbot {
         }
 
         exec { 'move-ld':
-            command => '[ \! -L /usr/bin/ld ] && mv -f /usr/bin/ld /usr/bin/ld.REAL',
+            command => '[ -L /usr/bin/ld ] || mv -f /usr/bin/ld /usr/bin/ld.REAL',
             path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         }
 
