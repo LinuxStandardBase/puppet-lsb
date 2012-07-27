@@ -1,10 +1,15 @@
 class alien {
 
-    # need alien, dkpg and dependencies to create .deb repos
+    # need alien, dpkg and dependencies to create .deb repos
 
     $sles11alienrepo = "$operatingsystem-$operatingsystemrelease" ? {
         /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/alien_for_sles11.repo'],
         default               => undef,
+    }
+
+    $dpkgversion = "$operatingsystem-$operatingsystemrelease" ? {
+        /^SLES-11(\.[0-9])?$/ => '1.16.0.1',
+        default               => present,
     }
 
     file { ['/opt/zypper', '/opt/zypper/alien_for_sles11']:
@@ -39,7 +44,12 @@ class alien {
     }
 
     # the bits we really want
-    package { ['alien', 'dpkg', 'perl-Dpkg']:
+    # the native 'deb' package also provides dpkg, use the new one
+    package { 'dpkg':
+        ensure => $dpkgversion,
+        require => $sles11alienrepo,
+    }
+    package { ['alien', 'perl-Dpkg', 'debhelper']:
         ensure => present,
         require => $sles11alienrepo,
     }
