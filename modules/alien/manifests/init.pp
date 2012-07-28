@@ -25,13 +25,7 @@ class alien {
     
     # dependencies I needed to build the packages
     # not needed long term, from existing repos
-    package { 'zlib-devel':
-        ensure => present,
-    }
-    package { 'perl-SGMLS':
-        ensure => present,
-    }
-    package { 'perl-Text-CharWidth':
+    package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth']:
         ensure => present,
     }
 
