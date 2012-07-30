@@ -25,7 +25,7 @@ class alien {
     
     # dependencies I needed to build the packages
     # not needed long term, from existing repos
-    package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config']:
+    package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config' 'util-linux', 'libstdc++43-devel']:
         ensure => present,
     }
 
@@ -43,7 +43,7 @@ class alien {
         ensure => $dpkgversion,
         require => $sles11alienrepo,
     }
-    package { ['alien', 'perl-Dpkg', 'debhelper']:
+    package { ['alien', 'perl-Dpkg', 'debhelper', 'fakeroot']:
         ensure => present,
         require => $sles11alienrepo,
     }
