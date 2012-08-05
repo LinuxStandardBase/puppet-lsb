@@ -33,13 +33,21 @@ class buildbot::master inherits buildbot {
     }
 
     file { "/opt/buildbot/lsb-master":
-        ensure => directory,
-        owner  => 'buildbot',
+        ensure  => directory,
+        owner   => 'buildbot',
+        require => File["/opt/buildbot"],
     }
 
     file { "/opt/buildbot/debcache-snapshot":
-        ensure => directory,
-        owner  => 'buildbot',
+        ensure  => directory,
+        owner   => 'buildbot',
+        require => File["/opt/buildbot"],
+    }
+
+    file { "/opt/buildbot/debcache-snapshot/pkgs-snapshot":
+        ensure  => directory,
+        owner   => 'buildbot',
+        require => File["/opt/buildbot/debcache-snapshot"],
     }
 
     exec { "make-master":
