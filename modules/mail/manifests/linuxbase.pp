@@ -6,4 +6,12 @@ class mail::linuxbase inherits mail::postfix {
         recipient => 'lsb-discuss@lists.linux-foundation.org',
     }
 
+    mailalias { 'lsb-dtk-support':
+        recipient => 'lsb-discuss@lists.linux-foundation.org',
+    }
+
+    mailalias { 'lsb-appchk-support':
+        recipient => 'lsb-discuss@lists.linux-foundation.org',
+    }
+
 }
