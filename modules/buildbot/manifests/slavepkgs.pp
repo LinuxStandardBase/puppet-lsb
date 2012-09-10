@@ -220,6 +220,6 @@ class buildbot::slavepkgs {
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
                  "$expectpkg", "$expatdevelpkg", 'perl', 
-                 'ncurses-devel' ]
+                 'ncurses-devel', 'libxslt' ]
 
 }
