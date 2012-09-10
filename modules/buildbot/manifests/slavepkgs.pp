@@ -203,7 +203,7 @@ class buildbot::slavepkgs {
                     "$gtkpkg", "$jpegpkg", "$GLpkg",
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
-                    "$kernelpkg", "$sanepkg", "$xkbpkg",  ]
+                    "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel' ]
     # end devchk
     
     # command for forcing the small-word environment
