@@ -101,6 +101,8 @@ lfbuild-ppc32:$buildbotpw::ppc32password
 lfbuild-ppc64:$buildbotpw::ppc64password
 lfbuild-s390:$buildbotpw::s390password
 lfbuild-s390x:$buildbotpw::s390xpassword
+devchk-fedora-x86:$buildbotpw::x86fedora
+devchk-fedora-x86_64:$buildbotpw::x64fedora
 ",
     }
 
