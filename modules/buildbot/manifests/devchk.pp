@@ -16,6 +16,6 @@ class buildbot::devchk inherits buildbot::slave {
         default              => $buildbotpw::masterpw,
     }
 
-    install-pkglist { $buildbot::slavepkgs::devchklist: }    
+    package { $buildbot::slavepkgs::devchklist: ensure => present }    
 
 }
