@@ -1,0 +1,21 @@
+# This class implements a build slave for devchk.  Such build slaves
+# test the LSB against native environments, so there should be a number
+# of them, and they should be diverse--different distros and architectures.
+
+class buildbot::devchk inherits buildbot::slave {
+
+    $masteruser = "$operatingsystem-$operatingsystemrelease-$architecture" ? {
+        /^Fedora-16-i386$/   => 'devchk-fedora-x86',
+        /^Fedora-16-x86_64$/ => 'devchk-fedora-x86_64',
+        default              => $buildbotpw::masteruser,
+    }
+
+    $masterpw = "$operatingsystem-$operatingsystemrelease-$architecture" ? {
+        /^Fedora-16-i386$/   => $buildbotpw::x86fedora,
+        /^Fedora-16-x86_64$/ => $buildbotpw::x64fedora,
+        default              => $buildbotpw::masterpw,
+    }
+
+    install-pkglist { $buildbot::slavepkgs::devchklist: }    
+
+}

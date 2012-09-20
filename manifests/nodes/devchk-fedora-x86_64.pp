@@ -7,4 +7,6 @@ node 'vm178231168.pmman.net' {
 
     include puppet
 
+    include buildbot::devchk
+
 }
