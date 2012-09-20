@@ -65,6 +65,7 @@ class buildbot::slavepkgs {
         /^SLES-ppc64$/  => 'java-1_6_0-ibm',
         /^SLES-ia64$/   => 'jre',
         /^CentOS/       => 'java-1.6.0-openjdk',
+        /^Fedora/       => 'java-1.7.0-openjdk',
         default         => 'openjdk',
     }
 
@@ -100,6 +101,7 @@ class buildbot::slavepkgs {
     $expatdevelpkg = $operatingsystem ? {
         /^SLES/   => 'libexpat-devel',
         /^CentOS/ => 'expat-devel',
+        /^Fedora/ => 'expat-devel',
         default   => 'libexpat-dev',
     }
 
@@ -113,11 +115,13 @@ class buildbot::slavepkgs {
     $qt4pkg = $operatingsystem ? {
         /^SLES/   => 'libqt4-devel',
         /^CentOS/ => 'qt4-devel',
+        /^Fedora/ => 'qt4-devel',
         default   => 'libqt4-devel',
     }
     $alsapkg = $operatingsystem ? {
         /^SLES/   => 'alsa-devel',
         /^CentOS/ => 'alsa-lib-devel',
+        /^Fedora/ => 'alsa-lib-devel',
         default   => 'alsa-devel',
     }
     $atkpkg = $operatingsystem ? {
@@ -139,6 +143,7 @@ class buildbot::slavepkgs {
     $freetypepkg = $operatingsystem ? {
         /^SLES/   => 'freetype2-devel',
         /^CentOS/ => 'freetype-devel',
+        /^Fedora/ => 'freetype-devel',
         default   => 'freetype2-devel',
     }
     $gtkpkg = $operatingsystem ? {
@@ -152,6 +157,7 @@ class buildbot::slavepkgs {
     $GLpkg = $operatingsystem ? {
         /^SLES/   => 'Mesa-devel',
         /^CentOS/ => 'mesa-libGLU-devel',
+        /^Fedora/ => 'mesa-libGLU-devel',
         default   => 'Mesa-devel',
     }
     $nsprpkg = $operatingsystem ? {
@@ -181,21 +187,25 @@ class buildbot::slavepkgs {
     $xkbpkg = $operatingsystem ? {
         /^SLES/   => 'xorg-x11-libxkbfile-devel',
         /^CentOS/ => 'libxkbfile-devel',
+        /^Fedora/ => 'libxkbfile-devel',
         default   => 'xorg-x11-libxkbfile-devel',
     }
     $xrenderpkg = $operatingsystem ? {
         /^SLES/   => 'xorg-x11-libXrender-devel',
         /^CentOS/ => 'libXrender-devel',
+        /^Fedora/ => 'libXrender-devel',
         default   => 'xorg-x11-libXrender-devel',
     }
     $kernelpkg = $operatingsystem ? {
         /^SLES/   => 'linux-kernel-headers',
         /^CentOS/ => 'kernel-headers',
+        /^Fedora/ => 'kernel-headers',
         default   => 'linux-kernel-headers',
     }
     $sanepkg = $operatingsystem ? {
         /^SLES/   => 'sane-backends',
         /^CentOS/ => 'sane-backends-devel',
+        /^Fedora/ => 'sane-backends-devel',
         default   => 'libsane1-devel',
     }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
