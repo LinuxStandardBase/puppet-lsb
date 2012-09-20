@@ -115,7 +115,7 @@ class buildbot::slavepkgs {
     $qt4pkg = $operatingsystem ? {
         /^SLES/   => 'libqt4-devel',
         /^CentOS/ => 'qt4-devel',
-        /^Fedora/ => 'qt4-devel',
+        /^Fedora/ => 'qt-devel',
         default   => 'libqt4-devel',
     }
     $alsapkg = $operatingsystem ? {
@@ -152,6 +152,7 @@ class buildbot::slavepkgs {
     }
     $jpegpkg = $operatingsystem ? {
         /^SLES/   => 'libjpeg-devel',
+        /^Fedora/ => 'libjpeg-turbo-devel',
         default   => 'libjpeg-devel',
     }
     $GLpkg = $operatingsystem ? {
