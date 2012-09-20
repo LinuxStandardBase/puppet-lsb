@@ -16,6 +16,10 @@ class buildbot::devchk inherits buildbot::slave {
         default              => $buildbotpw::masterpw,
     }
 
-    package { $buildbot::slavepkgs::devchklist: ensure => present }    
+    package { $buildbot::slavepkgs::devchklist: ensure => present }
+
+    Exec["make-slave"] {
+        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave vm1.linuxbase.org:9989 $masteruser $masterpw",
+    }
 
 }
