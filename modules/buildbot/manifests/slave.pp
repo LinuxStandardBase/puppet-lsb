@@ -97,10 +97,6 @@ class buildbot::slave inherits buildbot {
         package { "${name}": ensure => installed }
     }
 
-    define remove-pkglist() {
-        package { "${name}": ensure => absent }
-    }
-
     # On Red Hat systems, this is the same package as $bdftocfpkg.
     if $operatingsystem !~ /^(Fedora|CentOS)$/ {
         package { "$buildbot::slavepkgs::ucs2anypkg":
@@ -116,8 +112,6 @@ class buildbot::slave inherits buildbot {
     install-pkglist { $buildbot::slavepkgs::xdevelpkg: }
 
     install-pkglist { $buildbot::slavepkgs::pkglist: }
-
-    remove-pkglist { $buildbot::slavepkgs::devchklist: }    
 
     # Get special LSB packages needed for builds.
 
