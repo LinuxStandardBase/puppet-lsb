@@ -4,6 +4,8 @@
 
 class buildbot::devchk inherits buildbot::slave {
 
+    include buildbotpw
+
     $masteruser = "$operatingsystem-$operatingsystemrelease-$architecture" ? {
         /^Fedora-16-i386$/   => 'devchk-fedora-x86',
         /^Fedora-16-x86_64$/ => 'devchk-fedora-x86_64',
