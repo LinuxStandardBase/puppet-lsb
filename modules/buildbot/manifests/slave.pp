@@ -176,10 +176,10 @@ class buildbot::slave inherits buildbot {
         require => Exec["install-twisted"],
     }
 
-    # The following two commands are overriden by buildbot::devchk
+    # The following command is overriden by buildbot::devchk
     # to work around an issue with Puppet variables.  If we change
-    # them, we have to change the overriden ones there to match.
-    # It's a pain, but hopefully these won't need to change much.
+    # it, we have to change the overriden one there to match.
+    # It's a pain, but hopefully this won't need to change much.
 
     exec { "make-slave":
         command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave vm1.linuxbase.org:9989 $masteruser $masterpw",
@@ -190,17 +190,6 @@ class buildbot::slave inherits buildbot {
         user    => 'buildbot',
         require => [ Exec["install-buildslave"],
                      File["/opt/buildbot/lsb-slave"] ],
-    }
-
-    exec { "set-slave-pw":
-        command => "sed 's/^passwd[[:space:]]*=.*$/passwd = \"$masterpw\"/' < /opt/buildbot/lsb-slave/buildbot.tac > /opt/buildbot/lsb-slave/buildbot.tac.new && rm /opt/buildbot/lsb-slave/buildbot.tac && mv /opt/buildbot/lsb-slave/buildbot.tac.new /opt/buildbot/lsb-slave/buildbot.tac",
-        cwd     => '/opt/buildbot',
-        path    => [ '/opt/buildbot/bin', '/bin', '/sbin', '/usr/bin',
-                     '/usr/sbin' ],
-        user    => 'buildbot',
-        require => Exec['make-slave'],
-        onlyif  => "[ $(grep -c $masterpw /opt/buildbot/lsb-slave/buildbot.tac) -eq 0 ]",
-        notify  => Service['buildslave'],
     }
 
     file { "/opt/buildbot/lsb-slave/info/admin":
