@@ -152,4 +152,12 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         weekday => 'Saturday',
     }
 
+    cron ( 'weekly-rebuild-devchk':
+        command => '/usr/local/bin/start_lsb_build devel devchk',
+        user    => 'buildbot',
+        hour    => '6',
+        minute  => '0',
+        weekday => 'Saturday',
+    }
+
 }
