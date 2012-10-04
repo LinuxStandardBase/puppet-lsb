@@ -209,12 +209,16 @@ class buildbot::slavepkgs {
         /^Fedora/ => 'sane-backends-devel',
         default   => 'libsane1-devel',
     }
+    $tiffpkg = $operatingsystem ? {
+        default => 'libtiff-devel',
+    }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
                     "$gtkpkg", "$jpegpkg", "$GLpkg",
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
-                    "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel' ]
+                    "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
+                    "$tiffpkg" ]
     # end devchk
     
     # command for forcing the small-word environment
