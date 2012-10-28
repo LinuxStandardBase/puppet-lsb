@@ -2,7 +2,7 @@ class buildbot {
 
     include user::buildbot
 
-    $buildbotversion = '0.8.5'
+    $buildbotversion = '0.8.6p1'
     $twistedversion = '8.2.0'
 
     $pythonversion = "$operatingsystem-$operatingsystemrelease" ? {
