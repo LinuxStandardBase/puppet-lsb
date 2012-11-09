@@ -10,6 +10,10 @@ class apachehttpd::betaspecs {
     }
 
     file { '/etc/cron.daily/update-betaspecs':
+        ensure => absent,
+    }
+
+    file { '/usr/local/bin/update-betaspecs':
         source => [ "puppet:///modules/apachehttpd/update-betaspecs" ],
         notify => Exec['do-update-betaspecs'],
         mode => 0755,
@@ -54,11 +58,18 @@ class apachehttpd::betaspecs {
     }
 
     exec { 'do-update-betaspecs':
-        command => '/etc/cron.daily/update-betaspecs',
+        command => '/usr/local/bin/update-betaspecs',
         path => [ '/usr/sbin', '/usr/bin', '/bin' ],
         timeout => 600,
         refreshonly => true,
         logoutput => on_failure,
+    }
+
+    cron { 'regular-update-betaspecs':
+        command => '/usr/local/bin/update-betaspecs',
+        user    => root,
+        hour    => 3,
+        minute  => 0,
     }
 
 }

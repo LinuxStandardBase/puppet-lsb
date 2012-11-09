@@ -25,10 +25,16 @@ class ftp {
 
     # Scripts for updating information on the FTP server.
 
-    file { '/etc/cron.daily/update-manifests':
+    file {
+        '/etc/cron.daily/update-manifests': ensure => absent;
+        '/etc/cron.daily/update-problem-db2': ensure => absent;
+    }
+
+    file { '/usr/local/bin/update-manifests':
         source => [ "puppet:///modules/ftp/cron/update-manifests/$fqdn",
                     "puppet:///modules/ftp/cron/update-manifests/default" ],
         mode   => 0755,
+        notify => Exec['do-update-manifests'],
     }
 
     file { '/opt/ftp-maint/manifest/manifest_rebuild_s.sh':
@@ -36,12 +42,44 @@ class ftp {
         mode   => 0755,
         group  => 'users',
         owner  => 'lfadmin',
+        notify => Exec['do-update-manifests'],
     }
 
-    file { '/etc/cron.daily/update-problem-db2':
+    file { '/usr/local/bin/update-problem-db2':
         source => [ "puppet:///modules/ftp/cron/update-problem-db2/$fqdn",
                     "puppet:///modules/ftp/cron/update-problem-db2/default" ],
         mode   => 0755,
+        notify => Exec['do-update-problem-db2'],
+    }
+
+    exec { 'do-update-manifests':
+        command => '/usr/local/bin/update-manifests',
+        path => [ '/usr/sbin', '/usr/bin', '/bin' ],
+        timeout => 600,
+        refreshonly => true,
+        logoutput => on_failure,
+    }
+
+    cron { 'regular-update-manifests':
+        command => '/usr/local/bin/update-manifests',
+        user    => root,
+        hour    => 3,
+        minute  => 15,
+    }
+
+    exec { 'do-update-problem-db2':
+        command => '/usr/local/bin/update-problem-db2',
+        path => [ '/usr/sbin', '/usr/bin', '/bin' ],
+        timeout => 600,
+        refreshonly => true,
+        logoutput => on_failure,
+    }
+
+    cron { 'regular-update-problem-db2':
+        command => '/usr/local/bin/update-problem-db2',
+        user    => root,
+        hour    => 3,
+        minute  => 30,
     }
 
 }
