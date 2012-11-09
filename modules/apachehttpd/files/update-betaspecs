@@ -89,6 +89,7 @@ rm -rf /tmp/fhs-spec
 
 # LSB specs are already built. Grab them from booksets and books branches,
 # but only the directories that begin with LSB- are "published"
+# for LSB 5, no more looking in books - change this just for snapshots for now
 
 # beta specs: export a specific tagged revision (tag set at top of this script)
 for branch in $BRANCHURL/booksets $BRANCHURL/books
@@ -106,7 +107,8 @@ do
 done
 
 # snapshots: just take the top
-for branch in $BRANCHURL/booksets $BRANCHURL/books
+#for branch in $BRANCHURL/booksets $BRANCHURL/books
+for branch in $BRANCHURL/booksets
 do
     for path in $(bzr ls $branch)
     do
