@@ -8,7 +8,7 @@ class alien {
     }
 
     $dpkgversion = "$operatingsystem-$operatingsystemrelease" ? {
-        /^SLES-11(\.[0-9])?$/ => '1.16.0.1',
+        /^SLES-11(\.[0-9])?$/ => '1.16.0.1-2lsb5',
         default               => present,
     }
 
