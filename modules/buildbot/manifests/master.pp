@@ -4,6 +4,8 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
+    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20121105154452-10j8rlpwtz6yh4jz'
+
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
 
     $htpasswd = "$operatingsystem-$operatingsystemrelease" ? {
@@ -25,7 +27,7 @@ class buildbot::master inherits buildbot {
     }
 
     exec { "make-buildbot-config":
-        command => "bzr checkout http://bzr.linuxfoundation.org/lsb/devel/buildbot-config",
+        command => "bzr checkout -r $buildbotconfigrev http://bzr.linuxfoundation.org/lsb/devel/buildbot-config",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/buildbot-config",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
@@ -57,7 +59,8 @@ class buildbot::master inherits buildbot {
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
         user    => 'buildbot',
-        require => [ Exec["make-buildbot"], File["/opt/buildbot/lsb-master"] ],
+        require => [ Exec["make-buildbot"], Exec["make-buildbot-config"],
+                     File["/opt/buildbot/lsb-master"] ],
     }
 
     file { "/opt/buildbot/lsb-master/master.cfg":
@@ -158,6 +161,12 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         hour    => '6',
         minute  => '0',
         weekday => 'Saturday',
+    }
+
+    exec { 'update-buildbot-config':
+        command => "bzr update -r $buildbotconfigrev /opt/buildbot/buildbot-config",
+        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        require => Exec['make-buildbot-config'],
     }
 
 }
