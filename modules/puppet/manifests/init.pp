@@ -7,7 +7,7 @@ class puppet {
     }
 
     $puppetversion = "$operatingsystem-$operatingsystemrelease" ? {
-        /^SLES-11\.1$/  => '2.6.17-0.3.1',
+        /^SLES-11\.1$/  => '2.7.6-9.1',
         default         => present,
     }
     $facterversion = "$operatingsystem-$operatingsystemrelease" ? {
@@ -24,6 +24,19 @@ class puppet {
     }
 
     if $operatingsystem == "SLES" {
+        file { 'etc/zypp/repos.d/home_lserepo.repo':
+            source => 'puppet:///modules/puppet/home_lserepo.repo',
+            notify => Exec['refresh-zypper-keys-for-puppet'],
+            before => Package['puppet'],
+        }
+
+        exec { 'refresh-zypper-keys-for-puppet':
+            command     => 'zypper --gpg-auto-import-keys refresh',
+            path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
+            refreshonly => true,
+            logoutput   => true,
+        }
+
         file { '/etc/sysconfig/puppet':
             source => [ "puppet:///modules/puppet/sysconfig/$fqdn",
                         "puppet:///modules/puppet/sysconfig/$osdefault" ],

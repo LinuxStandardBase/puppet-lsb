@@ -1,0 +1,7 @@
+[home_lserepo]
+name=LSE Repository (SLE_11_SP1)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/home:/lserepo/SLE_11_SP1/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/home:/lserepo/SLE_11_SP1/repodata/repomd.xml.key
+enabled=1
