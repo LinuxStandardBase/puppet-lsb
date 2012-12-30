@@ -1,16 +1,16 @@
 class puppet {
 
-    $osdefault = "$operatingsystem-$operatingsystem" ? {
+    $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11/ => 'default-sles11',
         /^Debian/  => 'default-debian',
         default    => 'default-sles11',
     }
 
-    $puppetversion = "$operatingsystem-$operatingsystemrelease" ? {
+    $puppetversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11\.1$/  => '2.7.6-9.1',
         default         => present,
     }
-    $facterversion = "$operatingsystem-$operatingsystemrelease" ? {
+    $facterversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11\.1$/  => '1.5.2-1.20',
         default         => present,
     }

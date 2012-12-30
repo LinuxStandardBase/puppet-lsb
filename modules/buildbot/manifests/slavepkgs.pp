@@ -46,7 +46,7 @@ class buildbot::slavepkgs {
         default    => 'lsb',
     }
 
-    $rpmpkg = "$operatingsystem-$operatingsystemrelease" ? {
+    $rpmpkg = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-.+$/     => 'rpm',
         /^OpenSuSE-.+$/ => 'rpm',
         default         => 'rpm-build',
@@ -59,7 +59,7 @@ class buildbot::slavepkgs {
     # Java package, needed by OLVER.  On ia64, SuSE does not ship a
     # decent JRE, so you have to download the ia64 JRE directly from
     # Oracle.
-    $javapkg = "$operatingsystem-$architecture" ? {
+    $javapkg = "${operatingsystem}-${architecture}" ? {
         /^SLES-x86_64$/ => 'java-1_6_0-ibm',
         /^SLES-s390x$/  => 'java-1_6_0-ibm',
         /^SLES-ppc64$/  => 'java-1_6_0-ibm',

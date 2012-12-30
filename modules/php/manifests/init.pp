@@ -1,6 +1,6 @@
 class php {
 
-    $osdefault = "$operatingsystem-$operatingsystemrelease" ? {
+    $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11/ => 'default-sles11',
     }
 

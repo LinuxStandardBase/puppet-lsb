@@ -3,12 +3,12 @@ class bzr {
     # bzr on SLES 11 is too old; add a repository on the openSUSE
     # Build Service for newer bzr.
 
-    $sles11obsrepo = "$operatingsystem-$operatingsystemrelease" ? {
+    $sles11obsrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/devel_tools_scm.repo'],
         default               => undef,
     }
 
-    $bzrversion = "$operatingsystem-$operatingsystemrelease" ? {
+    $bzrversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => '2.4.1-18.1',
         default               => present,
     }

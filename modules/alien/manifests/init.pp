@@ -2,12 +2,12 @@ class alien {
 
     # need alien, dpkg and dependencies to create .deb repos
 
-    $sles11alienrepo = "$operatingsystem-$operatingsystemrelease" ? {
+    $sles11alienrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/alien_for_sles11.repo'],
         default               => undef,
     }
 
-    $dpkgversion = "$operatingsystem-$operatingsystemrelease" ? {
+    $dpkgversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => '1.16.0.1-2lsb5',
         default               => present,
     }

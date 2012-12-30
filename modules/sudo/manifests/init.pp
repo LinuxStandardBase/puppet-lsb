@@ -2,7 +2,7 @@ class sudo {
 
     include user::lfadmin
 
-    $osdefault = "$operatingsystem-$operatingsystemrelease" ? {
+    $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^(CentOS|RedHat)-5\.[0-9]+$/       => 'default-el5',
         /^(CentOS|RedHat)-6(\.[0-9]+)?$/    => 'default-fedora',
         /^Fedora-1[5-9]$/                   => 'default-fedora',

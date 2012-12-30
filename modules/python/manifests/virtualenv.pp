@@ -3,7 +3,7 @@ class python::virtualenv inherits python {
     # These packages aren't available in certain SUSE variants, so we'll need
     # to add the repos first.
 
-    $osid = "$operatingsystem-$operatingsystemrelease"
+    $osid = "${operatingsystem}-${operatingsystemrelease}"
 
     $suseobsrepo = "$osid" ? {
         /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/devel_languages_python.repo'],

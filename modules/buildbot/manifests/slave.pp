@@ -33,7 +33,7 @@ class buildbot::slave inherits buildbot {
 
     # Which SDKs should we use for released and beta builds?
 
-    $releasedsdk = "$architecture-$::chroot" ? {
+    $releasedsdk = "${architecture}-${::chroot}" ? {
         /^i386/         => 'lsb-sdk-4.1.4-1.ia32.tar.gz',
         /^x86_64/       => 'lsb-sdk-4.1.4-1.x86_64.tar.gz',
         /^ia64/         => 'lsb-sdk-4.1.4-1.ia64.tar.gz',
@@ -53,7 +53,7 @@ class buildbot::slave inherits buildbot {
     # XXX: this should migrate to using package repositories and
     #      the package resource in puppet.
 
-    $lsbpythonurl = "$architecture-$::chroot" ? {
+    $lsbpythonurl = "${architecture}-${::chroot}" ? {
         /^i386/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-5.lsb4.i486.rpm',
         /^x86_64/       => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
         /^ia64/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia64/lsb-python-2.4.6-5.lsb4.ia64.rpm',
@@ -161,7 +161,7 @@ class buildbot::slave inherits buildbot {
     exec { "install-twisted":
         command => "/opt/buildbot/bin/pip install Twisted==$twistedversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lib/python$pythonversion/site-packages/twisted/__init__.py",
+        creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/twisted/__init__.py",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
         require => Exec["make-buildbot-virtualenv"],
@@ -170,7 +170,7 @@ class buildbot::slave inherits buildbot {
     exec { "install-buildslave":
         command => "/opt/buildbot/bin/pip install buildbot-slave==$buildbotversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lib/python$pythonversion/site-packages/buildbot_slave-$buildbotversion-py$pythonversion.egg-info",
+        creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/buildbot_slave-${buildbotversion}-py${pythonversion}.egg-info",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
         require => Exec["install-twisted"],
@@ -199,7 +199,7 @@ class buildbot::slave inherits buildbot {
     }
 
     file { "/opt/buildbot/lsb-slave/info/host":
-        content => "Host $fqdn, running $operatingsystem $operatingsystemrelease on $architecture.\n",
+        content => "Host ${fqdn}, running $operatingsystem $operatingsystemrelease on ${architecture}.\n",
         require => Exec['make-slave'],
         notify  => Service['buildslave'],
     }
@@ -220,7 +220,7 @@ class buildbot::slave inherits buildbot {
     }
 
     exec { 'download-released-sdk':
-        command => "wget http://ftp.linuxbase.org/pub/lsb/$releasedsdkpath/$releasedsdk",
+        command => "wget http://ftp.linuxbase.org/pub/lsb/${releasedsdkpath}/${releasedsdk}",
         cwd     => '/opt/buildbot',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => "/opt/buildbot/$releasedsdk",
@@ -234,7 +234,7 @@ class buildbot::slave inherits buildbot {
     }
 
     exec { 'download-beta-sdk':
-        command => "wget http://ftp.linuxbase.org/pub/lsb/$betasdkpath/$betasdk",
+        command => "wget http://ftp.linuxbase.org/pub/lsb/${betasdkpath}/${betasdk}",
         cwd     => '/opt/buildbot',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => "/opt/buildbot/$betasdk",

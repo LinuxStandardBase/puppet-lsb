@@ -8,7 +8,7 @@ class buildbot::master inherits buildbot {
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
 
-    $htpasswd = "$operatingsystem-$operatingsystemrelease" ? {
+    $htpasswd = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => 'htpasswd2',
         default               => 'htpasswd',
     }
@@ -20,7 +20,7 @@ class buildbot::master inherits buildbot {
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lib/python$pythonversion/site-packages/buildbot-$buildbotversion-py$pythonversion.egg-info",
+        creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/buildbot-${buildbotversion}-py${pythonversion}.egg-info",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
         require => Exec["make-buildbot-virtualenv"],
