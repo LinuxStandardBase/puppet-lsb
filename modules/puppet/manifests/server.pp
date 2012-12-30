@@ -1,7 +1,7 @@
 class puppet::server inherits puppet {
 
     package { 'puppet-server':
-        ensure  => $puppetversion;
+        ensure  => $puppetversion,
         require => File['/etc/zypp/repos.d/home_lserepo.repo'],
     }
 
