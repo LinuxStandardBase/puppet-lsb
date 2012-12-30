@@ -24,7 +24,7 @@ class puppet {
     }
 
     if $operatingsystem == "SLES" {
-        file { 'etc/zypp/repos.d/home_lserepo.repo':
+        file { '/etc/zypp/repos.d/home_lserepo.repo':
             source => 'puppet:///modules/puppet/home_lserepo.repo',
             notify => Exec['refresh-zypper-keys-for-puppet'],
             before => Package['puppet'],
