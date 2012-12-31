@@ -38,15 +38,40 @@ class puppet {
         }
 
         file { '/etc/sysconfig/puppet':
-            source => [ "puppet:///modules/puppet/sysconfig/$fqdn",
-                        "puppet:///modules/puppet/sysconfig/$osdefault" ],
+            source  => [ "puppet:///modules/puppet/sysconfig/$fqdn",
+                         "puppet:///modules/puppet/sysconfig/$osdefault" ],
+            require => Package['puppet'],
+        }
+
+        # For SLES 11 systems that have the vendor puppet package,
+        # zypper will prevent upgrading to the 2.7 package due to
+        # the vendor change.  So, in order to make that happen, we
+        # temporarily ignore vendor changes.
+
+        if $::puppetversion == "2.6.17" {
+
+            file { '/tmp/zypp.conf':
+                content => "
+[main]
+solver.allowVendorChange = true
+",
+            }
+
+            exec { 'update-puppet-with-vendor-change':
+                command => 'zypper --config /tmp/zypp.conf --quiet install -y puppet-$puppetversion',
+                path    => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
+                require => File['/tmp/zypp.conf'],
+                before  => Package['puppet'],
+            }
+
         }
     }
 
     if $operatingsystem == "Debian" {
         file { '/etc/default/puppet':
-            source => [ "puppet:///modules/puppet/etcdefault/$fqdn",
-                        "puppet:///modules/puppet/etcdefault/$osdefault" ],
+            source  => [ "puppet:///modules/puppet/etcdefault/$fqdn",
+                         "puppet:///modules/puppet/etcdefault/$osdefault" ],
+            require => Package['puppet'],
         }
     }
 
