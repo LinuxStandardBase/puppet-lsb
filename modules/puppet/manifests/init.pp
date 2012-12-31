@@ -58,7 +58,7 @@ solver.allowVendorChange = true
             }
 
             exec { 'update-puppet-with-vendor-change':
-                command => 'zypper --config /tmp/zypp.conf --quiet install -y puppet-$puppetversion',
+                command => "zypper --config /tmp/zypp.conf --quiet install -y --force-resolution puppet-$puppetversion",
                 path    => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
                 require => File['/tmp/zypp.conf'],
                 before  => Package['puppet'],
