@@ -6,9 +6,10 @@ class puppet {
         default    => 'default-sles11',
     }
 
-    $puppetversion = "${operatingsystem}-${operatingsystemrelease}" ? {
-        /^SLES-11\.1$/  => '2.7.6-9.1',
-        default         => present,
+    $puppetversion = "${operatingsystem}-${operatingsystemrelease}-${architecture}" ? {
+        /^SLES-11\..-s390x$/ => '2.6.17-0.3.1',
+        /^SLES-11\..-.*$/    => '2.7.6-9.1',
+        default              => present,
     }
     $facterversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11\.1$/  => '1.5.2-1.20',
