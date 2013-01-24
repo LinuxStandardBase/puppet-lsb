@@ -21,7 +21,7 @@ case "$1" in
   start)
     echo -n "Checking configuration for $PRG: "
     /bin/su -c "$DAEMON checkconfig /opt/buildbot/lsb-master >> /tmp/buildbot-start.log 2>&1" $USER
-    if [ $? -eq 1 ]; then
+    if [ $? -eq 0 ]; then
         echo "done"
     else
         echo "errors found; check /tmp/buildbot-start.log for details"
