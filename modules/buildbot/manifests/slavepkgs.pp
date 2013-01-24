@@ -111,6 +111,15 @@ class buildbot::slavepkgs {
         default   => 'expect',
     }
 
+    # Apparently, libbat needs the printproto stuff to be
+    # installed.  This should be built and used as part of
+    # the libbat build; need to investigate.
+    $printprotopkg = $operatingsystem ? {
+        /^SLES/   => 'xorg-x11-proto-devel',
+        /^CentOS/ => 'libXp-devel',
+        default   => 'libXp-devel',
+    }
+
     # devchk needs
     $qt4pkg = $operatingsystem ? {
         /^SLES/   => 'libqt4-devel',
@@ -235,6 +244,6 @@ class buildbot::slavepkgs {
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
                  "$expectpkg", "$expatdevelpkg", 'perl', 
-                 'ncurses-devel', 'libxslt' ]
+                 'ncurses-devel', 'libxslt', "$printprotopkg" ]
 
 }
