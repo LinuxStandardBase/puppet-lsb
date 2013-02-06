@@ -2,7 +2,9 @@
 
 if [ -e /tmp/last_installed_sdk ]; then
     if [ $(cat /tmp/last_installed_sdk) = "devel" ]; then
-	echo "devel SDK already installed"
+	echo "devel SDK already installed:"
+	/opt/lsb/bin/lsbcc --lsbcc-version
+	/opt/lsb/bin/lsbcc --lsb-version
 	exit 0
     fi
 fi
@@ -15,3 +17,7 @@ find $PKG_DIR -name \*.rpm -print | grep -v src.rpm | \
   xargs sudo rpm -Uvh --force
 
 echo "devel" > /tmp/last_installed_sdk
+
+echo "SDK updated to devel:"
+/opt/lsb/bin/lsbcc --lsbcc-version
+/opt/lsb/bin/lsbcc --lsb-version

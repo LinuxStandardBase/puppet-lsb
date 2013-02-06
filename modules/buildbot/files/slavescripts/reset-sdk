@@ -8,7 +8,9 @@ fi
 
 if [ -e /tmp/last_installed_sdk ]; then
     if [ $(cat /tmp/last_installed_sdk) = "$SDK_TYPE" ]; then
-	echo "$SDK_TYPE SDK already installed"
+	echo "$SDK_TYPE SDK already installed:"
+	/opt/lsb/bin/lsbcc --lsbcc-version
+	/opt/lsb/bin/lsbcc --lsb-version
 	exit 0
     fi
 fi
@@ -44,3 +46,7 @@ done
 
 rm -rf /tmp/sdk-install
 echo $SDK_TYPE > /tmp/last_installed_sdk
+
+echo "SDK updated to $SDK_TYPE:"
+/opt/lsb/bin/lsbcc --lsbcc-version
+/opt/lsb/bin/lsbcc --lsb-version
