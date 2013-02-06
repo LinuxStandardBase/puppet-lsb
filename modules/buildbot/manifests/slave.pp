@@ -34,13 +34,13 @@ class buildbot::slave inherits buildbot {
     # Which SDKs should we use for released and beta builds?
 
     $releasedsdk = "${architecture}-${::chroot}" ? {
-        /^i386/         => 'lsb-sdk-4.1.4-1.ia32.tar.gz',
-        /^x86_64/       => 'lsb-sdk-4.1.4-1.x86_64.tar.gz',
-        /^ia64/         => 'lsb-sdk-4.1.4-1.ia64.tar.gz',
-        /^s390x-small$/ => 'lsb-sdk-4.1.4-1.s390.tar.gz',
-        /^s390x-big$/   => 'lsb-sdk-4.1.4-1.s390x.tar.gz',
-        /^ppc64-small$/ => 'lsb-sdk-4.1.4-1.ppc32.tar.gz',
-        /^ppc64-big$/   => 'lsb-sdk-4.1.4-1.ppc64.tar.gz',
+        /^i386/         => 'lsb-sdk-4.1.5-1.ia32.tar.gz',
+        /^x86_64/       => 'lsb-sdk-4.1.5-1.x86_64.tar.gz',
+        /^ia64/         => 'lsb-sdk-4.1.5-1.ia64.tar.gz',
+        /^s390x-small$/ => 'lsb-sdk-4.1.5-1.s390.tar.gz',
+        /^s390x-big$/   => 'lsb-sdk-4.1.5-1.s390x.tar.gz',
+        /^ppc64-small$/ => 'lsb-sdk-4.1.5-1.ppc32.tar.gz',
+        /^ppc64-big$/   => 'lsb-sdk-4.1.5-1.ppc64.tar.gz',
     }
 
     $releasedsdkpath = 'bundles/released-4.1.0/sdk'
