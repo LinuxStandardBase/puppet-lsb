@@ -112,7 +112,7 @@ class buildbot::slavepkgs {
     }
 
     # bison used to provide yacc for runtime-test, now it's byacc sometimes
-    bisonpkg = $operatingsystem ? {
+    $bisonpkg = $operatingsystem ? {
         /^SLES/   => 'bison',
         /^CentOS/ => 'byacc',
         /^Fedora/ => 'byacc',
@@ -120,7 +120,7 @@ class buildbot::slavepkgs {
     }
     
     # need libc.a to build a chroot test in runtime-test
-    libcstaticpkg = $operatingsystem ? {
+    $libcstaticpkg = $operatingsystem ? {
         /^SLES/   => 'glibc-devel',
         /^CentOS/ => 'glibc-static',
         /^Fedora/ => 'glibc-static',
