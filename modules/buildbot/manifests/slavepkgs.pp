@@ -118,6 +118,14 @@ class buildbot::slavepkgs {
         /^Fedora/ => 'byacc',
         default   => 'bison',
     }
+    
+    # need libc.a to build a chroot test in runtime-test
+    libcstaticpkg = $operatingsystem ? {
+        /^SLES/   => 'glibc-devel',
+        /^CentOS/ => 'glibc-static',
+        /^Fedora/ => 'glibc-static',
+        default   => 'glibc-static-devel',
+    }
 
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
@@ -251,7 +259,7 @@ class buildbot::slavepkgs {
                  "$javapkg", 'autoconf', 'automake', 'libtool', "$bisonpkg",
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
-                 "$expectpkg", "$expatdevelpkg", 'perl', 
+                 "$expectpkg", "$expatdevelpkg", 'perl', "$libcstaticpkg", 
                  'ncurses-devel', 'libxslt', "$printprotopkg" ]
 
 }
