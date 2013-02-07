@@ -111,6 +111,14 @@ class buildbot::slavepkgs {
         default   => 'expect',
     }
 
+    # bison used to provide yacc for runtime-test, now it's byacc sometimes
+    bisonpkg = $operatingsystem ? {
+        /^SLES/   => 'bison',
+        /^CentOS/ => 'byacc',
+        /^Fedora/ => 'byacc',
+        default   => 'bison',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.
@@ -240,7 +248,7 @@ class buildbot::slavepkgs {
     # Most packages needed for a typical slave; see the definitions
     # above for $ucs2anypkg and $xdevelpkg for the interesting ones.
     $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg",
-                 "$javapkg", 'autoconf', 'automake', 'libtool', 'bison',
+                 "$javapkg", 'autoconf', 'automake', 'libtool', "$bisonpkg",
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
                  "$expectpkg", "$expatdevelpkg", 'perl', 
