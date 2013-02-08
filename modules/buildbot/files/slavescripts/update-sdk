@@ -11,10 +11,19 @@ fi
 
 rm -f /tmp/last_installed_sdk
 
-PKG_DIR=$1
+if [ \! -e ../../saved/devel/sdk.tar.gz ]; then
+    echo "could not find devel SDK to install" >&2
+    exit 1
+fi
 
-find $PKG_DIR -name \*.rpm -print | grep -v src.rpm | \
+rm -rf /tmp/install-sdk
+mkdir /tmp/install-sdk
+zcat ../../saved/devel/sdk.tar.gz | (cd /tmp/install-sdk && tar xf -)
+
+find /tmp/install-sdk -name \*.rpm -print | grep -v src.rpm | \
   xargs sudo rpm -Uvh --force
+
+rm -rf /tmp/install-sdk
 
 echo "devel" > /tmp/last_installed_sdk
 
