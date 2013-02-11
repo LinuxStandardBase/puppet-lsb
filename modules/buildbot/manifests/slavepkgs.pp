@@ -16,8 +16,8 @@ class buildbot::slavepkgs {
     # xts5 is no longer a pure LSB build, needs at least libXi, Xext, Xtst, Xt
     # probably more, the SLES package pulls in a bunch
     $xdevelpkg = $operatingsystem ? {
-        /^Fedora$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel'],
-        /^CentOS$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel'],
+        /^Fedora$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel', 'libXdmcp-devel'],
+        /^CentOS$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel', 'libXdmcp-devel'],
         /^SLES/ => 'xorg-x11-devel',
         default => 'libxorg-x11-devel',
     }
