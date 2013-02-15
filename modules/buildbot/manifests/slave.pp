@@ -45,9 +45,17 @@ class buildbot::slave inherits buildbot {
 
     $releasedsdkpath = 'bundles/released-4.1.0/sdk'
 
-    $betasdk = $releasedsdk
+    $betasdk = "${architecture}-${::chroot}" ? {
+        /^i386/         => 'lsb-sdk-4.1.6-1.ia32.tar.gz',
+        /^x86_64/       => 'lsb-sdk-4.1.6-1.x86_64.tar.gz',
+        /^ia64/         => 'lsb-sdk-4.1.6-1.ia64.tar.gz',
+        /^s390x-small$/ => 'lsb-sdk-4.1.6-1.s390.tar.gz',
+        /^s390x-big$/   => 'lsb-sdk-4.1.6-1.s390x.tar.gz',
+        /^ppc64-small$/ => 'lsb-sdk-4.1.6-1.ppc32.tar.gz',
+        /^ppc64-big$/   => 'lsb-sdk-4.1.6-1.ppc64.tar.gz',
+    }
 
-    $betasdkpath = $releasedsdkpath
+    $betasdkpath = 'bundles/beta/sdk'
 
     # Special downloaded packages needed for builds from the LSB.
     # XXX: this should migrate to using package repositories and
