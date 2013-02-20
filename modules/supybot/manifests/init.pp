@@ -29,7 +29,8 @@ class supybot {
         path    => [ '/bin', '/usr/bin' ],
         user    => 'supybot',
         creates => '/opt/supybot/bin/supybot',
-        require => Exec['make-supybot-virtualenv'],
+        require => [ Exec['make-supybot-virtualenv'],
+                     Exec['checkout-supybot'], ],
     }
 
 }
