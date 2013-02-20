@@ -7,6 +7,11 @@ class user::virtual inherits user {
         home        => '/opt/buildbot',
     }
 
+    @user { 'supybot':
+        ensure      => present,
+        home        => '/opt/supybot',
+    }
+
     @user { 'lfadmin':
         ensure      => present,
         comment     => 'Linux Foundation IT',
