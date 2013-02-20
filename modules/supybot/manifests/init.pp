@@ -2,6 +2,8 @@ class supybot {
 
     include user::supybot
 
+    include python::virtualenv
+
     $supybotversion = '0.83.4.1'
 
     exec { 'checkout-supybot':
@@ -10,6 +12,24 @@ class supybot {
         path     => [ '/bin', '/usr/bin' ],
         creates  => '/opt/supybot/code',
         user     => 'supybot',
+    }
+
+    exec { "make-supybot-virtualenv":
+        command => "virtualenv --system-site-packages /opt/supybot",
+        cwd     => "/opt/supybot",
+        creates => "/opt/supybot/bin/pip",
+        path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
+        user    => 'supybot',
+        require => [ File["/opt/supybot"], Package['python-virtualenv'] ],
+    }
+
+    exec { 'install-supybot':
+        command => '/opt/supybot/bin/python setup.py install',
+        cwd     => '/opt/supybot/code',
+        path    => [ '/bin', '/usr/bin' ],
+        user    => 'supybot',
+        creates => '/opt/supybot/bin/supybot',
+        require => Exec['make-supybot-virtualenv'],
     }
 
 }
