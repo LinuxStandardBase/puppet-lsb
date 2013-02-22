@@ -4,7 +4,7 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
-    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20130208205022-9o9g7y039mf6bui3'
+    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20130222035153-lg4qg2q292rp0la6'
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
 
@@ -84,6 +84,12 @@ class buildbot::master inherits buildbot {
     file { "/opt/buildbot/lsb-master/templates":
         ensure => link,
         target => "../buildbot-config/templates",
+        require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
+    }
+
+    file { "/opt/buildbot/lsb-master/public_html":
+        ensure => link,
+        target => "../buildbot-config/public_html",
         require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
     }
 
