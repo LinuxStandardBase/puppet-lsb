@@ -4,7 +4,7 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
-    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20130222035153-lg4qg2q292rp0la6'
+    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20130224015935-vi1bv1w8tiegqfr1'
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
 
@@ -167,6 +167,13 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         hour    => '6',
         minute  => '0',
         weekday => 'Saturday',
+    }
+
+    cron { 'daily-low-resource-jobs':
+        command => '/opt/buildbot/buildbot-config/low-resource-jobs',
+        user    => 'buildbot',
+        hour    => '19',
+        minute  => '30',
     }
 
     exec { 'update-buildbot-config':
