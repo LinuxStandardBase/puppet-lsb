@@ -16,10 +16,11 @@ class buildbot::slavepkgs {
     # xts5 is no longer a pure LSB build, needs at least libXi, Xext, Xtst, Xt
     # probably more, the SLES package pulls in a bunch
     $xdevelpkg = $operatingsystem ? {
-        /^Fedora$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel', 'libXdmcp-devel'],
-        /^CentOS$/ => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel', 'libXdmcp-devel'],
-        /^SLES/ => 'xorg-x11-devel',
-        default => 'libxorg-x11-devel',
+        /^Fedora$/  => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel', 'libXdmcp-devel'],
+        /^CentOS$/  => ['libXi-devel', 'libXext-devel', 'libXtst-devel', 'libXt-devel', 'libXdmcp-devel'],
+        /^SLES/     => 'xorg-x11-devel',
+        /^OpenSuSE/ => 'xorg-x11-devel',
+        default     => 'libxorg-x11-devel',
     }
 
     # this one for xts5 and lsb-xvfb
@@ -34,10 +35,11 @@ class buildbot::slavepkgs {
     # NOTE: on Red Hat-based systems, this is the same as $bdftopcfpkg,
     # so don't include it 
     $ucs2anypkg = $operatingsystem ? {
-        /^Fedora$/ => 'xorg-x11-font-utils',
-        /^CentOS$/ => 'xorg-x11-font-utils',
-        /^SLES/ => 'xorg-x11-fonts-devel',
-        default => 'x11-font-util',
+        /^Fedora$/  => 'xorg-x11-font-utils',
+        /^CentOS$/  => 'xorg-x11-font-utils',
+        /^SLES/     => 'xorg-x11-fonts-devel',
+        /^OpenSuSE/ => 'font-util',
+        default     => 'x11-font-util',
     }
 
     $lsbpkg = $operatingsystem ? {
@@ -66,17 +68,20 @@ class buildbot::slavepkgs {
         /^SLES-ia64$/   => 'jre',
         /^CentOS/       => 'java-1.6.0-openjdk',
         /^Fedora/       => 'java-1.7.0-openjdk',
+        /^OpenSuSE/     => 'java-1_7_0-openjdk',
         default         => 'openjdk',
     }
 
     $pkgconfigpkg = $operatingsystem ? {
-        /^SLES/ => 'pkg-config',
-        default => 'pkgconfig',
+        /^SLES/     => 'pkg-config',
+        /^OpenSuSE/ => 'pkg-config',
+        default     => 'pkgconfig',
     }
 
     $xgettextpkg = $operatingsystem ? {
-        /^SLES/ => 'gettext-tools',
-        default => 'gettext',
+        /^SLES/     => 'gettext-tools',
+        /^OpenSuSE/ => 'gettext-tools',
+        default     => 'gettext',
     }
 
     # for appbat
@@ -99,10 +104,11 @@ class buildbot::slavepkgs {
 
     # expat - needed for old builds of libbat/appbat
     $expatdevelpkg = $operatingsystem ? {
-        /^SLES/   => 'libexpat-devel',
-        /^CentOS/ => 'expat-devel',
-        /^Fedora/ => 'expat-devel',
-        default   => 'libexpat-dev',
+        /^SLES/     => 'libexpat-devel',
+        /^OpenSuSE/ => 'libexpat-devel',
+        /^CentOS/   => 'expat-devel',
+        /^Fedora/   => 'expat-devel',
+        default     => 'libexpat-dev',
     }
 
     # runtime-test for 4.0 still uses expect
@@ -121,10 +127,11 @@ class buildbot::slavepkgs {
     
     # need libc.a to build a chroot test in runtime-test
     $libcstaticpkg = $operatingsystem ? {
-        /^SLES/   => 'glibc-devel',
-        /^CentOS/ => 'glibc-static',
-        /^Fedora/ => 'glibc-static',
-        default   => 'glibc-static-devel',
+        /^SLES/     => 'glibc-devel',
+        /^OpenSuSE/ => 'glibc-devel-static',
+        /^CentOS/   => 'glibc-static',
+        /^Fedora/   => 'glibc-static',
+        default     => 'glibc-static-devel',
     }
 
     # Apparently, libbat needs the printproto stuff to be
@@ -134,6 +141,12 @@ class buildbot::slavepkgs {
         /^SLES/   => 'xorg-x11-proto-devel',
         /^CentOS/ => 'libXp-devel',
         default   => 'libXp-devel',
+    }
+
+    # libxslt
+    $libxsltpkg = $operatingsystem ? {
+        /^OpenSuSE/ => 'libxslt1',
+        default     => 'libxslt',
     }
 
     # devchk needs
@@ -260,6 +273,6 @@ class buildbot::slavepkgs {
                  'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
                  "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
                  "$expectpkg", "$expatdevelpkg", 'perl', "$libcstaticpkg", 
-                 'ncurses-devel', 'libxslt', "$printprotopkg" ]
+                 'ncurses-devel', "$libxsltpkg", "$printprotopkg" ]
 
 }
