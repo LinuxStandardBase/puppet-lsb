@@ -50,7 +50,7 @@ class buildbot::slavepkgs {
 
     $rpmpkg = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-.+$/     => 'rpm',
-        /^OpenSuSE-.+$/ => 'rpm',
+        /^OpenSuSE-.+$/ => 'rpm-build',
         default         => 'rpm-build',
     }
 
