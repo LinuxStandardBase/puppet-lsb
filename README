@@ -108,6 +108,42 @@ would get stale, and implementors would be forced to reverse-engineer
 the missing bits from this repository anyway.  Suggestions for fixing
 this problem are welcome.
 
+Troubleshooting
+---------------
+
+There is a known issue with running a Puppet client with Ruby 1.9.2,
+where the client refuses to complete the first-time connection with a
+message like this:
+
+err: Could not request certificate: SSL_connect returned=1 errno=0 \
+  state=SSLv3 read server certificate B: certificate verify failed. \
+  This is often because the time is out of sync on the server or client
+
+(line reformatted for readability)
+
+The problem has to do with an incompatible change in the way Ruby
+1.9.2 validates certificates.  The problem and fix is discussed here:
+
+http://urgetopunt.com/puppet/2011/09/14/puppet-ruby19.html
+
+It consists of copying the master CA cert to the client manually, and
+then linking it into OpenSSL's cert cache.  The file to copy should be
+in /var/lib/puppet/ssl/certs/ca.pem if you're using distro-packaged
+Puppet; that's both the location of the file on the master and its
+destination on the client.  The symlink has to be a particular name:
+[hash].0, where [hash] is calculated using this command:
+
+openssl x509 -hash -noout -in /etc/puppet/ssl/certs/ca.pem
+
+This symlink should live in /etc/ssl/certs on most Linux
+distributions.  If you're not sure, the following command will tell
+you where it should go:
+
+openssl version -d
+
+Once the file and symlink are in place on the client, retry the
+initial puppet connection.  It should work.
+
 Jeff Licquia
 licquia@linuxfoundation.org
-2012-01-28
+2013-03-11
