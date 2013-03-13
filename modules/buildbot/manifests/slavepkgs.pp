@@ -24,21 +24,11 @@ class buildbot::slavepkgs {
     }
 
     # this one for xts5 and lsb-xvfb
-    $bdftopcfpkg = $operatingsystem ? {
-        /^Fedora$/ => 'xorg-x11-font-utils',
-        /^CentOS$/ => 'xorg-x11-font-utils',
-        /^SLES/ => 'xorg-x11',
-        default => 'bdftopcf',
-    }
-
-    # for lsb-xvfb
-    # NOTE: on Red Hat-based systems, this is the same as $bdftopcfpkg,
-    # so don't include it 
-    $ucs2anypkg = $operatingsystem ? {
+    $fontutilpkg = $operatingsystem ? {
         /^Fedora$/  => 'xorg-x11-font-utils',
         /^CentOS$/  => 'xorg-x11-font-utils',
-        /^SLES/     => 'xorg-x11-fonts-devel',
-        /^OpenSuSE/ => 'font-util',
+        /^SLES/     => ['xorg-x11', 'xorg-x11-fonts-devel'],
+        /^OpenSuSE/ => ['xorg-x11', 'mkfontdir', 'mkfontscale', 'bdftopcf', 'font-util'],
         default     => 'x11-font-util',
     }
 
@@ -267,12 +257,12 @@ class buildbot::slavepkgs {
     }
 
     # Most packages needed for a typical slave; see the definitions
-    # above for $ucs2anypkg and $xdevelpkg for the interesting ones.
+    # above for $fontutilpkg and $xdevelpkg for the interesting ones.
     $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg",
                  "$javapkg", 'autoconf', 'automake', 'libtool', "$bisonpkg",
-                 'flex', "$xgettextpkg", 'rsync', "$bdftopcfpkg",
-                 "$intltoolpkg", "$glibdevelpkg", "$pamdevelpkg",
-                 "$expectpkg", "$expatdevelpkg", 'perl', "$libcstaticpkg", 
+                 'flex', "$xgettextpkg", 'rsync', "$intltoolpkg",
+                 "$glibdevelpkg", "$pamdevelpkg", "$expectpkg",
+                 "$expatdevelpkg", 'perl', "$libcstaticpkg", 
                  'ncurses-devel', "$libxsltpkg", "$printprotopkg" ]
 
 }

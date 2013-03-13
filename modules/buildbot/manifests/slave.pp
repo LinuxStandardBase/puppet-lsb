@@ -105,19 +105,14 @@ class buildbot::slave inherits buildbot {
         package { "${name}": ensure => installed }
     }
 
-    # On Red Hat systems, this is the same package as $bdftocfpkg.
-    if $operatingsystem !~ /^(Fedora|CentOS)$/ {
-        package { "$buildbot::slavepkgs::ucs2anypkg":
-            ensure => present,
-        }
-    }
-
     # Declare most of the package dependencies from buildbot::slavepkgs
     # in one fell swoop.
 
     install-pkglist { $buildbot::slavepkgs::lsbpkg: }
 
     install-pkglist { $buildbot::slavepkgs::xdevelpkg: }
+
+    install-pkglist { $buildbot::slavepkgs::fontutilpkg: }
 
     install-pkglist { $buildbot::slavepkgs::pkglist: }
 
