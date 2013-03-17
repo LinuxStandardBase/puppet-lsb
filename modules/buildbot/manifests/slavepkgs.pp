@@ -258,7 +258,7 @@ class buildbot::slavepkgs {
 
     # Most packages needed for a typical slave; see the definitions
     # above for $fontutilpkg and $xdevelpkg for the interesting ones.
-    $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg",
+    $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg", 'cvs',
                  "$javapkg", 'autoconf', 'automake', 'libtool', "$bisonpkg",
                  'flex', "$xgettextpkg", 'rsync', "$intltoolpkg",
                  "$glibdevelpkg", "$pamdevelpkg", "$expectpkg",
