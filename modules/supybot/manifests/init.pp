@@ -33,4 +33,18 @@ class supybot {
                      Exec['checkout-supybot'], ],
     }
 
+    file { '/etc/init.d/supybot':
+        ensure => present,
+        source => 'puppet:///modules/supybot/supybot.init',
+        mode   => 0755,
+        notify => Service['supybot'],
+    }
+
+    service { 'supybot':
+        ensure     => running,
+        hasrestart => false,
+        require    => [ File['/etc/init.d/supybot'],
+                        Exec['install-supybot'] ],
+    }
+
 }
