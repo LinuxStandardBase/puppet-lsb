@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 FILE_NAME=problem_db2
 FILE_LOC=/tmp/$FILE_NAME
