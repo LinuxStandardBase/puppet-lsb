@@ -78,7 +78,7 @@ class ftp {
     cron { 'regular-update-problem-db2':
         command => '/usr/local/bin/update-problem-db2',
         user    => root,
-        hour    => '3,6,9,12,15,18,21',
+        hour    => [ 3, 6, 9, 12, 15, 18, 21 ],
         minute  => 37,
     }
 
