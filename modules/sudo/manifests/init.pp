@@ -18,6 +18,7 @@ class sudo {
         mode    => 0440,
         source  => [ "puppet:///modules/sudo/sudoers/$fqdn",
                      "puppet:///modules/sudo/sudoers/$osdefault" ],
+        links   => follow,
         require => [ Package["sudo"], User['lfadmin'] ]
     }
 
