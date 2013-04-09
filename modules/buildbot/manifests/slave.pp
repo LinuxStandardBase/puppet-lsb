@@ -17,6 +17,25 @@ class buildbot::slave inherits buildbot {
 
     include buildbotpw
 
+    # 32-bit versions of some architectures don't exist as
+    # native platforms themselves; they run almost entirely
+    # on the 64-bit version.  For these, we have to figure
+    # out whether we're building on the "big" or "small"
+    # version of the architecture.  This is indicated for
+    # build slaves using chroots for us; for non-chroot
+    # build slaves, we need to find that out for ourselves.
+
+    if $chroot != "" {
+        $wordsize = $chroot
+    } else {
+        $wordsize = $hostname ? {
+            'lfdev-build-power32' => 'small',
+            'lfdev-build-power64' => 'big',
+        }
+    }
+
+    # Set up login information.
+
     $masteruser = "${architecture}-${wordsize}" ? {
         /^i386/         => 'lfbuild-x86',
         /^x86_64/       => 'lfbuild-x86_64',
@@ -33,23 +52,6 @@ class buildbot::slave inherits buildbot {
         /^ppc64-small$/ => $buildbotpw::ppc32password,
         /^ppc64-big$/   => $buildbotpw::ppc64password,
         default         => $buildbotpw::masterpw,
-    }
-
-    # 32-bit versions of some architectures don't exist as
-    # native platforms themselves; they run almost entirely
-    # on the 64-bit version.  For these, we have to figure
-    # out whether we're building on the "big" or "small"
-    # version of the architecture.  This is indicated for
-    # build slaves using chroots for us; for non-chroot
-    # build slaves, we need to find that out for ourselves.
-
-    if $chroot != "" {
-        $wordsize = $chroot
-    } else {
-        $wordsize = $hostname ? {
-            'lfdev-build-power32' => 'small',
-            'lfdev-build-power64' => 'big',
-        }
     }
 
     # Which SDKs should we use for released and beta builds?
