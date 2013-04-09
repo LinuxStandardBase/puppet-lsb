@@ -31,9 +31,26 @@ class buildbot::slave inherits buildbot {
         default    => $buildbotpw::masterpw,
     }
 
+    # 32-bit versions of some architectures don't exist as
+    # native platforms themselves; they run almost entirely
+    # on the 64-bit version.  For these, we have to figure
+    # out whether we're building on the "big" or "small"
+    # version of the architecture.  This is indicated for
+    # build slaves using chroots for us; for non-chroot
+    # build slaves, we need to find that out for ourselves.
+
+    if $chroot != "" {
+        $wordsize = $chroot
+    } else {
+        $wordsize = $hostname ? {
+            'lfdev-build-power32' => 'small',
+            'lfdev-build-power64' => 'big',
+        }
+    }
+
     # Which SDKs should we use for released and beta builds?
 
-    $releasedsdk = "${architecture}-${::chroot}" ? {
+    $releasedsdk = "${architecture}-${wordsize}" ? {
         /^i386/         => 'lsb-sdk-4.1.6-2.ia32.tar.gz',
         /^x86_64/       => 'lsb-sdk-4.1.6-2.x86_64.tar.gz',
         /^ia64/         => 'lsb-sdk-4.1.6-2.ia64.tar.gz',
@@ -50,7 +67,7 @@ class buildbot::slave inherits buildbot {
     # actually different, we need to specify that here.
     # Use this set of declarations for a separate beta SDK.
 
-    #$betasdk = "${architecture}-${::chroot}" ? {
+    #$betasdk = "${architecture}-${wordsize}" ? {
     #    /^i386/         => 'lsb-sdk-4.1.6-1.ia32.tar.gz',
     #    /^x86_64/       => 'lsb-sdk-4.1.6-1.x86_64.tar.gz',
     #    /^ia64/         => 'lsb-sdk-4.1.6-1.ia64.tar.gz',
@@ -72,7 +89,7 @@ class buildbot::slave inherits buildbot {
     # XXX: this should migrate to using package repositories and
     #      the package resource in puppet.
 
-    $lsbpythonurl = "${architecture}-${::chroot}" ? {
+    $lsbpythonurl = "${architecture}-${wordsize}" ? {
         /^i386/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-5.lsb4.i486.rpm',
         /^x86_64/       => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
         /^ia64/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia64/lsb-python-2.4.6-5.lsb4.ia64.rpm',
@@ -84,8 +101,8 @@ class buildbot::slave inherits buildbot {
 
     $appchkpyurl = 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/application/lsb-appchk-python-4.1.0-1.noarch.rpm'
 
-    # For small-word build slave chroots.
-    if $chroot == 'small' {
+    # For small-word build slaves.
+    if $wordsize == 'small' {
 
         $smallwordcmd = $architecture ? {
             's390x' => 's390',
@@ -284,9 +301,9 @@ class buildbot::slave inherits buildbot {
                         Exec['make-slave'] ],
     }
 
-    # Special: for small-word chroot build slaves, we need to force
-    # small-word builds (31- or 32-bit builds).  The source for gcc-wrapper
-    # is actually created by buildbot::slavechroot; see its definition there.
+    # Special: for small-word build slaves, we need to force
+    # small-word builds (31- or 32-bit builds).  We do this
+    # differently for chroots vs. regular build systems.
 
     if $chroot == 'small' {
 
@@ -345,6 +362,49 @@ class buildbot::slave inherits buildbot {
             ensure  => link,
             target  => 'ld-wrapper',
             require => [ Exec['move-ld'], File['/usr/bin/ld-wrapper'] ],
+        }
+
+    } elsif $wordsize == 'small' {
+
+        $realgcc = '/usr/bin/gcc'
+
+        $realld = '/usr/bin/ld'
+
+        package { $slavepkgs::smallwordpkg: ensure => present }
+
+        file { '/usr/local/bin/gcc-wrapper':
+            content => template('buildbot/gcc-wrapper.erb'),
+            mode    => 0755,
+        }
+
+        file { '/usr/local/bin/ld-wrapper':
+            content => template('buildbot/ld-wrapper.erb'),
+            mode    => 0755,
+        }
+
+        file ( '/usr/local/bin/gcc':
+            ensure => link,
+            target => 'gcc-wrapper',
+        }
+
+        file ( '/usr/local/bin/g++':
+            ensure => link,
+            target => 'gcc-wrapper',
+        }
+
+        file ( '/usr/local/bin/cc':
+            ensure => link,
+            target => 'gcc-wrapper',
+        }
+
+        file ( '/usr/local/bin/c++':
+            ensure => link,
+            target => 'gcc-wrapper',
+        }
+
+        file ( '/usr/local/bin/ld':
+            ensure => link,
+            target => 'ld-wrapper',
         }
 
     }

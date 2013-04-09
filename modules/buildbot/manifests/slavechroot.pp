@@ -14,6 +14,12 @@ class buildbot::slavechroot inherits buildbot {
 
     $bigwordchroot = '/data/chroots/sles11-64bit'
 
+    # Set the location for the real gcc/ld.
+
+    $realgcc = '${0##/*/}-4.3'
+
+    $realld = '/usr/bin/ld.REAL'
+
     # We need to force small-word builds on the small-word chroots.
 
     $smallwordarch = $architecture ? {

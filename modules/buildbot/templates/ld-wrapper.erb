@@ -1,8 +1,8 @@
 #!/bin/sh
 
 if [ `arch` == "<%= smallwordarch %>" ]; then
-	/usr/bin/ld.REAL <%= ldsmallword %> "$@"
+	<%= realld %> <%= ldsmallword %> "$@"
 else
-	/usr/bin/ld.REAL "$@"
+	<%= realld %> "$@"
 fi
 
