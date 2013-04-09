@@ -201,7 +201,8 @@ class buildbot::slave inherits buildbot {
         creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/twisted/__init__.py",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
-        require => Exec["make-buildbot-virtualenv"],
+        require => [ Exec["make-buildbot-virtualenv"],
+                     Package['python-devel] ],
     }
 
     exec { "install-buildslave":
