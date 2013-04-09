@@ -17,18 +17,22 @@ class buildbot::slave inherits buildbot {
 
     include buildbotpw
 
-    $masteruser = $architecture ? {
-        /^i386$/   => 'lfbuild-x86',
-        /^x86_64$/ => 'lfbuild-x86_64',
-        /^ia64$/   => 'lfbuild-ia64',
-        default    => $buildbotpw::masteruser,
+    $masteruser = "${architecture}-${wordsize}" ? {
+        /^i386/         => 'lfbuild-x86',
+        /^x86_64/       => 'lfbuild-x86_64',
+        /^ia64/         => 'lfbuild-ia64',
+        /^ppc64-small$/ => 'lfbuild-ppc32',
+        /^ppc64-big$/   => 'lfbuild-ppc64',
+        default         => $buildbotpw::masteruser,
     }
 
-    $masterpw = $architecture ? {
-        /^i386$/   => $buildbotpw::x86password,
-        /^x86_64$/ => $buildbotpw::x64password,
-        /^ia64$/   => $buildbotpw::ia64password,
-        default    => $buildbotpw::masterpw,
+    $masterpw = "${architecture}-${wordsize}" ? {
+        /^i386/         => $buildbotpw::x86password,
+        /^x86_64/       => $buildbotpw::x64password,
+        /^ia64/         => $buildbotpw::ia64password,
+        /^ppc64-small$/ => $buildbotpw::ppc32password,
+        /^ppc64-big$/   => $buildbotpw::ppc64password,
+        default         => $buildbotpw::masterpw,
     }
 
     # 32-bit versions of some architectures don't exist as
