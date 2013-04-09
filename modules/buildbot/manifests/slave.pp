@@ -94,13 +94,13 @@ class buildbot::slave inherits buildbot {
     #      the package resource in puppet.
 
     $lsbpythonurl = "${architecture}-${wordsize}" ? {
-        /^i386/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-5.lsb4.i486.rpm',
-        /^x86_64/       => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-5.lsb4.x86_64.rpm',
-        /^ia64/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia64/lsb-python-2.4.6-5.lsb4.ia64.rpm',
-        /^s390x-small$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/s390/lsb-python-2.4.6-5.lsb4.s390.rpm',
-        /^s390x-big$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/s390x/lsb-python-2.4.6-5.lsb4.s390x.rpm',
-        /^ppc64-small$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ppc32/lsb-python-2.4.6-5.lsb4.ppc.rpm',
-        /^ppc64-big$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ppc64/lsb-python-2.4.6-5.lsb4.ppc64.rpm',
+        /^i386/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia32/lsb-python-2.4.6-7.lsb4.i486.rpm',
+        /^x86_64/       => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/amd64/lsb-python-2.4.6-7.lsb4.x86_64.rpm',
+        /^ia64/         => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ia64/lsb-python-2.4.6-7.lsb4.ia64.rpm',
+        /^s390x-small$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/s390/lsb-python-2.4.6-7.lsb4.s390.rpm',
+        /^s390x-big$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/s390x/lsb-python-2.4.6-7.lsb4.s390x.rpm',
+        /^ppc64-small$/ => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ppc32/lsb-python-2.4.6-7.lsb4.ppc.rpm',
+        /^ppc64-big$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ppc64/lsb-python-2.4.6-7.lsb4.ppc64.rpm',
     }
 
     $appchkpyurl = 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/application/lsb-appchk-python-4.1.0-1.noarch.rpm'
