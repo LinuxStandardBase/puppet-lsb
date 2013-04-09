@@ -150,6 +150,12 @@ class buildbot::slave inherits buildbot {
 
     install-pkglist { $buildbot::slavepkgs::pkglist: }
 
+    # 32-bit cross-built arch packages.
+
+    if $wordsize == 'small' {
+        package { $buildbot::slavepkgs::libcstatic32pkg: ensure => installed; }
+    }
+
     # Get special LSB packages needed for builds.
 
     exec { "download-lsb-python":

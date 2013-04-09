@@ -115,12 +115,19 @@ class buildbot::slavepkgs {
         default   => 'bison',
     }
     
-    # need libc.a to build a chroot test in runtime-test
+    # need libc.a to build a chroot test in runtime-test and for lsbrun
+
     $libcstaticpkg = $operatingsystem ? {
         /^SLES/     => 'glibc-devel',
         /^OpenSuSE/ => 'glibc-devel-static',
         /^CentOS/   => 'glibc-static',
         /^Fedora/   => 'glibc-static',
+        default     => 'glibc-static-devel',
+    }
+
+    $libcstatic32pkg = $operatingsystem ? {
+        /^SLES/     => 'glibc-devel',
+        /^OpenSuSE/ => 'glibc-devel-static-32bit',
         default     => 'glibc-static-devel',
     }
 
