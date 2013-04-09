@@ -6,6 +6,6 @@ node 'lfdev-build-power64.osuosl.org' {
 
     include puppet
 
-    # include buildbot::slave
+    include buildbot::slave
 
 }
