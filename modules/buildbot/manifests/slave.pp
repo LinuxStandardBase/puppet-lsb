@@ -382,27 +382,27 @@ class buildbot::slave inherits buildbot {
             mode    => 0755,
         }
 
-        file ( '/usr/local/bin/gcc':
+        file { '/usr/local/bin/gcc':
             ensure => link,
             target => 'gcc-wrapper',
         }
 
-        file ( '/usr/local/bin/g++':
+        file { '/usr/local/bin/g++':
             ensure => link,
             target => 'gcc-wrapper',
         }
 
-        file ( '/usr/local/bin/cc':
+        file { '/usr/local/bin/cc':
             ensure => link,
             target => 'gcc-wrapper',
         }
 
-        file ( '/usr/local/bin/c++':
+        file { '/usr/local/bin/c++':
             ensure => link,
             target => 'gcc-wrapper',
         }
 
-        file ( '/usr/local/bin/ld':
+        file { '/usr/local/bin/ld':
             ensure => link,
             target => 'ld-wrapper',
         }
