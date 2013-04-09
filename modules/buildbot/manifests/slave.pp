@@ -202,7 +202,7 @@ class buildbot::slave inherits buildbot {
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
         require => [ Exec["make-buildbot-virtualenv"],
-                     Package['python-devel] ],
+                     Package['python-devel'] ],
     }
 
     exec { "install-buildslave":
