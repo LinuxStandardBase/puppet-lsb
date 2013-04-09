@@ -376,6 +376,25 @@ class buildbot::slave inherits buildbot {
 
         $realld = '/usr/bin/ld'
 
+        # Pull in values from slavechroot.  Right now, this is
+        # just a cut-n-paste; in the future, these should be
+        # defined in one common place.
+
+        $smallwordarch = $architecture ? {
+            's390x' => 's390',
+            'ppc64' => 'ppc',
+        }
+
+        $gccsmallword = $architecture ? {
+            's390x' => '-m31',
+            'ppc64' => '-m32',
+        }
+
+        $ldsmallword = $architecture ? {
+            's390x' => '-melf_s390',
+            'ppc64' => '-melf32ppc',
+        }
+
         package { $slavepkgs::smallwordpkg: ensure => present }
 
         file { '/usr/local/bin/gcc-wrapper':

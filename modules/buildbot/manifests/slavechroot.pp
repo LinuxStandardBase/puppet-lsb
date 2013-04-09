@@ -21,6 +21,8 @@ class buildbot::slavechroot inherits buildbot {
     $realld = '/usr/bin/ld.REAL'
 
     # We need to force small-word builds on the small-word chroots.
+    # NOTE: these are also defined in slave.pp; make sure that they
+    # get changed in both places if they need to change.
 
     $smallwordarch = $architecture ? {
         's390x' => 's390',
