@@ -158,11 +158,13 @@ class buildbot::slavechroot inherits buildbot {
 
     file { '/etc/puppet-chroot/modules/buildbotpw/manifests/init_smallword.pp':
         content => template('buildbot/buildbotpw-init-smallword.pp.erb'),
+        mode    => 0600,
         require => File['/etc/puppet-chroot/modules/buildbotpw/manifests'],
     }
 
     file { '/etc/puppet-chroot/modules/buildbotpw/manifests/init_bigword.pp':
         content => template('buildbot/buildbotpw-init-bigword.pp.erb'),
+        mode    => 0600,
         require => File['/etc/puppet-chroot/modules/buildbotpw/manifests'],
     }
 
