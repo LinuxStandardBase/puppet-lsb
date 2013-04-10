@@ -7,7 +7,7 @@ class sudo {
         /^(CentOS|RedHat)-6(\.[0-9]+)?$/    => 'default-fedora',
         /^Fedora-1[5-9]$/                   => 'default-fedora',
         /^SLES-11\.?[0-9]*$/                => 'default-sles11',
-        /^OpenSuSE/                         => 'default-sles11',
+        /^OpenSuSE/                         => 'default-opensuse',
     }
 
     package { sudo: ensure => latest }
