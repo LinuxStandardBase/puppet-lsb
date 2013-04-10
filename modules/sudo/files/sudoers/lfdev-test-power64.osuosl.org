@@ -69,6 +69,7 @@ ALL	ALL=(ALL) ALL   # WARNING! Only use this together with 'Defaults targetpw'!
 ## User privilege specification
 ##
 root ALL=(ALL) ALL
+osuadmin ALL=(ALL) ALL
 
 ## Uncomment to allow members of group wheel to execute any command
 # %wheel ALL=(ALL) ALL
