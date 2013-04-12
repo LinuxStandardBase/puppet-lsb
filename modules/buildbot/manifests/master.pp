@@ -4,7 +4,7 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
-    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20130401004352-jehcbm2cm7b4ijcx'
+    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20130412024307-csydw3mj7ranq2c5'
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
 
