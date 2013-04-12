@@ -131,6 +131,14 @@ class buildbot::slavepkgs {
         default     => 'glibc-static-devel',
     }
 
+    # for 32-bit environments, make sure to add 32-bit C++
+
+    $cpp32pkg = $operatingsystem ? {
+        /^OpenSuSE/ => 'libstdc++47-32bit',
+        /^SLES/     => 'libstdc++43-32bit',
+        default     => 'libstdc++-32bit',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.
