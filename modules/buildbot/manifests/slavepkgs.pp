@@ -139,6 +139,12 @@ class buildbot::slavepkgs {
         default     => 'libstdc++-32bit',
     }
 
+    # other 32-bit pkgs needed
+
+    $zlib32pkg = $operatingsystem ? {
+        default => 'zlib-32bit',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.
