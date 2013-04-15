@@ -145,6 +145,14 @@ class buildbot::slavepkgs {
         default => 'zlib-32bit',
     }
 
+    $ncurses32pkg = $operatingsystem ? {
+        default => 'ncurses-devel-32bit',
+    }
+
+    $expat32pkg = $operatingsystem ? {
+        default => 'libexpat-devel-32bit',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.
