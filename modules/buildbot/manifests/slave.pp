@@ -163,7 +163,6 @@ class buildbot::slave inherits buildbot {
             $buildbot::slavepkgs::gtk32pkg: ensure => installed;
             $buildbot::slavepkgs::png32pkg: ensure => installed;
             $buildbot::slavepkgs::xdevel32pkg: ensure => installed;
-            $buildbot::slavepkgs::cpp32pkg: ensure => installed;
 	}
     }
 
