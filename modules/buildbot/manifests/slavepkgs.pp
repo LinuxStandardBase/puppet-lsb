@@ -24,7 +24,7 @@ class buildbot::slavepkgs {
     }
 
     $xdevel32pkg = $operatingsystem ? {
-        default => ['libX1-devel-32bit', 'libXext-devel-32bit',
+        default => ['libX11-devel-32bit', 'libXext-devel-32bit',
                     'libXtst-devel-32bit', 'libXt-devel-32bit',
                     'libXdmcp-devel-32bit'],
     }
