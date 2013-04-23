@@ -153,6 +153,10 @@ class buildbot::slavepkgs {
         default => 'libexpat-devel-32bit',
     }
 
+    $gtk32pkg = $operatingsystem ? {
+        default => 'libgtk-2_0-0-32bit',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.

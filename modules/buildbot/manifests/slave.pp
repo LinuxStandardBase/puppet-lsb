@@ -160,6 +160,7 @@ class buildbot::slave inherits buildbot {
             $buildbot::slavepkgs::zlib32pkg: ensure => installed;
             $buildbot::slavepkgs::ncurses32pkg: ensure => installed;
             $buildbot::slavepkgs::expat32pkg: ensure => installed;
+            $buildbot::slavepkgs::gtk32pkg: ensure => installed;
 	}
     }
 
