@@ -157,6 +157,10 @@ class buildbot::slavepkgs {
         default => 'libgtk-2_0-0-32bit',
     }
 
+    $png32pkg = $operatingsysem ? {
+        default => 'libpng12-0-32bit',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.
@@ -234,7 +238,7 @@ class buildbot::slavepkgs {
         /^SLES/   => 'pango-devel',
         default   => 'pango-devel',
     }
-    $pngpkg = $operatingsystem ? {
+    $pngdevpkg = $operatingsystem ? {
         /^SLES/   => 'libpng-devel',
         default   => 'libpng-devel',
     }
@@ -277,7 +281,7 @@ class buildbot::slavepkgs {
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
                     "$gtkpkg", "$jpegpkg", "$GLpkg",
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
-                    "$pngpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
+                    "$pngdevpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
                     "$tiffpkg" ]
     # end devchk

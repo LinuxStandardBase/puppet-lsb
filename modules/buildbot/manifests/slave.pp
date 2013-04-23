@@ -161,6 +161,7 @@ class buildbot::slave inherits buildbot {
             $buildbot::slavepkgs::ncurses32pkg: ensure => installed;
             $buildbot::slavepkgs::expat32pkg: ensure => installed;
             $buildbot::slavepkgs::gtk32pkg: ensure => installed;
+            $buildbot::slavepkgs::png32pkg: ensure => installed;
 	}
     }
 
