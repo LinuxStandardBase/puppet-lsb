@@ -140,9 +140,9 @@ class buildbot::slavepkgs {
     # for 32-bit environments, make sure to add 32-bit C++
 
     $cpp32pkg = $operatingsystem ? {
-        /^OpenSuSE/ => 'libstdc++47-32bit',
-        /^SLES/     => 'libstdc++43-32bit',
-        default     => 'libstdc++-32bit',
+        /^OpenSuSE/ => 'libstdc++47-devel-32bit',
+        /^SLES/     => 'libstdc++43-devel-32bit',
+        default     => 'libstdc++-devel-32bit',
     }
 
     # other 32-bit pkgs needed
