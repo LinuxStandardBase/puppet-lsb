@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ `arch` == "<%= smallwordarch %>" ]; then
-        <%= realgcc %> <%= gccsmallword %> "$@"
+        /usr/bin/$(basename $0) <%= gccsmallword %> "$@"
 else
-        <%= realgcc %> "$@"
+        /usr/bin/$(basename $0) "$@"
 fi
