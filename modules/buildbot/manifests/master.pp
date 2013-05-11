@@ -159,6 +159,7 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         hour    => '6',
         minute  => '0',
         weekday => 'Saturday',
+        ensure  => absent,
     }
 
     cron { 'weekly-rebuild-devchk':
