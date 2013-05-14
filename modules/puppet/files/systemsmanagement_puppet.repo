@@ -1,0 +1,7 @@
+[systemsmanagement_puppet]
+name=A network tool for managing many disparate systems (SLE_11_SP2)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/systemsmanagement:/puppet/SLE_11_SP2/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/systemsmanagement:/puppet/SLE_11_SP2/repodata/repomd.xml.key
+enabled=1

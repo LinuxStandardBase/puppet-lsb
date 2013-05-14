@@ -8,14 +8,16 @@ class puppet {
 
     $puppetversion = "${operatingsystem}-${operatingsystemrelease}-${architecture}" ? {
         /^SLES-11\..-s390x$/ => '2.6.17-0.3.1',
-        /^SLES-11\..-.*$/    => '2.7.6-9.1',
+        /^SLES-11\.1-.*$/    => '2.7.6-9.1',
+        /^SLES-11\.2-.*$/    => '3.1.1-1.7',
         default              => present,
     }
 
-    $puppetmasterversion = '2.7.6-9.1'
+    $puppetmasterversion = '3.1.1-1.7'
 
     $facterversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11\.1$/  => '1.5.2-1.20',
+        /^SLES-11\.2$/  => '1.6.18-1.1',
         default         => present,
     }
 
@@ -34,6 +36,12 @@ class puppet {
             before => Package['puppet'],
         }
 
+        file { '/etc/zypp/repos.d/systemsmanagement_puppet.repo':
+            source => 'puppet:///modules/puppet/systemsmanagement_puppet.repo',
+            notify => Exec['refresh-zypper-keys-for-puppet'],
+            before => Package['puppet'],
+        }
+
         exec { 'refresh-zypper-keys-for-puppet':
             command     => 'zypper --gpg-auto-import-keys refresh',
             path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
@@ -48,7 +56,7 @@ class puppet {
         }
 
         # For SLES 11 systems that have the vendor puppet package,
-        # zypper will prevent upgrading to the 2.7 package due to
+        # zypper will prevent upgrading to a newer package due to
         # the vendor change.  So, in order to make that happen, we
         # temporarily ignore vendor changes.
 
