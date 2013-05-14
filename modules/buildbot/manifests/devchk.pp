@@ -9,13 +9,13 @@ class buildbot::devchk inherits buildbot::slave {
     $masteruser = "$operatingsystem-$operatingsystemrelease-$architecture" ? {
         /^Fedora-16-i386$/   => 'devchk-fedora-x86',
         /^Fedora-16-x86_64$/ => 'devchk-fedora-x86_64',
-        default              => $buildbotpw::masteruser,
+        default              => 'unknown',
     }
 
     $masterpw = "$operatingsystem-$operatingsystemrelease-$architecture" ? {
         /^Fedora-16-i386$/   => $buildbotpw::x86fedora,
         /^Fedora-16-x86_64$/ => $buildbotpw::x64fedora,
-        default              => $buildbotpw::masterpw,
+        default              => 'unknown',
     }
 
     package { $buildbot::slavepkgs::devchklist: ensure => present }
