@@ -156,16 +156,15 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
     cron { 'weekly-rebuild':
         command => "echo architectures=$weeklyrebuildarchs | cat /opt/buildbot/buildbot-config/weekly-jobfile - > /opt/buildbot/jobdir/weekly-jobfile",
         user    => 'buildbot',
-        hour    => '6',
+        hour    => '1',
         minute  => '0',
         weekday => 'Saturday',
-        ensure  => absent,
     }
 
     cron { 'weekly-rebuild-devchk':
         command => '/usr/local/bin/start_lsb_build devel devchk',
         user    => 'buildbot',
-        hour    => '6',
+        hour    => '1',
         minute  => '0',
         weekday => 'Saturday',
     }
