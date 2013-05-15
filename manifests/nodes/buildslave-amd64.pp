@@ -5,6 +5,6 @@ node 'buildslave-amd64.internal.licquia.org' {
 
     include puppet
 
-    #include buildbot::slave
+    include buildbot::slave
 
 }
