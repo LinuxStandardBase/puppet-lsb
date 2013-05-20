@@ -253,7 +253,7 @@ class buildbot::slave inherits buildbot {
     }
 
     file { "/opt/buildbot/lsb-slave/info/host":
-        content => "Host ${fqdn}, running $operatingsystem $operatingsystemrelease on ${architecture}.\n",
+        content => "Host ${fqdn} (${ipaddress}), running $operatingsystem $operatingsystemrelease on ${architecture}.\n",
         require => Exec['make-slave'],
         notify  => Service['buildslave'],
     }
