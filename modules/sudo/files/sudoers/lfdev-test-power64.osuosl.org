@@ -58,8 +58,8 @@ Defaults !insults
 ## This allows use of an ordinary user account for administration of a freshly
 ## installed system. When configuring sudo, delete the two
 ## following lines:
-Defaults targetpw   # ask for the password of the target user i.e. root
-ALL	ALL=(ALL) ALL   # WARNING! Only use this together with 'Defaults targetpw'!
+# Defaults targetpw   # ask for the password of the target user i.e. root
+# ALL	ALL=(ALL) ALL   # WARNING! Only use this together with 'Defaults targetpw'!
 
 ##
 ## Runas alias specification
@@ -72,7 +72,7 @@ root ALL=(ALL) ALL
 osuadmin ALL=(ALL) ALL
 
 ## Uncomment to allow members of group wheel to execute any command
-# %wheel ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
 
 ## Same thing without a password
 # %wheel ALL=(ALL) NOPASSWD: ALL
@@ -80,3 +80,7 @@ osuadmin ALL=(ALL) ALL
 ## Read drop-in files from /etc/sudoers.d
 ## (the '#' here does not indicate a comment)
 #includedir /etc/sudoers.d
+
+# Local LF settings
+lfadmin	ALL = (ALL) ALL 
+licquia	ALL = (ALL) ALL
