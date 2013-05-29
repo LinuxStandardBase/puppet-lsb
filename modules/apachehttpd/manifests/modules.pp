@@ -15,25 +15,29 @@ class apachehttpd::modules {
     # Do initial checkouts of modules.
 
     exec { 'make-dbadmin-module':
-        command => "cd /srv/www/modules && bzr checkout -r $dbadminrev http://bzr.linuxfoundation.org/lsb/devel/dbadmin",
+        command => "bzr checkout -r $dbadminrev http://bzr.linuxfoundation.org/lsb/devel/dbadmin",
+        cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/dbadmin',
     }
 
     exec { 'make-lsbcert-module':
-        command => "cd /srv/www/modules && bzr checkout -r $certrev http://bzr.linuxfoundation.org/lsb/devel/lsb-cert",
+        command => "bzr checkout -r $certrev http://bzr.linuxfoundation.org/lsb/devel/lsb-cert",
+        cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/lsb-cert',
     }
 
     exec { 'make-prdb-module':
-        command => "cd /srv/www/modules && bzr checkout -r $prdbrev http://bzr.linuxfoundation.org/lsb/devel/prdb",
+        command => "bzr checkout -r $prdbrev http://bzr.linuxfoundation.org/lsb/devel/prdb",
+        cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/prdb',
     }
 
     exec { 'make-refspec-module':
-        command => "cd /srv/www/modules && bzr checkout -r $refspecrev http://bzr.linuxfoundation.org/refspec/devel/refspec",
+        command => "bzr checkout -r $refspecrev http://bzr.linuxfoundation.org/refspec/devel/refspec",
+        cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/refspec',
     }
