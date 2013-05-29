@@ -10,6 +10,7 @@ class apachehttpd::modules {
     $dbadminrev = 'revid:denis.silakov@rosalab.ru-20130401141239-ob3v5vf40t2hoyce'
     $certrev = 'revid:licquia@linuxfoundation.org-20120626045849-zsw9ke1pz8wsp7sm'
     $prdbrev = 'revid:licquia@linuxfoundation.org-20130403210502-fvfaoom70dhyu4qp'
+    $refspecrev = 'revid:mats@linuxfoundation.org-20130529180431-pq8ao1t04vwex0yk'
 
     # Do initial checkouts of modules.
 
@@ -29,6 +30,12 @@ class apachehttpd::modules {
         command => "cd /srv/www/modules && bzr checkout -r $prdbrev http://bzr.linuxfoundation.org/lsb/devel/prdb",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/prdb',
+    }
+
+    exec { 'make-refspec-module':
+        command => "cd /srv/www/modules && bzr checkout -r $refspecrev http://bzr.linuxfoundation.org/refspec/devel/refspec",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        creates => '/srv/www/modules/refspec',
     }
 
     # Set module configuration files.
@@ -63,6 +70,12 @@ class apachehttpd::modules {
         command => "bzr update -r $prdbrev /srv/www/modules/prdb",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-prdb-module'],
+    }
+
+    exec { 'update-refspec-module':
+        command => "bzr update -r $refspecrev /srv/www/modules/refspec",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Exec['make-refspec-module'],
     }
 
     # The prdb app needs a way to modify and commit to the
