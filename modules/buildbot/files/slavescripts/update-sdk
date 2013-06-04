@@ -1,5 +1,10 @@
 #!/bin/sh -e
 
+if [ $(whoami) != "buildbot" ]; then
+    echo "reset-sdk: run as the buildbot user" >&2
+    exit 1
+fi
+
 if [ -e /tmp/last_installed_sdk ]; then
     if [ $(cat /tmp/last_installed_sdk) = "devel" ]; then
 	echo "devel SDK already installed:"
