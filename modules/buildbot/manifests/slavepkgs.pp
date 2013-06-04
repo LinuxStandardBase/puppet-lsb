@@ -132,7 +132,7 @@ class buildbot::slavepkgs {
     }
 
     $libcstatic32pkg = $operatingsystem ? {
-        /^SLES/     => 'glibc-devel',
+        /^SLES/     => 'glibc-devel-32bit',
         /^OpenSuSE/ => 'glibc-devel-static-32bit',
         default     => 'glibc-static-devel',
     }
