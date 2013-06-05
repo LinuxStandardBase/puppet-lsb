@@ -6,7 +6,7 @@ node 'etpglr3.dal-ebis.ihost.com' {
 
     include puppet
 
-    include buildbot::slavechroot
+    # include buildbot::slavechroot
 
     # These are special entries for monitoring workload on the IBM server.
 
