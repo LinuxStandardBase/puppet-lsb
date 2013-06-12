@@ -31,6 +31,8 @@ class buildbot::slave inherits buildbot {
         $wordsize = $hostname ? {
             'lfdev-build-power32' => 'small',
             'lfdev-build-power64' => 'big',
+            'buildslave-s390'     => 'small',
+            'buildslave-s390x'    => 'big',
             default               => '',
         }
     }
@@ -43,6 +45,8 @@ class buildbot::slave inherits buildbot {
         /^ia64/         => 'lfbuild-ia64',
         /^ppc64-small$/ => 'lfbuild-ppc32',
         /^ppc64-big$/   => 'lfbuild-ppc64',
+        /^s390x-small$/ => 'lfbuild-s390',
+        /^s390x-big$/   => 'lfbuild-s390x',
         default         => $buildbotpw::masteruser,
     }
 
@@ -52,6 +56,8 @@ class buildbot::slave inherits buildbot {
         /^ia64/         => $buildbotpw::ia64password,
         /^ppc64-small$/ => $buildbotpw::ppc32password,
         /^ppc64-big$/   => $buildbotpw::ppc64password,
+        /^s390x-small$/ => $buildbotpw::s390password,
+        /^s390x-big$/   => $buildbotpw::s390xpassword,
         default         => $buildbotpw::masterpw,
     }
 
