@@ -5,6 +5,6 @@ node 'buildslave-s390' {
 
     include puppet
 
-    #include buildbot::slave
+    include buildbot::slave
 
 }
