@@ -152,6 +152,11 @@ class buildbot::slavepkgs {
 
     # other 32-bit pkgs needed
 
+    $lsb32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'redhat-lsb.s390',
+        default          => 'lsb32',
+    }
+
     $zlib32pkg = "$operatingsystem-$architecture" ? {
         /^Fedora-s390x$/ => 'zlib-devel.s390',
         default          => 'zlib-32bit',

@@ -161,6 +161,7 @@ class buildbot::slave inherits buildbot {
 
     if $wordsize == 'small' {
         package {
+            $buildbot::slavepkgs::lsb32pkg: ensure => installed;
             $buildbot::slavepkgs::libcstatic32pkg: ensure => installed;
             $buildbot::slavepkgs::cpp32pkg: ensure => installed;
             $buildbot::slavepkgs::zlib32pkg: ensure => installed;
