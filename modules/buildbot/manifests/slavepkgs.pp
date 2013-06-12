@@ -23,10 +23,13 @@ class buildbot::slavepkgs {
         default     => 'libxorg-x11-devel',
     }
 
-    $xdevel32pkg = $operatingsystem ? {
-        default => ['libX11-devel-32bit', 'libXext-devel-32bit',
-                    'libXtst-devel-32bit', 'libXt-devel-32bit',
-                    'libXdmcp-devel-32bit', 'libXi-devel-32bit'],
+    $xdevel32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => ['libX11-devel.s390', 'libXext-devel.s390',
+                             'libXtst-devel.s390', 'libXt-devel.s390',
+                             'libXdmcp-devel.s390', 'libXi-devel.s390'],
+        default          => ['libX11-devel-32bit', 'libXext-devel-32bit',
+                             'libXtst-devel-32bit', 'libXt-devel-32bit',
+                             'libXdmcp-devel-32bit', 'libXi-devel-32bit'],
     }
 
     # this one for xts5 and lsb-xvfb
@@ -131,40 +134,47 @@ class buildbot::slavepkgs {
         default     => 'glibc-static-devel',
     }
 
-    $libcstatic32pkg = $operatingsystem ? {
-        /^SLES/     => 'glibc-devel-32bit',
-        /^OpenSuSE/ => 'glibc-devel-static-32bit',
-        default     => 'glibc-static-devel',
+    $libcstatic32pkg = "$operatingsystem-$architecture" ? {
+        /^SLES/          => 'glibc-devel-32bit',
+        /^OpenSuSE/      => 'glibc-devel-static-32bit',
+        /^Fedora-s390x$/ => 'glibc-static.s390',
+        default          => 'glibc-static-devel',
     }
 
     # for 32-bit environments, make sure to add 32-bit C++
 
-    $cpp32pkg = $operatingsystem ? {
-        /^OpenSuSE/ => 'libstdc++47-devel-32bit',
-        /^SLES/     => 'libstdc++43-devel-32bit',
-        default     => 'libstdc++-devel-32bit',
+    $cpp32pkg = "$operatingsystem-$architecture" ? {
+        /^OpenSuSE/      => 'libstdc++47-devel-32bit',
+        /^SLES/          => 'libstdc++43-devel-32bit',
+        /^Fedora-s390x$/ => 'libstdc++-devel.s390',
+        default          => 'libstdc++-devel-32bit',
     }
 
     # other 32-bit pkgs needed
 
-    $zlib32pkg = $operatingsystem ? {
-        default => 'zlib-32bit',
+    $zlib32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'zlib-devel.s390',
+        default          => 'zlib-32bit',
     }
 
-    $ncurses32pkg = $operatingsystem ? {
-        default => 'ncurses-devel-32bit',
+    $ncurses32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'ncurses-devel.s390',
+        default          => 'ncurses-devel-32bit',
     }
 
-    $expat32pkg = $operatingsystem ? {
-        default => 'libexpat-devel-32bit',
+    $expat32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'expat-devel.s390',
+        default          => 'libexpat-devel-32bit',
     }
 
-    $gtk32pkg = $operatingsystem ? {
-        default => 'libgtk-2_0-0-32bit',
+    $gtk32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'gtk2.s390',
+        default          => 'libgtk-2_0-0-32bit',
     }
 
-    $png32pkg = $operatingsysem ? {
-        default => 'libpng12-0-32bit',
+    $png32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'libpng12.s390',
+        default          => 'libpng12-0-32bit',
     }
 
     # Apparently, libbat needs the printproto stuff to be
