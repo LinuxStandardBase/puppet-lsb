@@ -120,7 +120,7 @@ class buildbot::slavepkgs {
     $bisonpkg = $operatingsystem ? {
         /^SLES/   => 'bison',
         /^CentOS/ => 'byacc',
-        /^Fedora/ => 'byacc',
+        /^Fedora/ => 'bison',
         default   => 'bison',
     }
     
