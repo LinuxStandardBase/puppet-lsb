@@ -303,10 +303,11 @@ class buildbot::slavepkgs {
     # end devchk
     
     # command for forcing the small-word environment
-    $smallwordpkg = $architecture ? {
-        's390x' => 's390-32',
-        'ppc64' => 'powerpc32',
-        default => '',
+    $smallwordpkg = "$operatingsystem-$architecture" ? {
+        'SLES-s390x'   => 's390-32',
+        'Fedora-s390x' => 'util-linux',
+        /ppc64$/       => 'powerpc32',
+        default        => '',
     }
 
     # Most packages needed for a typical slave; see the definitions
