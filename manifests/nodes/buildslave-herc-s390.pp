@@ -1,5 +1,5 @@
 # Backup 31-bit s390 build slave on Hercules.
-node 'buildslave-s390' {
+node 'buildslave-s390.internal.licquia.org' {
 
     include sudo
 
