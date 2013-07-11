@@ -187,6 +187,11 @@ class buildbot::slavepkgs {
         default          => 'libpng12-0-32bit',
     }
 
+    $glut32pkg = "$operatingsystem-$architecture" ? {
+        /^Fedora-s390x$/ => 'freeglut-devel.s390',
+        default          => 'freeglut-devel-32bit',
+    }
+
     # Apparently, libbat needs the printproto stuff to be
     # installed.  This should be built and used as part of
     # the libbat build; need to investigate.
@@ -327,6 +332,7 @@ class buildbot::slavepkgs {
                  'flex', "$xgettextpkg", 'rsync', "$intltoolpkg",
                  "$glibdevelpkg", "$pamdevelpkg", "$expectpkg",
                  "$expatdevelpkg", 'perl', "$libcstaticpkg", 
-                 'ncurses-devel', "$libxsltpkg", "$printprotopkg" ]
+                 'ncurses-devel', "$libxsltpkg", "$printprotopkg",
+                 'freeglut-devel' ]
 
 }
