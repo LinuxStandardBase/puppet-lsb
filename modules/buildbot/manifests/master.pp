@@ -174,7 +174,6 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         user    => 'buildbot',
         hour    => '19',
         minute  => '30',
-        ensure  => absent,
     }
 
     exec { 'update-buildbot-config':
