@@ -123,6 +123,12 @@ class buildbot::slavepkgs {
         /^Fedora/ => 'bison',
         default   => 'bison',
     }
+
+    # automake 1.4 is needed by the gtkvts portion of desktop-test
+    $automakepkg = $operatingsystem ? {
+        /^Fedora/ => 'automake14',
+        default   => 'automake',
+    }
     
     # need libc.a to build a chroot test in runtime-test and for lsbrun
 
@@ -323,7 +329,7 @@ class buildbot::slavepkgs {
     # Most packages needed for a typical slave; see the definitions
     # above for $fontutilpkg and $xdevelpkg for the interesting ones.
     $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg", 'cvs',
-                 "$javapkg", 'autoconf', 'automake', 'libtool', "$bisonpkg",
+                 "$javapkg", 'autoconf', "$automakepkg", 'libtool', "$bisonpkg",
                  'flex', "$xgettextpkg", 'rsync', "$intltoolpkg",
                  "$glibdevelpkg", "$pamdevelpkg", "$expectpkg",
                  "$expatdevelpkg", 'perl', "$libcstaticpkg", 
