@@ -37,28 +37,47 @@ class buildbot::slave inherits buildbot {
         }
     }
 
-    # Set up login information.
+    # We also have multiple build slaves for s390 and s390x.
+    # Figure out which slave we are by looking at the hostname.
+    # By default, set ourselves up as #1 unless the hostname
+    # matches the hostnames we want as #2; this means that
+    # if we switch the #2 build slaves, we need to fix the
+    # hostname here.  Also, this means that other archs are
+    # set up as #1, which shouldn't matter, but is at least
+    # consistent with reality.
 
-    $masteruser = "${architecture}-${wordsize}" ? {
-        /^i386/         => 'lfbuild-x86',
-        /^x86_64/       => 'lfbuild-x86_64',
-        /^ia64/         => 'lfbuild-ia64',
-        /^ppc64-small$/ => 'lfbuild-ppc32',
-        /^ppc64-big$/   => 'lfbuild-ppc64',
-        /^s390x-small$/ => 'lfbuild-s390',
-        /^s390x-big$/   => 'lfbuild-s390x',
-        default         => $buildbotpw::masteruser,
+    $slaveid = $hostname ? {
+        'buildslave-s390'  => 'two',
+        'buildslave-s390x' => 'two',
+        default            => 'one',
     }
 
-    $masterpw = "${architecture}-${wordsize}" ? {
-        /^i386/         => $buildbotpw::x86password,
-        /^x86_64/       => $buildbotpw::x64password,
-        /^ia64/         => $buildbotpw::ia64password,
-        /^ppc64-small$/ => $buildbotpw::ppc32password,
-        /^ppc64-big$/   => $buildbotpw::ppc64password,
-        /^s390x-small$/ => $buildbotpw::s390password,
-        /^s390x-big$/   => $buildbotpw::s390xpassword,
-        default         => $buildbotpw::masterpw,
+    # Set up login information.
+
+    $masteruser = "${architecture}-${wordsize}-${slaveid}" ? {
+        /^i386/            => 'lfbuild-x86',
+        /^x86_64/          => 'lfbuild-x86_64',
+        /^ia64/            => 'lfbuild-ia64',
+        /^ppc64-small/     => 'lfbuild-ppc32',
+        /^ppc64-big/       => 'lfbuild-ppc64',
+        /^s390x-small-one/ => 'lfbuild-s390',
+        /^s390x-big-one/   => 'lfbuild-s390x',
+        /^s390x-small-two/ => 'lfbuild-s390-2',
+        /^s390x-big-two/   => 'lfbuild-s390x-2',
+        default            => $buildbotpw::masteruser,
+    }
+
+    $masterpw = "${architecture}-${wordsize}-${slaveid}" ? {
+        /^i386/            => $buildbotpw::x86password,
+        /^x86_64/          => $buildbotpw::x64password,
+        /^ia64/            => $buildbotpw::ia64password,
+        /^ppc64-small/     => $buildbotpw::ppc32password,
+        /^ppc64-big/       => $buildbotpw::ppc64password,
+        /^s390x-small-one/ => $buildbotpw::s390password,
+        /^s390x-big-one/   => $buildbotpw::s390xpassword,
+        /^s390x-small-two/ => $buildbotpw::s390pwd2,
+        /^s390x-big-two/   => $buildbotpw::s390xpwd2,
+        default            => $buildbotpw::masterpw,
     }
 
     # Which SDKs should we use for released and beta builds?
