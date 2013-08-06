@@ -63,7 +63,7 @@ class ftp {
     cron { 'regular-update-manifests':
         command => '/usr/local/bin/update-manifests',
         user    => root,
-        hour    => 3,
+        hour    => [ 3, 6, 9, 12, 15, 18, 21 ],
         minute  => 15,
     }
 
