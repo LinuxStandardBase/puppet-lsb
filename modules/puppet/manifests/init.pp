@@ -21,6 +21,11 @@ class puppet {
         default         => present,
     }
 
+    $puppetservice = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^Fedora-/ => 'puppetagent',
+        default    => 'puppet',
+    }
+
     file { 'puppet.conf':
         name => '/etc/puppet/puppet.conf',
         source => 'puppet:///modules/puppet/puppet.conf',
@@ -87,7 +92,7 @@ solver.allowVendorChange = true
         }
     }
 
-    service { 'puppet':
+    service { $puppetservice:
         enable      => true,
         require     => Package['puppet'],
     }
