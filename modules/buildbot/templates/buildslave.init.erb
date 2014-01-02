@@ -14,6 +14,7 @@
 PRG=buildslave
 DAEMON=/opt/buildbot/bin/$PRG
 USER=buildbot
+PIDFILE=/opt/buildbot/lsb-slave/twistd.pid
 <% if scope.lookupvar("wordsize") == "small" then -%>
 SMALLWORDRUN=<%= smallwordcmd %>
 <% end -%>
@@ -35,6 +36,24 @@ case "$1" in
     /bin/su -c "$DAEMON stop /opt/buildbot/lsb-slave >> /tmp/buildbot-start.log 2>&1" $USER
     RETVAL=$?
     echo "done"
+    ;;
+  status)
+    if [ -f $PIDFILE ]; then
+      if [ -d /proc/$(cat $PIDFILE) ]; then
+        echo "$PRG is running"
+        RETVAL=0
+      else
+        echo "$PRG is not running (stale PID file found)"
+        RETVAL=1
+      fi
+    else
+      echo "$PRG is not running"
+      RETVAL=3
+    fi
+    ;;
+  *)
+    echo "Usage: $0 start|stop|status"
+    RETVAL=1
     ;;
 esac
 

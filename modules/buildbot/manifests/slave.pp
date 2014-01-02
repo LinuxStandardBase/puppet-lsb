@@ -345,8 +345,7 @@ class buildbot::slave inherits buildbot {
     service { "buildslave":
         ensure     => running,
         hasrestart => false,
-        hasstatus  => false,
-        status     => 'ps -p $(cat /opt/buildbot/lsb-slave/twistd.pid)',
+        hasstatus  => true,
         require    => [ File['/etc/init.d/buildslave'], User['buildbot'],
                         Exec['make-slave'] ],
     }
