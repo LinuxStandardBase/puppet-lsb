@@ -22,8 +22,9 @@ class puppet {
     }
 
     $puppetservice = "${operatingsystem}-${operatingsystemrelease}" ? {
-        /^Fedora-/ => 'puppetagent',
-        default    => 'puppet',
+        /^Fedora-16/ => 'puppet',
+        /^Fedora-/   => 'puppetagent',
+        default      => 'puppet',
     }
 
     file { 'puppet.conf':
