@@ -13,8 +13,8 @@ class user::herrold inherits user::virtual {
     ssh_authorized_key { 'herrold+lf-2013-rsa@owlriver.com':
         ensure  => present,
         type    => 'ssh-rsa',
-        key     => 'AAAAB3NzaC1yc2EAAAABIwAAAQEA7q203HceYQBUBzJSpp6IP0aIfH8PLLbqYdRM38u5X/W0P+r2gYIq7hr2R4+wYvCZvySXoA3dukrI/V/bTsF5W++h2LTtFNZvSTZYbv/ZDFfe9QlOEamY+kKZkgvOByZiOJhv4jnxIY1IUmSQHdy0CWjA82VMncaTm3vOkg+565SIhFAgxLxu/UhH7IK66IEreefAx5qFVF4O6jU3kKKzUZaimqXwIJuZvce52l8qc6zZyLobuEqTPv5mwLSH8LbZKlf/N5jWJJ1Ou1p8tZB4BZbeJv8FP4cHVMyHf9EJUkKKdeQiI2N8X8c4zy+Kqc/+kXf5I1UcwyOsLAFOTlfQsw==',
-        user    => 'herrold',
+        key     => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAuBgHhm6RzKd2MUJLv2G36PVi7fgH+haefHQRH1ZCPv4FHbDuKLHJr2T6JrrzUCPnlX7wXNGTJPlAmiw8mfM4eTdgybjXE4Htj9CewyPP8hzOSc3bxQD4UgdPGy0XsxHQg3weAg1+/K5iXpYMLsrsF2yub9xZ9+0FuXFMkVq2W0AbOoUF+2DX5e461RfZkFxtUjcKZNHgFtPhwzcVMmQVj+96m28jJFnDCWJI5vcUoMIf3VnH4XX757jNOj+KX87eE7q4hUhkn7GZ0k2/nkDKsh3Ey01IvxLsjquf4wVN5T3ESk3EAgtSlq6XfbK90POZqtYIz5g/bDT8QOyRu9SMjw==',
+        user    => 'herrold+lf-2014-rsa@owlriver.com',
     }
 
 
