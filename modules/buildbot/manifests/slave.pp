@@ -31,8 +31,10 @@ class buildbot::slave inherits buildbot {
         $wordsize = $hostname ? {
             'lfdev-build-power32' => 'small',
             'lfdev-build-power64' => 'big',
-            'buildslave-s390'     => 'small',
-            'buildslave-s390x'    => 'big',
+            'lsb-k-b-s390'        => 'small',
+            'lsb-x-s390'          => 'small',
+            'lsb-k-b-s390x'       => 'big',
+            'lsb-x-b-s390x'       => 'big',
             default               => '',
         }
     }
@@ -47,9 +49,9 @@ class buildbot::slave inherits buildbot {
     # consistent with reality.
 
     $slaveid = $hostname ? {
-        'buildslave-s390'  => 'two',
-        'buildslave-s390x' => 'two',
-        default            => 'one',
+        'lsb-x-s390'    => 'two',
+        'lsb-x-b-s390x' => 'two',
+        default         => 'one',
     }
 
     # Set up login information.
