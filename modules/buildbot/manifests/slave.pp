@@ -352,6 +352,14 @@ class buildbot::slave inherits buildbot {
                         Exec['make-slave'] ],
     }
 
+    # Get rid of an old cache that can cause space issues on
+    # systems with /tmp mounted tmpfs.
+
+    file { "/tmp/appbat-pkgcache":
+        ensure  => absent,
+        recurse => true,
+    }
+
     # Special: for small-word build slaves, we need to force
     # small-word builds (31- or 32-bit builds).  We do this
     # differently for chroots vs. regular build systems.
