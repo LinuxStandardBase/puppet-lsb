@@ -358,6 +358,7 @@ class buildbot::slave inherits buildbot {
     file { "/tmp/appbat-pkgcache":
         ensure  => absent,
         recurse => true,
+        force   => true,
     }
 
     # Special: for small-word build slaves, we need to force
