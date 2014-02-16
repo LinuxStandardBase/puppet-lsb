@@ -18,7 +18,7 @@ class buildbot::virtualenv {
     }
 
     exec { "make-buildbot-virtualenv":
-        command => "virtualenv --system-site-packages /opt/buildbot",
+        command => "virtualenv /opt/buildbot",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/bin/pip",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
