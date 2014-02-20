@@ -229,6 +229,10 @@ class buildbot::slavepkgs {
         /^SLES/   => 'cairo-devel',
         default   => 'cairo-devel',
     }
+    $cairogobjectpkg = $operatingsystem ? {
+        /^SLES/   => 'cairo-gobject-devel',
+        default   => 'cairo-devel',
+    }
     $cupspkg = $operatingsystem ? {
         /^SLES/   => 'cups-devel',
         default   => 'cups-devel',
@@ -243,9 +247,13 @@ class buildbot::slavepkgs {
         /^Fedora/ => 'freetype-devel',
         default   => 'freetype2-devel',
     }
-    $gtkpkg = $operatingsystem ? {
+    $gtk2pkg = $operatingsystem ? {
         /^SLES/   => 'gtk2-devel',
         default   => 'gtk2-devel',
+    }
+    $gtk3pkg = $operatingsystem ? {
+        /^SLES/   => 'gtk3-devel',
+        default   => 'gtk3-devel',
     }
     $jpegpkg = $operatingsystem ? {
         /^SLES/   => 'libjpeg-devel',
@@ -311,11 +319,11 @@ class buildbot::slavepkgs {
     }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
-                    "$gtkpkg", "$jpegpkg", "$GLpkg",
+                    "$gtk2pkg", "$gtk3pkg", "$jpegpkg", "$GLpkg",
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngdevpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
-                    "$tiffpkg" ]
+                    "$tiffpkg", $cairogobjectpkg ]
     # end devchk
     
     # command for forcing the small-word environment

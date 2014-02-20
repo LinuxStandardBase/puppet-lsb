@@ -21,7 +21,7 @@ export BZR_PROGRESS_BAR
 
 # the current tags to export from for "beta" versions:
 BETAFHS="-1"
-BETALSB=LSB-4.1
+BETALSB=LSB-5.0-beta
 
 # obtain the current FHS spec from bzr
 [ -d /tmp/fhs-spec ] && rm -rf /tmp/fhs-spec
@@ -46,7 +46,7 @@ then
 <title>FHS Snapshot Specification</title>
 </head>
 <body>
-<h1>Filesystem Hierarchy Specification - Beta</h1>
+<h1>Filesystem Hierarchy Specification - Snapshot</h1>
 <ul>
 <li><a href="fhs.txt">UTF-8 Text</a></li>
 <li><a href="fhs.html">HTML (one page)</a></li>
@@ -89,22 +89,10 @@ rm -rf /tmp/fhs-spec
 
 # LSB specs are already built. Grab them from booksets and books branches,
 # but only the directories that begin with LSB- are "published"
-# for LSB 5, no more looking in books - change this just for snapshots for now
-
-# beta specs: export a specific tagged revision (tag set at top of this script)
-for branch in $BRANCHURL/booksets $BRANCHURL/books
-do
-    for path in $(bzr ls $branch)
-    do
-	book=$(echo $path | sed "s,$branch/,,")
-	if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
-	then
-	    [ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
-	    mkdir -p $BETASPECS_PATH/lsb/$book
-	    bzr export -r $BETALSB $BETASPECS_PATH/lsb/$book $path
-	fi
-    done
-done
+# with the LSB 5.0 reorganization, there are no more published specs 
+# in the "books" tree, but keep the existing structure for a while
+# just in case this mechanism needs to be used to publish an older spec.
+# later we can clean it up.
 
 # snapshots: just take the top
 #for branch in $BRANCHURL/booksets $BRANCHURL/books
@@ -118,6 +106,24 @@ do
 	    [ -d $SNAPSHOTS_PATH/lsb/$book ] && rm -rf $SNAPSHOTS_PATH/lsb/$book
 	    mkdir -p $SNAPSHOTS_PATH/lsb/$book
 	    bzr export $SNAPSHOTS_PATH/lsb/$book $path
+	fi
+    done
+done
+
+# beta specs: export a specific tagged revision (tag set at top of this script)
+#for branch in $BRANCHURL/booksets $BRANCHURL/books
+for branch in $BRANCHURL/booksets $BRANCHURL/books
+do
+    for path in $(bzr ls $branch)
+    do
+	book=$(echo $path | sed "s,$branch/,,")
+	if [ $(echo $book | grep "^LSB-" | wc -l) -ne 0 ]
+	then
+	    [ -d $BETASPECS_PATH/lsb/$book ] && rm -rf $BETASPECS_PATH/lsb/$book
+	    mkdir -p $BETASPECS_PATH/lsb/$book
+	    bzr export -r $BETALSB $BETASPECS_PATH/lsb/$book $path
+	    # XXX check for error, and give up - if the tag does not work
+	    # XXX once, there is no point in continuing
 	fi
     done
 done
