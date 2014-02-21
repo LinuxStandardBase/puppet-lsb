@@ -2,7 +2,6 @@ class puppet::server inherits puppet {
 
     package { 'puppet-server':
         ensure  => $puppetmasterversion,
-        require => File['/etc/zypp/repos.d/systemsmanagement_puppet.repo'],
     }
 
     # For the Puppet server, puppet.conf is in the root of
