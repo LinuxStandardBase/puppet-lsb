@@ -6,4 +6,6 @@ node 'lsb2.linux-foundation.org' {
 
     include sudo
 
+    include puppet::server
+
 }

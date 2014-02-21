@@ -14,13 +14,23 @@ class puppet::server inherits puppet {
     # Requires that sudo be configured to allow the MTA user
     # to run "/usr/bin/bzr update -q" as root.
 
-    file { '/usr/local/bin/puppet-email-notify':
-        source => [ "puppet:///modules/puppet/puppet-email-notify" ],
-        mode => 0755,
-    }
+    #file { '/usr/local/bin/puppet-email-notify':
+    #    source => [ "puppet:///modules/puppet/puppet-email-notify" ],
+    #    mode => 0755,
+    #}
 
-    mailalias { 'puppet-notify':
-        recipient => '|/usr/local/bin/puppet-email-notify',
+    #mailalias { 'puppet-notify':
+    #    recipient => '|/usr/local/bin/puppet-email-notify',
+    #}
+
+    # Disabled the email auto-update feature; instead, while we
+    # migrate from lsb1 to lsb2, just do an update via cron
+    # every few minutes, like with puppet-secret.
+
+    cron { 'update-puppet':
+        command => 'cd /etc/puppet && bzr up -q',
+        user    => 'root',
+        minute  => '*/5',
     }
 
     # Update the secrets repository as well.  This is assumed to be

@@ -13,7 +13,10 @@ class puppet {
         default              => present,
     }
 
-    $puppetmasterversion = '3.1.1-1.7'
+    $puppetmasterversion = "${operatingsystem}-${operatingsystemrelease}-${architecture}" ? {
+        /^SLES-11\.2-.*$/ => '3.1.1-1.7',
+        default           => present,
+    }
 
     $facterversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11\.1$/  => '1.5.2-1.20',
@@ -24,6 +27,7 @@ class puppet {
     $puppetservice = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^Fedora-16/ => 'puppet',
         /^Fedora-/   => 'puppetagent',
+        /^OpenSuSE-/ => 'puppetagent',
         default      => 'puppet',
     }
 
