@@ -231,6 +231,7 @@ class buildbot::slavepkgs {
     }
     $cairogobjectpkg = $operatingsystem ? {
         /^SLES/   => 'cairo-gobject-devel',
+        /^Fedora/ => 'cairo-gobject-devel',
         default   => '',
     }
     $cupspkg = $operatingsystem ? {
@@ -324,7 +325,7 @@ class buildbot::slavepkgs {
                     "$pngdevpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
                     "$tiffpkg" ]
-    if $operatingsystem =~ /^SLES/ {
+    if $operatingsystem =~ /^SLES/ or $operatingsystem =~ /^Fedora/ {
         $devchklist += [ "$cairogobjectpkg" ]
     }
     # end devchk
