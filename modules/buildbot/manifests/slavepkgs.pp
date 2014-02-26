@@ -231,7 +231,7 @@ class buildbot::slavepkgs {
     }
     $cairogobjectpkg = $operatingsystem ? {
         /^SLES/   => 'cairo-gobject-devel',
-        default   => 'cairo-devel',
+        default   => '',
     }
     $cupspkg = $operatingsystem ? {
         /^SLES/   => 'cups-devel',
@@ -323,7 +323,10 @@ class buildbot::slavepkgs {
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngdevpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
-                    "$tiffpkg", $cairogobjectpkg ]
+                    "$tiffpkg" ]
+    if $operatingsystem =~ /^SLES/ {
+        $devchklist += [ "$cairogobjectpkg" ]
+    }
     # end devchk
     
     # command for forcing the small-word environment
