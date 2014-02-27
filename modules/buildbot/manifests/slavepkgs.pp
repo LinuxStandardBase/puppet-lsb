@@ -324,10 +324,7 @@ class buildbot::slavepkgs {
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngdevpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
-                    "$tiffpkg" ]
-    if $operatingsystem =~ /^SLES/ or $operatingsystem =~ /^Fedora/ {
-        $devchklist += [ "$cairogobjectpkg" ]
-    }
+                    "$tiffpkg", "$cairogobjectpkg" ]
     # end devchk
     
     # command for forcing the small-word environment
