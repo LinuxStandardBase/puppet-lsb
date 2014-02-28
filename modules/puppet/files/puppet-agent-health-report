@@ -1,19 +1,35 @@
 #!/bin/sh
-
+#
+#	puppet-agent-health-report
+#
+#	suitable for cron	
+#
+PATH='/usr/lib64/qt-3.3/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:~/bin/:/home/herrold/bin:~/bin/'
+#
 TEMP_PATH=$(mktemp -d --tmpdir puppet-health.XXXXXXXXXX)
+RECIPIENTS="licquia@linuxfoundation.org,herrold@owlriver.com"
+BAS=`basename $0`
+STALE_TIME="125"
 
-cd /var/lib/puppet/yaml/node
+RPT_ROOT="/var/lib/puppet/yaml/node"
+cd ${RPT_ROOT}
 
-find . -mmin +125 -print \
+find . -mmin +${STALE_TIME} -type f -print \
   | sort \
   | (while read f; do ls -l $f; done) \
   | cut -d' ' -f6- \
   > $TEMP_PATH/report
 
 if [ -s $TEMP_PATH/report ]; then
+  ( echo "report: $BAS" ; \
+    echo -n "date: " ; date ; \
+    cat $TEMP_PATH/report ; \
+    echo -n "lines: " ; \
+    wc -l $TEMP_PATH/report ; \
+    echo "# EOJ" ) | \
   mail -s "LSB Puppet agent health report" \
-    licquia@linuxfoundation.org herrold@owlriver.com \
-    < $TEMP_PATH/report
+    ${RECIPIENTS}
 fi
 
 rm -rf $TEMP_PATH
+#
