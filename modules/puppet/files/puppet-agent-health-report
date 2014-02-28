@@ -1,6 +1,6 @@
 #!/bin/sh
 
-TEMP_PATH=$(mktemp --tmpdir puppet-health.XXXXXXXXXX)
+TEMP_PATH=$(mktemp -d --tmpdir puppet-health.XXXXXXXXXX)
 
 cd /var/lib/puppet/yaml/node
 
@@ -12,7 +12,8 @@ find . -mmin +125 -print \
 
 if [ -s $TEMP_PATH/report ]; then
   mail -s "LSB Puppet agent health report" \
-    licquia@linuxfoundation.org herrold@owlriver.com
+    licquia@linuxfoundation.org herrold@owlriver.com \
+    < $TEMP_PATH/report
 fi
 
 rm -rf $TEMP_PATH
