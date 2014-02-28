@@ -42,4 +42,17 @@ class puppet::server inherits puppet {
         minute  => '*/5',
     }
 
+    # Report on agent health.
+
+    file { '/usr/local/bin/puppet-agent-health-report':
+        source => [ "puppet:///modules/puppet/puppet-agent-health-report" ],
+        mode => 0755,
+    }
+
+    cron { 'report-puppet-agent-health':
+        command => '/usr/local/bin/puppet-agent-health-report',
+        user    => 'root',
+        minute  => 0,
+        hour    => '*/3',
+    }
 }
