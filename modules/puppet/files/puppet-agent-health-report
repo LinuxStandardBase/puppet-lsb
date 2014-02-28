@@ -22,6 +22,8 @@ find . -mmin +${STALE_TIME} -type f -print \
 
 if [ -s $TEMP_PATH/report ]; then
   ( echo "report: $BAS" ; \
+    echo -n "puppet host: " ;  \
+    hostname \
     echo -n "date: " ; date ; \
     cat $TEMP_PATH/report ; \
     echo -n "lines: " ; \
