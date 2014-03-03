@@ -32,7 +32,7 @@ find . -mmin +${STALE_TIME} -type f -print \
 if [ -s $TEMP_PATH/report -o "x${CONTINUITY}" != "x" ]; then
   ( echo    "report:      $BAS" ; \
     echo -n "puppet host: " ;  \
-    hostname \
+    hostname ; \
     echo -n "date:        " ; \
     date ; \
     echo    "continuity:  ${CONTINUITY}" ; \
