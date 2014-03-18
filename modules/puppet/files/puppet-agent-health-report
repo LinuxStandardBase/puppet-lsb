@@ -62,7 +62,7 @@ DIRTY=""
 if [ "x${DIRTY}" != "x" ]; then
   ( echo    "report:      $BAS" ; \
     echo -n "puppet host: " ;  \
-    hostname \
+    hostname ; \
     echo -n "date:        " ; \
     date ; \
     echo    "continuity:  ${CONTINUITY}" ; \
