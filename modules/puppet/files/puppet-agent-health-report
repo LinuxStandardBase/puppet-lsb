@@ -5,12 +5,30 @@
 #	suitable for cron	
 #
 PATH='/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin'
+BAS=`basename $0`
 #
-TEMP_PATH=$(mktemp -d --tmpdir puppet-health.XXXXXXXXXX)
+#	want a place to cache persistent state, 
+# 	so don't make if we have one, and use the same 
+#	one durably
+HASTEMP=`find /tmp -type d -name "${BAS}" | grep -c "${BAS}"`
+[ 0${HASTEMP} -lt 01 ] && {
+	TEMP_PATH=$(mktemp -d --tmpdir ${BAS}.XXXXXXXXXX)
+	}
+TEMP_PATH=`find /tmp -type d -name "${BAS}" | sort | tail -1 `
+[ "x${TEMP_PATH}" = "x" ] && {
+	echo "error: cannot see a working TEMP_PATH for ${BAS} " 1>&2
+	echo " ... bailing" 1>&2
+	exit 1
+	}
+#
 RECIPIENTS="licquia@linuxfoundation.org,herrold@owlriver.com"
 #
-BAS=`basename $0`
+#
 STALE_TIME="125"
+YMDH=`date +%Y+m%d%H`
+PRIORFILE=`find $TEMP_PATH -type f -name "report*"| sort | tail -1`
+CURRFILE="$TEMP_PATH/report-${YMDH}"
+#
 #	for continuity purposes, chirp once a day
 ALIVE=15
 POSTALIVE=18
@@ -27,9 +45,21 @@ find . -mmin +${STALE_TIME} -type f -print \
   | sort \
   | (while read f; do ls -l $f; done) \
   | cut -d' ' -f6- \
-  > $TEMP_PATH/report
+  > ${CURRFILE}
+#
+#	now diff vs last seen to spot changes
+OLDMD5=`md5sum ${PRIORFILE} | awk {'print $1'} `
+CURRMD5=`md5sum ${CURRFILE} | awk {'print $1'} `
 
-if [ -s $TEMP_PATH/report -o "x${CONTINUITY}" != "x" ]; then
+DIRTY=""
+[ "x${OLDMD5}" != "x${CURRMD5}" -a -s ${CURRFILE} ] && {
+	export DIRTY="y"
+	}
+[ "x${CONTINUITY}" != "x" ] && {
+	export DIRTY="y"
+	}
+	
+if [ "x${DIRTY}" != "x" ]; then
   ( echo    "report:      $BAS" ; \
     echo -n "puppet host: " ;  \
     hostname \
@@ -37,13 +67,15 @@ if [ -s $TEMP_PATH/report -o "x${CONTINUITY}" != "x" ]; then
     date ; \
     echo    "continuity:  ${CONTINUITY}" ; \
     echo    "directory:   ${RPT_ROOT} " ; \
-    sed -e 's@./@@g' < $TEMP_PATH/report ; \
+    sed -e 's@./@@g' < $CURRFILE ; \
     echo -n "lines: " ; \
-    wc -l $TEMP_PATH/report ; \
+    wc -l $CURRFILE ; \
     echo "# EOJ" ) | \
-  mail -s "LSB Puppet agent health report" \
+  mail -s "LSB Puppet agent health ${YYMDH} " \
     ${RECIPIENTS}
 fi
 
-rm -rf $TEMP_PATH
+cd $TEMP_PATH
+# -cmin is in units of minutes -- toss old files
+find $TEMP_PATH -cmin $STALE_TIME -type f -a -exec rm {} \;
 #
