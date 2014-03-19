@@ -10,11 +10,11 @@ BAS=`basename $0`
 #	want a place to cache persistent state, 
 # 	so don't make if we have one, and use the same 
 #	one durably
-HASTEMP=`find /tmp -type d -name "${BAS}" | grep -c "${BAS}"`
+HASTEMP=`find /tmp -type d -print | grep -c "${BAS}"`
 [ 0${HASTEMP} -lt 01 ] && {
 	TEMP_PATH=$(mktemp -d --tmpdir ${BAS}.XXXXXXXXXX)
 	}
-TEMP_PATH=`find /tmp -type d -name "${BAS}" | sort | tail -1 `
+TEMP_PATH=`find /tmp -type d -print | grep "${BAS}" | sort | tail -1 `
 [ "x${TEMP_PATH}" = "x" ] && {
 	echo "error: cannot see a working TEMP_PATH for ${BAS} " 1>&2
 	echo " ... bailing" 1>&2
