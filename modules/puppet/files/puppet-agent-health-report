@@ -7,10 +7,27 @@
 PATH='/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin'
 BAS=`basename $0`
 #
-#	want a place to cache persistent state, 
+RECIPIENTS="licquia@linuxfoundation.org,herrold@owlriver.com"
+#
+#	for continuity purposes, chirp once a day
+ALIVE=15
+POSTALIVE=18
+HOUR=`date +%H`
+[ 0${HOUR} -ge 0${ALIVE} -a 0${HOUR} -lt 0${POSTALIVE} ] && {
+	export CONTINUITY="y"
+#	toss out yesterday's temp directory
+	find /tmp -type d -name "${BAS}" -a -exec rm -rf {} \;
+	}
+#
+#	want a place to cache persistent state, save when we chirp
 # 	so don't make if we have one, and use the same 
+<<<<<<< TREE
+#	one durably all day
+HASTEMP=`find /tmp -type d -name "${BAS}" | grep -c "${BAS}" 2> /dev/null `
+=======
 #	one durably
 HASTEMP=`find /tmp -type d -print | grep -c "${BAS}"`
+>>>>>>> MERGE-SOURCE
 [ 0${HASTEMP} -lt 01 ] && {
 	TEMP_PATH=$(mktemp -d --tmpdir ${BAS}.XXXXXXXXXX)
 	}
@@ -21,21 +38,19 @@ TEMP_PATH=`find /tmp -type d -print | grep "${BAS}" | sort | tail -1 `
 	exit 1
 	}
 #
-RECIPIENTS="licquia@linuxfoundation.org,herrold@owlriver.com"
 #
-#
+#	how many minutes do we wait after no checkin before carping?
 STALE_TIME="125"
-YMDH=`date +%Y+m%d%H`
-PRIORFILE=`find $TEMP_PATH -type f -name "report*"| sort | tail -1`
-CURRFILE="$TEMP_PATH/report-${YMDH}"
 #
-#	for continuity purposes, chirp once a day
-ALIVE=15
-POSTALIVE=18
-HOUR=`date +%H`
-[ 0${HOUR} -ge 0${ALIVE} -a 0${HOUR} -lt 0${POSTALIVE} ] && {
-	export CONTINUITY="y"
+YMDH=`date +%Y%m%d%H`
+YMDZ=`date +%Y%m%d00`
+PRIORFILE=`find $TEMP_PATH -type f -name "report*"| sort | tail -1`
+#	when none exists, fake one so the later diff always has a target
+[ "x${PRIORFILE}" = "x" ] && {
+	PRIORFILE="$TEMP_PATH/report-${YMDZ}"
+	touch ${PRIORFILE}
 	}
+CURRFILE="$TEMP_PATH/report-${YMDH}"
 #
 RPT_ROOT="/var/lib/puppet/yaml/node"
 #
@@ -48,11 +63,11 @@ find . -mmin +${STALE_TIME} -type f -print \
   > ${CURRFILE}
 #
 #	now diff vs last seen to spot changes
-OLDMD5=`md5sum ${PRIORFILE} | awk {'print $1'} `
+PRIORMD5=`md5sum ${PRIORFILE} | awk {'print $1'} `
 CURRMD5=`md5sum ${CURRFILE} | awk {'print $1'} `
 
 DIRTY=""
-[ "x${OLDMD5}" != "x${CURRMD5}" -a -s ${CURRFILE} ] && {
+[ "x${PRIORMD5}" != "x${CURRMD5}" -a -s ${CURRFILE} ] && {
 	export DIRTY="y"
 	}
 [ "x${CONTINUITY}" != "x" ] && {
