@@ -6,7 +6,7 @@ node 'lsb1.linux-foundation.org' {
 
     include sudo
 
-    include puppet::server
+    include puppet
 
     include apachehttpd, apachehttpd::vhosts, apachehttpd::betaspecs,
             apachehttpd::modules
