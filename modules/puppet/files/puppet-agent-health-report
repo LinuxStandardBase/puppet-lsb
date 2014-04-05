@@ -21,13 +21,8 @@ HOUR=`date +%H`
 #
 #	want a place to cache persistent state, save when we chirp
 # 	so don't make if we have one, and use the same 
-<<<<<<< TREE
 #	one durably all day
-HASTEMP=`find /tmp -type d -name "${BAS}" | grep -c "${BAS}" 2> /dev/null `
-=======
-#	one durably
 HASTEMP=`find /tmp -type d -print | grep -c "${BAS}"`
->>>>>>> MERGE-SOURCE
 [ 0${HASTEMP} -lt 01 ] && {
 	TEMP_PATH=$(mktemp -d --tmpdir ${BAS}.XXXXXXXXXX)
 	}
