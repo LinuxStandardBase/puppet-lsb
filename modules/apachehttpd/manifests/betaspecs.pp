@@ -4,9 +4,10 @@ class apachehttpd::betaspecs {
 
     include bzr
 
+    include make
+
     package {
         'xmlto': ensure => present;
-        'make': ensure => present;
     }
 
     file { '/etc/cron.daily/update-betaspecs':

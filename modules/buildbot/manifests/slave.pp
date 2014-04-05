@@ -151,11 +151,7 @@ class buildbot::slave inherits buildbot {
 
     include bzr
 
-    # XXX: make should be its own module, since it's used in a few
-    # places.
-    #package { 'make':
-    #    ensure => present,
-    #}
+    include make
 
     # Packages that need to be absent on slaves.
 

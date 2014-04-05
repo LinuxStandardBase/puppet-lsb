@@ -1,13 +1,11 @@
 class mail::postfix inherits mail {
+
+    include make
+
     package { 'postfix':
         ensure => present,
         before => Service['mtadaemon'],
     }
-
-    # XXX: duplicate definition w/ apachehttpd::betaspecs
-    #package { 'make':
-    #    ensure => present,
-    #}
 
     Service['mtadaemon'] {
         restart => '/sbin/service postfix reload',
