@@ -8,4 +8,6 @@ node 'lsb2.linux-foundation.org' {
 
     include puppet::server
 
+    include mail::postfix
+
 }
