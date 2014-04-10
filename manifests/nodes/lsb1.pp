@@ -9,7 +9,7 @@ node 'lsb1.linux-foundation.org' {
     include puppet
 
     include apachehttpd, apachehttpd::vhosts, apachehttpd::betaspecs,
-            apachehttpd::modules
+            apachehttpd::modules, apachehttpd::ssl
 
     include php
 
