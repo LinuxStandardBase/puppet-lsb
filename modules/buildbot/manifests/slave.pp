@@ -178,7 +178,6 @@ class buildbot::slave inherits buildbot {
 
     if $wordsize == 'small' {
         package {
-            $buildbot::slavepkgs::lsb32pkg: ensure => installed;
             $buildbot::slavepkgs::libc32pkg: ensure => installed;
             $buildbot::slavepkgs::libcstatic32pkg: ensure => installed;
             $buildbot::slavepkgs::cpp32pkg: ensure => installed;
@@ -188,7 +187,13 @@ class buildbot::slave inherits buildbot {
             $buildbot::slavepkgs::gtk32pkg: ensure => installed;
             $buildbot::slavepkgs::png32pkg: ensure => installed;
             $buildbot::slavepkgs::xdevel32pkg: ensure => installed;
-	}
+        }
+
+        if $operatingsystem == 'Fedora' {
+            package {
+                $buildbot::slavepkgs::lsb32pkg: ensure => installed;
+            }
+        } 
     }
 
     # Get special LSB packages needed for builds.

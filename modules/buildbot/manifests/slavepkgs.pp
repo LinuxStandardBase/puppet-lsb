@@ -160,7 +160,7 @@ class buildbot::slavepkgs {
 
     $lsb32pkg = "$operatingsystem-$architecture" ? {
         /^Fedora-s390x$/ => 'redhat-lsb.s390',
-        default          => 'lsb32',
+        default          => 'error-package',
     }
 
     $libc32pkg = "$operatingsystem-$architecture" ? {
