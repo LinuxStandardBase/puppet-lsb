@@ -5,6 +5,8 @@ node 'lsb-x-b-s390x.lsbtest.net' {
 
     include puppet
 
+    include ntp
+
     include buildbot::slave
 
 }
