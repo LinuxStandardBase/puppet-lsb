@@ -16,14 +16,15 @@ slave:
 
     include buildbot::slave
 
-The one complication comes with some of the "small-word" build
-architectures (ppc32, s390).  Since we build those on "large-word"
-distributions, we have to indicate in some way that we should be
-building the "small-word" variant.
+The one complication comes with the architectures with "small" and
+"big" word architectures, where the native hardware is almost all
+"big".  This means we have to build the "small" architecture on a
+"big" system.  On these architectures, we need to configure which word
+size we're building.
 
 This is done in modules/buildbot/manifests/slave.pp.  Look for the
 setting for "$wordsize"; there, you will need to add the hostname of
-the build slave and make sure it's set to "small".
+the build slave and make sure it's set to "small" or "big".
 
 Restarting Buildbot
 -------------------

@@ -29,6 +29,7 @@ class buildbot::slave inherits buildbot {
         $wordsize = $chroot
     } else {
         $wordsize = $hostname ? {
+            'linfnd1'             => 'big',
             'linfnd2'             => 'small',
             'lfdev-build-power32' => 'small',
             'lfdev-build-power64' => 'big',
