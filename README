@@ -10,6 +10,12 @@ We use Puppet (http://puppetlabs.com) as the configuration tool.  The
 initial work done here was done with Puppet 2.6, and should remain
 compatible with that version for the foreseeable future.
 
+Documentation for specific services can be found in the documentation
+directory of this repository.  This note will cover some general
+topics related to the whole system.  If you find that something is not
+adequately documented here, please contact the workgroup and let us
+know what's not working for you.
+
 Configuration is defined per-service in Puppet modules, and per-node
 in the "nodes" directory.  Whenever possible, it's best to define
 services as modules, rather than include all the gory details in the
@@ -146,4 +152,4 @@ initial puppet connection.  It should work.
 
 Jeff Licquia
 licquia@linuxfoundation.org
-2013-03-11
+2014-04-23
