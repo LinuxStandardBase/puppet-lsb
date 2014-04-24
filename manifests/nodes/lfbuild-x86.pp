@@ -1,5 +1,5 @@
 # x86 build slave on Russ Herrold's PMMAN service
-node 'vm178231187.pmman.net' {
+node 'lfbuild-x86-2.lsbtest.net' {
 
     include user::licquia, user::stewb
 

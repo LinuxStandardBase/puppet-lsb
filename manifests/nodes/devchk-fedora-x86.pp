@@ -1,5 +1,5 @@
 # Test VM on Russ Herrold's network.
-node 'vm178231168.pmman.net' {
+node 'devchk-fedora-x86-2.lsbtest.net' {
 
     include user::licquia
 
