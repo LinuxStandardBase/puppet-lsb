@@ -46,3 +46,7 @@ process.  (You can find it with ps, or use
 The buildbot init script will check the configuration before starting
 buildbot, and will refuse to start if the configuration doesn't check
 out.
+
+If you don't know where buildbot is currently hosted, look for the
+line "include buildbot::master" in the per-host files in
+manifests/nodes.
