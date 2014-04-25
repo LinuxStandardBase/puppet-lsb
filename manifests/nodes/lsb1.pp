@@ -1,6 +1,6 @@
 node 'lsb1.linux-foundation.org' {
 
-    include user::lfadmin, user::licquia, user::stewb, user::mats
+    include user::lfadmin, user::licquia, user::stewb, user::mats, user::herrold
 
     include ntp
 
