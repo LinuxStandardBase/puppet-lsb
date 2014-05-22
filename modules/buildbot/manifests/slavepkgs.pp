@@ -57,6 +57,10 @@ class buildbot::slavepkgs {
         default      => 'gcc-c++',
     }
 
+    $cppdevelpkg = $operatingsystem ? {
+        default => 'libstdc++-devel',
+    }
+
     # Java package, needed by OLVER.  On ia64, SuSE does not ship a
     # decent JRE, so you have to download the ia64 JRE directly from
     # Oracle.
@@ -337,9 +341,9 @@ class buildbot::slavepkgs {
 
     # Most packages needed for a typical slave; see the definitions
     # above for $fontutilpkg and $xdevelpkg for the interesting ones.
-    $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$pkgconfigpkg", 'cvs',
-                 "$javapkg", 'autoconf', "$automakepkg", 'libtool', "$bisonpkg",
-                 'flex', "$xgettextpkg", 'rsync', "$intltoolpkg",
+    $pkglist = [ "$rpmpkg", "$gpluspluspkg", "$cppdevelpkg", "$pkgconfigpkg",
+                 'cvs', "$javapkg", 'autoconf', "$automakepkg", 'libtool',
+                 "$bisonpkg", 'flex', "$xgettextpkg", 'rsync', "$intltoolpkg",
                  "$glibdevelpkg", "$pamdevelpkg", "$expectpkg",
                  "$expatdevelpkg", 'perl', "$libcstaticpkg", 
                  'ncurses-devel', "$libxsltpkg", "$printprotopkg" ]

@@ -17,7 +17,7 @@ node 'lsb1.linux-foundation.org' {
 
     include alien
 
-    include mail::linuxbase
+    include mail::postfix
 
     include buildbot::master
 
