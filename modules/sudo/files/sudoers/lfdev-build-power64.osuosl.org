@@ -84,6 +84,7 @@ osuadmin ALL=(ALL) ALL
 # Local LF settings
 lfadmin	ALL = (ALL) ALL 
 licquia	ALL = (ALL) ALL
+herrold ALL = (ALL) ALL
 
 # Buildbot: allow the buildbot user to install packages
 buildbot ALL=NOPASSWD: /bin/rpm
