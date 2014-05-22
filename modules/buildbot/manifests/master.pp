@@ -6,7 +6,7 @@ class buildbot::master inherits buildbot {
 
     $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20140509154043-ovatueczfovn3mft'
 
-    $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64'
+    $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64,s390,s390x'
 
     $htpasswd = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => 'htpasswd2',
