@@ -23,8 +23,12 @@ class buildbot::slavepkgs {
         default     => 'libxorg-x11-devel',
     }
 
+## RPH -- split s390 from s390x 00 that .$ARCH would confuse RPM or yum
     $xdevel32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => ['libX11-devel.s390', 'libXext-devel.s390',
+        /^Fedora-s390x$/ => ['libX11-devel.s390x', 'libXext-devel.s390x',
+                             'libXtst-devel.s390x', 'libXt-devel.s390x',
+                             'libXdmcp-devel.s390x', 'libXi-devel.s390x'],
+        /^Fedora-s390$/ => ['libX11-devel.s390', 'libXext-devel.s390',
                              'libXtst-devel.s390', 'libXt-devel.s390',
                              'libXdmcp-devel.s390', 'libXi-devel.s390'],
         default          => ['libX11-devel-32bit', 'libXext-devel-32bit',
@@ -144,10 +148,12 @@ class buildbot::slavepkgs {
         default     => 'glibc-static-devel',
     }
 
+## RPH repeat arch split as above
     $libcstatic32pkg = "$operatingsystem-$architecture" ? {
         /^SLES/          => 'glibc-devel-32bit',
         /^OpenSuSE/      => 'glibc-devel-static-32bit',
-        /^Fedora-s390x$/ => 'glibc-static.s390',
+        /^Fedora-s390$/ => 'glibc-static.s390',
+        /^Fedora-s390x$/ => 'glibc-static.s390x',
         default          => 'glibc-static-devel',
     }
 
@@ -156,44 +162,52 @@ class buildbot::slavepkgs {
     $cpp32pkg = "$operatingsystem-$architecture" ? {
         /^OpenSuSE/      => 'libstdc++47-devel-32bit',
         /^SLES/          => 'libstdc++43-devel-32bit',
-        /^Fedora-s390x$/ => 'libstdc++-devel.s390',
+        /^Fedora-s390$/ => 'libstdc++-devel.s390',
+        /^Fedora-s390x$/ => 'libstdc++-devel.s390x',
         default          => 'libstdc++-devel-32bit',
     }
 
     # other 32-bit pkgs needed
 
     $lsb32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'redhat-lsb.s390',
+        /^Fedora-s390$/ => 'redhat-lsb.s390',
+        /^Fedora-s390x$/ => 'redhat-lsb.s390x',
         default          => 'error-package',
     }
 
     $libc32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'glibc-devel.s390',
+        /^Fedora-s390$/ => 'glibc-devel.s390',
+        /^Fedora-s390x$/ => 'glibc-devel.s390x',
         default          => 'glibc-devel-32bit',
     }
 
     $zlib32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'zlib-devel.s390',
+        /^Fedora-s390$/ => 'zlib-devel.s390',
+        /^Fedora-s390x$/ => 'zlib-devel.s390x',
         default          => 'zlib-32bit',
     }
 
     $ncurses32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'ncurses-devel.s390',
+        /^Fedora-s390$/ => 'ncurses-devel.s390',
+        /^Fedora-s390x$/ => 'ncurses-devel.s390x',
         default          => 'ncurses-devel-32bit',
     }
 
     $expat32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'expat-devel.s390',
+        /^Fedora-s390$/ => 'expat-devel.s390',
+        /^Fedora-s390x$/ => 'expat-devel.s390x',
         default          => 'libexpat-devel-32bit',
     }
 
     $gtk32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'gtk2.s390',
+        /^Fedora-s390$/ => 'gtk2.s390',
+        /^Fedora-s390x$/ => 'gtk2.s390x',
         default          => 'libgtk-2_0-0-32bit',
     }
 
     $png32pkg = "$operatingsystem-$architecture" ? {
-        /^Fedora-s390x$/ => 'libpng12.s390',
+        /^Fedora-s390$/ => 'libpng12.s390',
+        /^Fedora-s390x$/ => 'libpng12.s390x',
         default          => 'libpng12-0-32bit',
     }
 
