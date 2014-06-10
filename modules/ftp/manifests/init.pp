@@ -37,12 +37,22 @@ class ftp {
         notify => Exec['do-update-manifests'],
     }
 
+    file { '/opt/ftp-maint':
+        ensure => directory,
+    }
+
+    file { '/opt/ftp-maint/manifest':
+        ensure  => directory,
+        require => File['/opt/ftp-maint'],
+    }
+
     file { '/opt/ftp-maint/manifest/manifest_rebuild_s.sh':
-        source => "puppet:///modules/ftp/cron/update-manifests/manifest_rebuild_s.sh",
-        mode   => 0755,
-        group  => 'users',
-        owner  => 'lfadmin',
-        notify => Exec['do-update-manifests'],
+        source  => "puppet:///modules/ftp/cron/update-manifests/manifest_rebuild_s.sh",
+        mode    => 0755,
+        group   => 'users',
+        owner   => 'lfadmin',
+        require => File['/opt/ftp-maint'],
+        notify  => Exec['do-update-manifests'],
     }
 
     file { '/usr/local/bin/update-problem-db2':
