@@ -14,4 +14,13 @@ class mail::linuxbase inherits mail::postfix {
         recipient => 'lsb-discuss@lists.linux-foundation.org',
     }
 
+
+    # The following alias is necessary whenever mail is handled
+    # on a separate host from the buildbot master.  As of now,
+    # this is true during the lsb1 -> lsb2 migration.
+
+    mailalias { 'buildbot':
+        recipient => 'buildbot@lsb1.linux-foundation.org',
+    }
+
 }
