@@ -25,4 +25,8 @@ class apachehttpd {
         source => [ "puppet:///modules/apachehttpd/sysconfig/$fqdn", "puppet:///modules/apachehttpd/sysconfig/$osdefault" ],
     }
 
+    file { '/srv/www':
+        ensure => directory,
+    }
+
 }

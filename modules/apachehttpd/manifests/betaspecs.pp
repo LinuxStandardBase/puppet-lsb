@@ -1,5 +1,7 @@
 class apachehttpd::betaspecs {
 
+    include apachehttpd
+
     include apachehttpd::vhosts
 
     include bzr

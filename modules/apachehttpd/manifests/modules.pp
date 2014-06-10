@@ -1,5 +1,7 @@
 class apachehttpd::modules {
 
+    include apachehttpd
+
     # Pull in web database passwords and other web passwords.
 
     include webdb
@@ -12,6 +14,11 @@ class apachehttpd::modules {
     $prdbrev = 'revid:licquia@linuxfoundation.org-20130403210502-fvfaoom70dhyu4qp'
     $refspecrev = 'revid:mats@linuxfoundation.org-20130529180431-pq8ao1t04vwex0yk'
 
+    file { '/srv/www/modules':
+        ensure  => directory,
+        require => File['/srv/www'],
+    }
+
     # Do initial checkouts of modules.
 
     exec { 'make-dbadmin-module':
@@ -19,6 +26,7 @@ class apachehttpd::modules {
         cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/dbadmin',
+        require => File['/srv/www/modules'],
     }
 
     exec { 'make-lsbcert-module':
@@ -26,6 +34,7 @@ class apachehttpd::modules {
         cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/lsb-cert',
+        require => File['/srv/www/modules'],
     }
 
     exec { 'make-prdb-module':
@@ -33,6 +42,7 @@ class apachehttpd::modules {
         cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/prdb',
+        require => File['/srv/www/modules'],
     }
 
     exec { 'make-refspec-module':
@@ -40,6 +50,7 @@ class apachehttpd::modules {
         cwd     => '/srv/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/srv/www/modules/refspec',
+        require => File['/srv/www/modules'],
     }
 
     # Set module configuration files.
