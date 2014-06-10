@@ -13,4 +13,9 @@ class apachehttpd::vhosts {
         notify       => Service['apache2'],
     }
 
+    file { '/srv/www/vhosts':
+        ensure  => directory,
+        require => File['/srv/www'],
+    }
+
 }

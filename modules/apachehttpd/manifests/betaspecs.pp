@@ -22,12 +22,19 @@ class apachehttpd::betaspecs {
         mode => 0755,
     }
 
+    file { '/srv/www/vhosts/linuxbase.org':
+        ensure  => directory,
+        require => File['/srv/www/vhosts'],
+    }
+
     file { '/srv/www/vhosts/linuxbase.org/betaspecs':
         ensure => directory,
+        require => File['/srv/www/vhosts/linuxbase.org'],
     }
 
     file { '/srv/www/vhosts/linuxbase.org/snapshotspecs':
         ensure => directory,
+        require => File['/srv/www/vhosts/linuxbase.org'],
     }
 
     file { '/srv/www/vhosts/linuxbase.org/betaspecs/lsb':
