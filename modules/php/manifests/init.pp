@@ -1,12 +1,13 @@
 class php {
 
     $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
-        /^SLES-11/ => 'default-sles11',
+        /^SLES-11/       => 'default-sles11',
+        /^OpenSuSE-13.1/ => 'default-opensuse',
     }
 
     case $operatingsystem {
 
-        /^SLES$/: {
+        /^(SLES|OpenSuSE)$/: {
             package {
                 'php5': ensure => installed;
                 'apache2-mod_php5': ensure => installed;
