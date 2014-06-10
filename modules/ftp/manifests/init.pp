@@ -46,6 +46,22 @@ class ftp {
         require => File['/opt/ftp-maint'],
     }
 
+    file { '/opt/ftp-maint/cron.sh':
+        source  => 'puppet:///modules/ftp/ftp-maint/cron.sh',
+        mode    => 0755,
+        group   => 'users',
+        owner   => 'lfadmin',
+        require => File['/opt/ftp-maint'],
+    }
+
+    file { '/opt/ftp-maint/problem_db_update.sh':
+        source  => 'puppet:///modules/ftp/ftp-maint/problem_db_update.sh',
+        mode    => 0755,
+        group   => 'users',
+        owner   => 'lfadmin',
+        require => File['/opt/ftp-maint'],
+    }
+
     file { '/opt/ftp-maint/manifest/manifest_rebuild_s.sh':
         source  => "puppet:///modules/ftp/cron/update-manifests/manifest_rebuild_s.sh",
         mode    => 0755,
@@ -68,6 +84,8 @@ class ftp {
         timeout => 600,
         refreshonly => true,
         logoutput => on_failure,
+        require   => [ File['/usr/local/bin/update-manifests'],
+                       File['/opt/ftp-maint/cron.sh'] ],
     }
 
     cron { 'regular-update-manifests':
