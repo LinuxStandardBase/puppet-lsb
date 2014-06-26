@@ -81,7 +81,7 @@ APACHE_CONF_INCLUDE_DIRS=""
 # apache's default installation
 # APACHE_MODULES="authz_host actions alias asis auth autoindex cgi dir imap include log_config mime negotiation setenvif status userdir"
 # your settings
-APACHE_MODULES="authz_host actions alias auth_basic authz_groupfile authn_core authn_file authz_user autoindex cgi dir env include log_config mime negotiation setenvif status userdir asis ldap authnz_ldap rewrite ssl php5 proxy proxy_http socache_shmcb access_compat"
+APACHE_MODULES="authz_host actions alias authz_core auth_basic authz_groupfile authn_core authn_file authz_user autoindex cgi dir env include log_config mime negotiation setenvif status userdir asis ldap authnz_ldap rewrite ssl php5 proxy proxy_http socache_shmcb access_compat"
 
 
 ## Type:	string
