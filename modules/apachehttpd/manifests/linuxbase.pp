@@ -6,11 +6,6 @@ class apachehttpd::linuxbase {
 
     include apachehttpd::betaspecs
 
-    file { '/srv/www/vhosts/linuxbase.org':
-        ensure  => directory,
-        require => File['/srv/www/vhosts'],
-    }
-
     file { '/srv/www/vhosts/linuxbase.org/freenode.txt':
         source  => "puppet:///modules/apachehttpd/content/default/freenode.txt",
         require => File['/srv/www/vhosts/linuxbase.org'],
