@@ -12,6 +12,7 @@ class supybot {
         path     => [ '/bin', '/usr/bin' ],
         creates  => '/opt/supybot/code',
         user     => 'supybot',
+        require  => File['/opt/supybot'],
     }
 
     exec { "make-supybot-virtualenv":
@@ -40,11 +41,11 @@ class supybot {
         notify => Service['supybot'],
     }
 
-    service { 'supybot':
-        ensure     => running,
-        hasrestart => false,
-        require    => [ File['/etc/init.d/supybot'],
-                        Exec['install-supybot'] ],
-    }
+#    service { 'supybot':
+#        ensure     => running,
+#        hasrestart => false,
+#        require    => [ File['/etc/init.d/supybot'],
+#                        Exec['install-supybot'] ],
+#    }
 
 }

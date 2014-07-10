@@ -17,4 +17,6 @@ node 'lsb2.linux-foundation.org' {
 
     include ftp
 
+    include supybot
+
 }
