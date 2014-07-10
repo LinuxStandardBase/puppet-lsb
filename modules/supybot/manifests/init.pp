@@ -38,7 +38,7 @@ class supybot {
         ensure => present,
         source => 'puppet:///modules/supybot/supybot.init',
         mode   => 0755,
-        notify => Service['supybot'],
+#        notify => Service['supybot'],
     }
 
 #    service { 'supybot':

@@ -21,6 +21,4 @@ node 'lsb1.linux-foundation.org' {
 
     include buildbot::master
 
-    include supybot
-
 }
