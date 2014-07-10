@@ -38,14 +38,14 @@ class supybot {
         ensure => present,
         source => 'puppet:///modules/supybot/supybot.init',
         mode   => 0755,
-#        notify => Service['supybot'],
+        notify => Service['supybot'],
     }
 
-#    service { 'supybot':
-#        ensure     => running,
-#        hasrestart => false,
-#        require    => [ File['/etc/init.d/supybot'],
-#                        Exec['install-supybot'] ],
-#    }
+    service { 'supybot':
+        ensure     => running,
+        hasrestart => false,
+        require    => [ File['/etc/init.d/supybot'],
+                        Exec['install-supybot'] ],
+    }
 
 }
