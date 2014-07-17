@@ -10,16 +10,13 @@ $mysql_user = 'lsbcert';
 $mysql_password = '<%= scope.lookupvar('webdb::lsbcert') %>';
 $mysql_db = 'cert';
 
-$ldap_name_symbols = '\\w\\.\\@ \\-'; // also in validate_user_id() in functions.inc.php
-$ldap_pattern_name = '/^(stewb|licquia)$/';
-$ldap_host = 'ldaps://ldap1.linux-foundation.org';
-$ldap_base = 'dc=freestandards,dc=org';
-
-# How to construct a user DN.
-function getDN($uid) {
-    global $ldap_base;
-    return 'uid='.$uid.',ou=Users,'.$ldap_base;
-}
+### CAS configuration
+$cas_host = "identity.linuxfoundation.org";
+$cas_port = 443;
+$cas_context = "/cas";
+$cas_cert_path = "/var/lib/ca-certificates/ca-bundle.pem";
+$cas_pattern_name = "/^licquia$/";
+$phpcas_path = "/path/to/phpcas";
 
 $testsuites = array('alsa-t2c', 'apache', 'cmdchk', 'core', 'core-t2c', 'cpp-t2c', 'desktop', 'desktop-t2c', 'expect', 'groff', 'libchk', 'libstdcpp', 'olver', 'perl', 'printing', 'python', 'python_app', 'qt3-azov', 'qt4-azov', 'raptor', 'rsync', 'samba', 'tcl', 'vsw4', 'xml2-azov', 'xpdf', 'xts5');
 

@@ -2,6 +2,8 @@ class apachehttpd::modules {
 
     include apachehttpd
 
+    include git
+
     # Pull in web database passwords and other web passwords.
 
     include webdb
@@ -11,8 +13,12 @@ class apachehttpd::modules {
 
     $dbadminrev = 'revid:mats@linuxfoundation.org-20131231144734-kosexcysaedrkakr'
     $certrev = 'revid:licquia@linuxfoundation.org-20120626045849-zsw9ke1pz8wsp7sm'
-    $prdbrev = 'revid:licquia@linuxfoundation.org-20130403210502-fvfaoom70dhyu4qp'
+    $prdbrev = 'revid:licquia@linuxfoundation.org-20140717191502-a6e15c0iouqzqv9n'
     $refspecrev = 'revid:mats@linuxfoundation.org-20130529180431-pq8ao1t04vwex0yk'
+
+    # Revisions for dependencies.
+
+    $phpcastag = '1.3.2'
 
     file { '/srv/www/modules':
         ensure  => directory,
@@ -141,6 +147,24 @@ password=$webdb::autobuild
         user        => 'wwwrun',
         require     => Exec['checkout-problem-db'],
         logoutput   => on_failure,
+    }
+
+    exec { 'checkout-phpcas':
+        command   => "git clone -n https://github.com/Jasig/phpCAS.git",
+        cwd       => '/var/lib/wwwrun',
+        path      => [ '/bin', '/usr/bin' ],
+        creates   => '/var/lib/wwwrun/phpCAS',
+        user      => 'wwwrun',
+        logoutput => on_failure,
+    }
+
+    exec { 'update-phpcas':
+        command => "git fetch && git checkout $phpcastag",
+        cwd     => '/var/lib/wwwrun/phpCAS',
+        path    => [ '/bin', '/usr/bin' ],
+        user    => 'wwwrun',
+        require => Exec['checkout-phpcas'],
+        logoutput => on_failure,
     }
 
 }
