@@ -1,6 +1,6 @@
 node 'lsb1.linux-foundation.org' {
 
-    include user::lfadmin, user::licquia, user::stewb, user::mats, user::herrold
+    include user::lfadmin, user::licquia
 
     include ntp
 
@@ -12,8 +12,6 @@ node 'lsb1.linux-foundation.org' {
             apachehttpd::ssl, apachehttpd::linuxbase
 
     include php
-
-    include ftp
 
     include mail::postfix
 
