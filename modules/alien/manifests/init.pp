@@ -46,7 +46,7 @@ class alien {
 
     # dependencies I needed to build the packages
     # not needed long term, from existing repos
-    package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config', 'util-linux', 'libstdc++43-devel']:
+    package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config', 'util-linux']:
         ensure => present,
     }
 
