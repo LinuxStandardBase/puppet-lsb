@@ -2,11 +2,17 @@ class alien {
 
     # need alien, dpkg and dependencies to create .deb repos
 
-    $sles11alienrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
-        /^SLES-11(\.[0-9])?$/ => File['/etc/zypp/repos.d/alien_for_sles11.repo'],
+    $alienrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^SLES-11(\.[0-9])?$/ => 'alien_for_sles11.repo',
+        /^OpenSUSE-13\.1$/    => 'system_packagemanager_os13.1.repo',
         default               => undef,
     }
 
+    $fakerootrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^OpenSUSE-13\.1$/ => 'devel_tools_os13.1.repo',
+        default            => undef,
+    }
+    
     $dpkgversion = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => '1.16.0.1-2lsb5',
         default               => present,
@@ -17,12 +23,27 @@ class alien {
         mode   => 0755,
     }
 
-    if $sles11alienrepo {
-        file { "/etc/zypp/repos.d/alien_for_sles11.repo":
-            source => "puppet:///modules/alien/alien_for_sles11.repo",
+    if $alienrepo {
+        file { "/etc/zypp/repos.d/alien.repo":
+            source => "puppet:///modules/alien/${alienrepo}",
+            notify => Exec['refresh-zypper-keys-for-alien'],
         }
     }
     
+    if $fakerootrepo {
+        file { "/etc/zypp/repos.d/fakeroot.repo":
+            source => "puppet:///modules/alien/${fakerootrepo}",
+            notify => Exec['refresh-zypper-keys-for-alien'],
+        }
+    }
+
+    exec { 'refresh-zypper-keys-for-alien':
+        command     => 'zypper --gpg-auto-import-keys refresh',
+        path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
+        refreshonly => true,
+        logoutput   => true,
+    }
+
     # dependencies I needed to build the packages
     # not needed long term, from existing repos
     package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config', 'util-linux', 'libstdc++43-devel']:
@@ -41,10 +62,11 @@ class alien {
     # the native 'deb' package also provides dpkg, use the new one
     package { 'dpkg':
         ensure => $dpkgversion,
-        require => $sles11alienrepo,
+        require => File["/etc/zypp/repos.d/alien.repo"],
     }
-    package { ['alien', 'perl-Dpkg', 'debhelper', 'fakeroot']:
+    package { ['alien', 'debhelper', 'fakeroot']:
         ensure => present,
-        require => $sles11alienrepo,
+        require => [ File["/etc/zypp/repos.d/alien.repo"],
+                     File["/etc/zypp/repos.d/fakeroot.repo"] ],
     }
 }

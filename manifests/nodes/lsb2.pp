@@ -19,4 +19,8 @@ node 'lsb2.linux-foundation.org' {
 
     include supybot
 
+    include alien
+
+    include buildbot::master
+
 }

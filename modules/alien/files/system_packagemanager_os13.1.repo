@@ -1,0 +1,7 @@
+[system_packagemanager]
+name=system:packagemanager (openSUSE_13.1)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/system:/packagemanager/openSUSE_13.1/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/system:/packagemanager/openSUSE_13.1/repodata/repomd.xml.key
+enabled=1
