@@ -20,9 +20,9 @@ class buildbot::master inherits buildbot {
     }
 
     exec { "make-sqlalchemy":
-        command => "/opt/buildbot/bin/pip install sqlalchemy==${sqlalchemyversion}",
+        command => "/opt/buildbot/bin/pip install sqlalchemy==$sqlalchemyversion",
         cwd     => "/opt/buildbot",
-        creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/SQLAlchemy-${sqlalchemyversion}-py${pythonversion}.egg-info"
+        creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/SQLAlchemy-${sqlalchemyversion}-py${pythonversion}.egg-info",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
         require => Exec["make-buildbot-virtualenv"],
