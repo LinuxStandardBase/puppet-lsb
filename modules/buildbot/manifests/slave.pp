@@ -19,7 +19,8 @@ class buildbot::slave inherits buildbot {
 
     # Where's the master?
 
-    $buildbotmaster = 'vm2.linuxbase.org:9989'
+    $buildbotmaster = 'vm2.linuxbase.org'
+    $buildbotport = '9989'
 
     # 32-bit versions of some architectures don't exist as
     # native platforms themselves; they run almost entirely
@@ -272,7 +273,7 @@ class buildbot::slave inherits buildbot {
     # It's a pain, but hopefully this won't need to change much.
 
     exec { "make-slave":
-        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave $buildbotmaster $masteruser $masterpw",
+        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave ${buildbotmaster}:${buildbotport} $masteruser $masterpw",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-slave/buildbot.tac",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
@@ -280,6 +281,19 @@ class buildbot::slave inherits buildbot {
         user    => 'buildbot',
         require => [ Exec["install-buildslave"],
                      File["/opt/buildbot/lsb-slave"] ],
+    }
+
+    exec { "update-buildmaster":
+        command     => "sed -i 's/^buildmaster_host.*\$/buildmaster_host = \"${buildbotmaster}\"/' /opt/buildbot/lsb-slave/buildbot.tac"
+        path        => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ]
+        require     => Exec["make-slave"],
+        notify      => Service["buildslave"]
+        refreshonly => true,
+    }
+
+    file { "/opt/buildbot/${buildbotmaster}-update":
+        ensure => present,
+        notify => Exec["update-buildmaster"],
     }
 
     file { "/opt/buildbot/lsb-slave/info/admin":

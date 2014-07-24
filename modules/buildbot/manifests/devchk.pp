@@ -26,7 +26,7 @@ class buildbot::devchk inherits buildbot::slave {
     # commands, we need to change them here and in buildbot::slave.
 
     Exec["make-slave"] {
-        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave $buildbotmaster $masteruser $masterpw",
+        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave ${buildbotmaster}:${buildbotport} $masteruser $masterpw",
     }
 
 }
