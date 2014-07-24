@@ -94,14 +94,16 @@ class buildbot::master inherits buildbot {
     }
 
     file { "/opt/buildbot/lsb-master/templates":
-        ensure => link,
-        target => "../buildbot-config/templates",
+        ensure  => link,
+        target  => "../buildbot-config/templates",
+        force   => true,
         require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
     }
 
     file { "/opt/buildbot/lsb-master/public_html":
-        ensure => link,
-        target => "../buildbot-config/public_html",
+        ensure  => link,
+        target  => "../buildbot-config/public_html",
+        force   => true,
         require => [ Exec['make-buildbot-config'], Exec['make-master'] ],
     }
 
