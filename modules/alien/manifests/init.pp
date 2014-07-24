@@ -4,12 +4,12 @@ class alien {
 
     $alienrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => 'alien_for_sles11.repo',
-        /^OpenSUSE-13\.1$/    => 'system_packagemanager_os13.1.repo',
+        /^OpenSuSE-13\.1$/    => 'system_packagemanager_os13.1.repo',
         default               => undef,
     }
 
     $fakerootrepo = "${operatingsystem}-${operatingsystemrelease}" ? {
-        /^OpenSUSE-13\.1$/ => 'devel_tools_os13.1.repo',
+        /^OpenSuSE-13\.1$/ => 'devel_tools_os13.1.repo',
         default            => undef,
     }
     
