@@ -284,10 +284,10 @@ class buildbot::slave inherits buildbot {
     }
 
     exec { "update-buildmaster":
-        command     => "sed -i 's/^buildmaster_host.*\$/buildmaster_host = \"${buildbotmaster}\"/' /opt/buildbot/lsb-slave/buildbot.tac"
-        path        => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ]
+        command     => "sed -i 's/^buildmaster_host.*\$/buildmaster_host = \"${buildbotmaster}\"/' /opt/buildbot/lsb-slave/buildbot.tac",
+        path        => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         require     => Exec["make-slave"],
-        notify      => Service["buildslave"]
+        notify      => Service["buildslave"],
         refreshonly => true,
     }
 
