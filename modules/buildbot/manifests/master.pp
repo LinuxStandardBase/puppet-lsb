@@ -59,6 +59,38 @@ class buildbot::master inherits buildbot {
         require => File["/opt/buildbot"],
     }
 
+    file { "/opt/buildbot/Maildir":
+        ensure  => directory,
+        owner   => 'buildbot',
+        group   => 'users',
+        mode    => 0700,
+        require => File["/opt/buildbot"],
+    }
+
+    file { "/opt/buildbot/Maildir/cur":
+        ensure  => directory,
+        owner   => 'buildbot',
+        group   => 'users',
+        mode    => 0700,
+        require => File["/opt/buildbot/Maildir"],
+    }
+
+    file { "/opt/buildbot/Maildir/new":
+        ensure  => directory,
+        owner   => 'buildbot',
+        group   => 'users',
+        mode    => 0700,
+        require => File["/opt/buildbot/Maildir/cur"],
+    }
+
+    file { "/opt/buildbot/Maildir/tmp":
+        ensure  => directory,
+        owner   => 'buildbot',
+        group   => 'users',
+        mode    => 0700,
+        require => File["/opt/buildbot/Maildir/new"],
+    }
+
     file { "/opt/buildbot/debcache-snapshot/pkgs-snapshot":
         ensure  => directory,
         owner   => 'buildbot',
@@ -158,6 +190,7 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
               File['/opt/buildbot/lsb-master/master.cfg'], 
               File['/opt/buildbot/lsb-master/lfbuildbot.py'], 
               File['/opt/buildbot/lsb-master/bzr_buildbot.py'],
+              File['/opt/buildbot/Maildir/tmp'],
               User['buildbot'], Exec['make-master'], Exec['make-htpasswd'] ],
     }
 
