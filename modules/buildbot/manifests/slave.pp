@@ -17,6 +17,10 @@ class buildbot::slave inherits buildbot {
 
     include buildbotpw
 
+    # Where's the master?
+
+    $buildbotmaster = 'vm2.linuxbase.org:9989'
+
     # 32-bit versions of some architectures don't exist as
     # native platforms themselves; they run almost entirely
     # on the 64-bit version.  For these, we have to figure
@@ -268,7 +272,7 @@ class buildbot::slave inherits buildbot {
     # It's a pain, but hopefully this won't need to change much.
 
     exec { "make-slave":
-        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave vm1.linuxbase.org:9989 $masteruser $masterpw",
+        command => "/opt/buildbot/bin/buildslave create-slave --umask=022 /opt/buildbot/lsb-slave $buildbotmaster $masteruser $masterpw",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lsb-slave/buildbot.tac",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
