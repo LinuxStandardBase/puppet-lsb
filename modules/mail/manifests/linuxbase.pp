@@ -16,10 +16,12 @@ class mail::linuxbase inherits mail::postfix {
 
 
     # The following alias is necessary whenever mail is handled
-    # on a separate host from the buildbot master.  As of now,
-    # this is true during the lsb1 -> lsb2 migration.
+    # on a separate host from the buildbot master.  Switch the
+    # ensure line to 'absent' or 'present' depending on whether
+    # it's needed.
 
     mailalias { 'buildbot':
+        ensure    => absent,
         recipient => 'buildbot@lsb1.linux-foundation.org',
     }
 
