@@ -12,6 +12,7 @@ class buildbot::master inherits buildbot {
 
     $htpasswd = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11(\.[0-9])?$/ => 'htpasswd2',
+        /^OpenSuSE/           => 'htpasswd2',
         default               => 'htpasswd',
     }
 
