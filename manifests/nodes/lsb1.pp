@@ -15,10 +15,6 @@ node 'lsb1.linux-foundation.org' {
 
     include ftp
 
-    include alien
-
     include mail::postfix
-
-    include buildbot::master
 
 }
