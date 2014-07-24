@@ -4,6 +4,8 @@ class buildbot::master inherits buildbot {
 
     include buildbotpw
 
+    $sqlalchemyversion = '0.7.10'
+
     $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20140509154043-ovatueczfovn3mft'
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64,s390,s390x'
@@ -17,13 +19,23 @@ class buildbot::master inherits buildbot {
         ensure => present,
     }
 
+    exec { "make-sqlalchemy":
+        command => "/opt/buildbot/bin/pip install sqlalchemy==${sqlalchemyversion}",
+        cwd     => "/opt/buildbot",
+        creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/SQLAlchemy-${sqlalchemyversion}-py${pythonversion}.egg-info"
+        path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
+                     "/usr/sbin" ],
+        require => Exec["make-buildbot-virtualenv"],
+    }
+
     exec { "make-buildbot":
         command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/buildbot-${buildbotversion}-py${pythonversion}.egg-info",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
                      "/usr/sbin" ],
-        require => Exec["make-buildbot-virtualenv"],
+        require => [ Exec["make-buildbot-virtualenv"],
+                     Exec["make-sqlalchemy"] ],
     }
 
     exec { "make-buildbot-config":
