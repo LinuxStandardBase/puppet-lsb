@@ -12,7 +12,7 @@ if [ -e /tmp/last_installed_sdk ]; then
 	/opt/lsb/bin/lsbcc --version
 	/opt/lsb/bin/lsbcc --lsb-version
 	echo -n "Distribution "
-	lsb_release -D
+	lsb_release -d
 	exit 0
     fi
 fi
@@ -40,4 +40,4 @@ echo "SDK updated to devel:"
 /opt/lsb/bin/lsbcc --version
 /opt/lsb/bin/lsbcc --lsb-version
 echo -n "Distribution "
-lsb_release -D
+lsb_release -d
