@@ -109,13 +109,13 @@ class buildbot::slave inherits buildbot {
     # Use this set of declarations for a separate beta SDK.
 
     $betasdk = "${architecture}-${wordsize}" ? {
-        /^i386/         => 'lsb-sdk-5.0.0-1.ia32.tar.gz',
-        /^x86_64/       => 'lsb-sdk-5.0.0-1.x86_64.tar.gz',
-        /^ia64/         => 'lsb-sdk-5.0.0-1.ia64.tar.gz',
-        /^s390x-small$/ => 'lsb-sdk-5.0.0-1.s390.tar.gz',
-        /^s390x-big$/   => 'lsb-sdk-5.0.0-1.s390x.tar.gz',
-        /^ppc64-small$/ => 'lsb-sdk-5.0.0-1.ppc32.tar.gz',
-        /^ppc64-big$/   => 'lsb-sdk-5.0.0-1.ppc64.tar.gz',
+        /^i386/         => 'lsb-sdk-5.0.0-2.ia32.tar.gz',
+        /^x86_64/       => 'lsb-sdk-5.0.0-2.x86_64.tar.gz',
+        /^ia64/         => 'lsb-sdk-5.0.0-2.ia64.tar.gz',
+        /^s390x-small$/ => 'lsb-sdk-5.0.0-2.s390.tar.gz',
+        /^s390x-big$/   => 'lsb-sdk-5.0.0-2.s390x.tar.gz',
+        /^ppc64-small$/ => 'lsb-sdk-5.0.0-2.ppc32.tar.gz',
+        /^ppc64-big$/   => 'lsb-sdk-5.0.0-2.ppc64.tar.gz',
     }
 
     $betasdkpath = 'bundles/beta/sdk'
