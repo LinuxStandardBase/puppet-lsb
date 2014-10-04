@@ -13,7 +13,7 @@ class apachehttpd::modules {
 
     $dbadminrev = 'revid:licquia@linuxfoundation.org-20141003153711-0xexdfw1peqxn418'
     $certrev = 'revid:licquia@linuxfoundation.org-20120626045849-zsw9ke1pz8wsp7sm'
-    $prdbrev = 'revid:licquia@linuxfoundation.org-20140717191502-a6e15c0iouqzqv9n'
+    $prdbrev = 'revid:licquia@linuxfoundation.org-20141004212651-asp228c66o90sads'
     $refspecrev = 'revid:mats@linuxfoundation.org-20130529180431-pq8ao1t04vwex0yk'
 
     # Revisions for dependencies.
