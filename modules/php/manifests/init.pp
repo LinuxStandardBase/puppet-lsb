@@ -13,6 +13,7 @@ class php {
                 'apache2-mod_php5': ensure => installed;
                 'php5-ldap': ensure => installed;
                 'php5-mysql': ensure => installed;
+                'php5-curl': ensure => installed;
             }
 
             file { '/etc/php5/apache2/php.ini':
