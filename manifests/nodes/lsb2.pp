@@ -6,6 +6,8 @@ node 'lsb2.linux-foundation.org' {
 
     include sudo
 
+    include ldap
+
     include puppet::server
 
     include mail::linuxbase
