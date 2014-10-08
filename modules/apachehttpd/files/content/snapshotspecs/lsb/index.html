@@ -1,37 +1,48 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Linux/x86 (vers 1st December 2004), see www.w3.org" />
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii" />
-  <meta name="GENERATOR" content=
-  "Mozilla/4.78 [en] (X11; U; Linux 2.4.7-10 i686) [Netscape]" />
-  <meta name="Author" content="George Kraft" />
-
-  <title>DRAFT LSB 5.0 Specifications</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <meta name="generator" content="HTML Tidy for Linux/x86 (vers 1st December 2004), see www.w3.org" />
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+  <meta name="GENERATOR" content="Mozilla/4.78 [en] (X11; U; Linux 2.4.7-10 i686) [Netscape]" />
+  <meta name="Author" content="George Kraft" /><title>DRAFT LSB 5.0 Specifications</title>
 <style type="text/css">
 /*<![CDATA[*/
-table  { border-collapse: collapse; margin-top: 12px; border-spacing: 0px; border: thin solid black; }
-td, th { padding: 3px; margin: 0px; border: thin solid black; }
-#nav { font-size: small; vertical-align: middle; border: thin solid black; padding: 5px; }
+table  {
+    border-collapse: collapse;
+    margin-top: 12px;
+    border-spacing: 0px;
+    border: thin solid black;
+}
+td, th {
+    padding: 3px;
+    margin: 0px;
+    border: thin solid black;
+}
+
+td.avail {
+    background-color: #8d4;
+    border-color: #4f8530;
+}
+td.navail {
+    background-color: #e88;
+    border-color: #a77272;
+}
+
+.avail a:link { text-decoration: none }
+.navail a:link { text-decoration: none }
+
 /*]]>*/
-</style>
-</head>
+</style></head>
+<body bgcolor="#ffffff">
 
-<body bgcolor="#FFFFFF">
+<h2><a name="LSB_5.0_0" id="LSB_5.0_0">The SNAPSHOT LSB Specification</a></h2>
 
-<h2><a name="LSB_5.0_0" id="LSB_5.0_0"></a>The SNAPSHOT LSB Specification</h2>
-
-<p>This is the SNAPSHOT version of the LSB specification.
+<p><a name="LSB_5.0_0" id="LSB_5.0_0">This is the SNAPSHOT version of the LSB specification.
 The tables below present two popular formats, you may also go to the
-page with <a href="allspecs.shtml">all formats</a>.</p>
+page with </a><a href="allspecs.shtml">all formats</a>.</p>
 
 <p>Release notes outlining
 changes from the previous release of the specification can be found
-at <a href= "http://www.linuxfoundation.org/en/ReleaseNotes50">
+at <a href="http://www.linuxfoundation.org/en/ReleaseNotes50">
 http://www.linuxfoundation.org/en/ReleaseNotes50</a></p>
 
 <p>Note that LSB Core specification is a later version of
@@ -40,118 +51,111 @@ to LSB 3.1.  This edition is not to be considered an ISO standard
 at this time.
 </p>
 
-<blockquote bgcolor="yellow">
+<blockquote>
+Notes:
+<p>
 Do not claim conformance to a pre-release specification.
-</blockquote>
-
-<blockquote bgcolor="red">
-sorry: pdf versions of snapshot specifications are generally not available
+</p>
+<p>
+pdf versions of snapshot specifications are generally not available.
+Green table cells indicate available specs, red unavailable.
+</p>
 </blockquote>
 
 <table>
   <tbody>
     <tr>
       <th rowspan="2" valign="top">Document Set</th>
-      <th rowspan="2" valign="top">Functional Area</th>
-      <th colspan="8" align="center">Architecture</th>
+      <th rowspan="2" valign="top" align="left">Functional Area</th>
+      <th colspan="16" align="left">Architecture</th>
     </tr>
 
     <tr>
-      <th>Generic</th>
-      <th>IA32</th>
-      <th>IA64</th>
-      <th>PPC32</th>
-      <th>PPC64</th>
-      <th>S390</th>
-      <th>S390X</th>
-      <th>AMD64</th>
+      <th colspan=2>Generic</th>
+      <th colspan=2>IA32</th>
+      <th colspan=2>IA64</th>
+      <th colspan=2>PPC32</th>
+      <th colspan=2>PPC64</th>
+      <th colspan=2>S390</th>
+      <th colspan=2>S390X</th>
+      <th colspan=2>AMD64</th>
     </tr>
 
     <tr>
-      <th rowspan="5" align="left">LSB</th>
+      <th rowspan="6" align="left">LSB</th>
+      <th align="left">Common</th>
+      <td class=avail><a href="LSB-Common/LSB-Common/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Common/LSB-Common.pdf">pdf</a></td>
+      <td colspan=14>&nbsp;</td>
+    </tr>
+    <tr>
+      <!-- col1 spanned -->
       <th align="left">Core</th>
-      <td><a href="LSB-Core-generic/LSB-Core-generic/book1.html">html</a>
-      | <a href="LSB-Core-generic/LSB-Core-generic.pdf">pdf</a></td>
-      <td><a href="LSB-Core-IA32/LSB-Core-IA32/book1.html">html</a>
-      | <a href="LSB-Core-IA32/LSB-Core-IA32.pdf">pdf</a></td>
-      <td><a href="LSB-Core-IA64/LSB-Core-IA64/book1.html">html</a>
-      | <a href="LSB-Core-IA64/LSB-Core-IA64.pdf">pdf</a></td>
-      <td><a href="LSB-Core-PPC32/LSB-Core-PPC32/book1.html">html</a>
-      | <a href="LSB-Core-PPC32/LSB-Core-PPC32.pdf">pdf</a></td>
-      <td><a href="LSB-Core-PPC64/LSB-Core-PPC64/book1.html">html</a>
-      | <a href="LSB-Core-PPC64/LSB-Core-PPC64.pdf">pdf</a></td>
-      <td><a href="LSB-Core-S390/LSB-Core-S390/book1.html">html</a>
-      | <a href="LSB-Core-S390/LSB-Core-S390.pdf">pdf</a></td>
-      <td><a href="LSB-Core-S390X/LSB-Core-S390X/book1.html">html</a>
-      | <a href="LSB-Core-S390X/LSB-Core-S390X.pdf">pdf</a></td>
-      <td><a href="LSB-Core-AMD64/LSB-Core-AMD64/book1.html">html</a>
-      | <a href="LSB-Core-AMD64/LSB-Core-AMD64.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-generic/LSB-Core-generic/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-generic/LSB-Core-generic.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-IA32/LSB-Core-IA32/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-IA32/LSB-Core-IA32.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-IA64/LSB-Core-IA64/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-IA64/LSB-Core-IA64.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-PPC32/LSB-Core-PPC32/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-PPC32/LSB-Core-PPC32.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-PPC64/LSB-Core-PPC64/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-PPC64/LSB-Core-PPC64.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-S390/LSB-Core-S390/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-S390/LSB-Core-S390.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-S390X/LSB-Core-S390X/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-S390X/LSB-Core-S390X.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Core-AMD64/LSB-Core-AMD64/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Core-AMD64/LSB-Core-AMD64.pdf">pdf</a></td>
     </tr>
 
     <tr>
       <!-- col1 spanned -->
       <th align="left">Desktop</th>
-      <td><a href="LSB-Desktop-generic/LSB-Desktop-generic/book1.html">html</a>
-      | <a href="LSB-Desktop-generic/LSB-Desktop-generic.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-IA32/LSB-Desktop-IA32/book1.html">html</a>
-      | <a href="LSB-Desktop-IA32/LSB-Desktop-IA32.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-IA64/LSB-Desktop-IA64/book1.html">html</a>
-      | <a href="LSB-Desktop-IA64/LSB-Desktop-IA64.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-PPC32/LSB-Desktop-PPC32/book1.html">html</a>
-      | <a href="LSB-Desktop-PPC32/LSB-Desktop-PPC32.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-PPC64/LSB-Desktop-PPC64/book1.html">html</a>
-      | <a href="LSB-Desktop-PPC64/LSB-Desktop-PPC64.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-S390/LSB-Desktop-S390/book1.html">html</a>
-      | <a href="LSB-Desktop-S390/LSB-Desktop-S390.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-S390X/LSB-Desktop-S390X/book1.html">html</a>
-      | <a href="LSB-Desktop-S390X/LSB-Desktop-S390X.pdf">pdf</a></td>
-      <td><a href="LSB-Desktop-AMD64/LSB-Desktop-AMD64/book1.html">html</a>
-      | <a href="LSB-Desktop-AMD64/LSB-Desktop-AMD64.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-generic/LSB-Desktop-generic/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-generic/LSB-Desktop-generic.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-IA32/LSB-Desktop-IA32/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-IA32/LSB-Desktop-IA32.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-IA64/LSB-Desktop-IA64/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-IA64/LSB-Desktop-IA64.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-PPC32/LSB-Desktop-PPC32/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-PPC32/LSB-Desktop-PPC32.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-PPC64/LSB-Desktop-PPC64/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-PPC64/LSB-Desktop-PPC64.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-S390/LSB-Desktop-S390/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-S390/LSB-Desktop-S390.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-S390X/LSB-Desktop-S390X/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-S390X/LSB-Desktop-S390X.pdf">pdf</a></td>
+      <td class=avail><a href="LSB-Desktop-AMD64/LSB-Desktop-AMD64/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Desktop-AMD64/LSB-Desktop-AMD64.pdf">pdf</a></td>
     </tr>
 
     <tr>
       <!-- col1 spanned -->
       <th align="left">Runtime Languages</th>
-      <td><a href="LSB-Languages/LSB-Languages/book1.html">html</a>
-      | <a href="LSB-Languages/LSB-Languages.pdf">pdf</a></td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
+      <td class=avail><a href="LSB-Languages/LSB-Languages/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Languages/LSB-Languages.pdf">pdf</a></td>
+      <td colspan=14>&nbsp;</td>
     </tr>
 
     <tr>
       <!-- col1 spanned -->
       <th align="left">Imaging</th>
-      <td><a href="LSB-Imaging/LSB-Imaging/book1.html">html</a>
-      | <a href="LSB-Imaging/LSB-Imaging.pdf">pdf</a></td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
+      <td class=avail><a href="LSB-Imaging/LSB-Imaging/book1.html">html</a></td>
+      <td class=navail><a href="LSB-Imaging/LSB-Imaging.pdf">pdf</a></td>
+      <td colspan=14>&nbsp;</td>
     </tr>
 
     <tr>
       <!-- col1 spanned -->
       <th align="left">Trial Use</th>
-      <td><a href="LSB-TrialUse/LSB-TrialUse/book1.html">html</a>
-      | <a href="LSB-TrialUse/LSB-TrialUse.pdf">pdf</a></td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
-      <td align=center>n/a</td>
+      <td class=avail><a href="LSB-TrialUse/LSB-TrialUse/book1.html">html</a></td>
+      <td class=navail><a href="LSB-TrialUse/LSB-TrialUse.pdf">pdf</a></td>
+      <td colspan=14">&nbsp;</td>
     </tr>
   </tbody>
 </table>
 
-</body>
-</html>
+
+
+</body></html>
