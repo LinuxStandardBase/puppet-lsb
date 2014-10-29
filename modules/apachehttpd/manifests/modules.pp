@@ -59,6 +59,16 @@ class apachehttpd::modules {
         require => File['/srv/www/modules'],
     }
 
+    # Also do a staging version of (some of) the above modules.
+
+    exec { 'make-refspec-staging-module':
+        command => "bzr checkout -r -1 http://bzr.linuxfoundation.org/refspec/devel/refspec refspec-staging",
+        cwd     => '/srv/www/modules',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        creates => '/srv/www/modules/refspec-staging',
+        require => File['/srv/www/modules'],
+    }
+
     # Set module configuration files.
 
     file { '/srv/www/modules/dbadmin/config/connection.inc':
@@ -97,6 +107,12 @@ class apachehttpd::modules {
         command => "bzr update -r $refspecrev /srv/www/modules/refspec",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-refspec-module'],
+    }
+
+    exec { 'update-refspec-staging-module':
+        command => "bzr update -r -1 /srv/www/modules/refspec-staging",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Exec['make-refspec-staging-module'],
     }
 
     # The prdb app needs a way to modify and commit to the
