@@ -15,6 +15,8 @@ node 'lsb2.linux-foundation.org' {
     include apachehttpd, apachehttpd::vhosts, apachehttpd::betaspecs,
             apachehttpd::modules, apachehttpd::ssl, apachehttpd::linuxbase
 
+    include apachehttpd::qa
+
     include php
 
     include ftp

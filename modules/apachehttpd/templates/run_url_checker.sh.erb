@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+LSBDB=lsb
+LSBDBHOST=db21.linux-foundation.org
+LSBUSER=lsb
+LSBDBPASSWD=<%= scope.lookupvar('webdb::lsbuser') %>
+
+export LSBDB LSBDBHOST LSBUSER LSBDBPASSWD
+
+SPECDB_SCRIPTS_URL=http://bzr.linuxfoundation.org/lsb/devel/specdb-aux-scripts
+
+if [ \! -d /opt/specdb-aux-scripts ]; then
+    (cd /opt && bzr checkout $SPECDB_SCRIPTS_URL)
+else
+    (cd /opt/specdb-aux-scripts && bzr update)
+fi
+
+mkdir -p /tmp/url_checker
+cd /tmp/url_checker
+/opt/specdb-aux-scripts/url_checker.sh
