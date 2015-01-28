@@ -12,7 +12,7 @@ SPECDB_SCRIPTS_URL=http://bzr.linuxfoundation.org/lsb/devel/specdb-aux-scripts
 if [ \! -d /opt/specdb-aux-scripts ]; then
     (cd /opt && bzr checkout $SPECDB_SCRIPTS_URL)
 else
-    (cd /opt/specdb-aux-scripts && bzr update)
+    (cd /opt/specdb-aux-scripts && bzr update -q)
 fi
 
 mkdir -p /tmp/url_checker
