@@ -20,97 +20,101 @@ class apachehttpd::modules {
 
     $phpcastag = '1.3.2'
 
-    file { '/srv/www/modules':
+    file { '/data/www':
+        ensure => directory,
+    }
+
+    file { '/data/www/modules':
         ensure  => directory,
-        require => File['/srv/www'],
+        require => File['/data/www'],
     }
 
     # Do initial checkouts of modules.
 
     exec { 'make-dbadmin-module':
         command => "bzr checkout -r $dbadminrev http://bzr.linuxfoundation.org/lsb/devel/dbadmin",
-        cwd     => '/srv/www/modules',
+        cwd     => '/data/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => '/srv/www/modules/dbadmin',
-        require => File['/srv/www/modules'],
+        creates => '/data/www/modules/dbadmin',
+        require => File['/data/www/modules'],
     }
 
     exec { 'make-lsbcert-module':
         command => "bzr checkout -r $certrev http://bzr.linuxfoundation.org/lsb/devel/lsb-cert",
-        cwd     => '/srv/www/modules',
+        cwd     => '/data/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => '/srv/www/modules/lsb-cert',
-        require => File['/srv/www/modules'],
+        creates => '/data/www/modules/lsb-cert',
+        require => File['/data/www/modules'],
     }
 
     exec { 'make-prdb-module':
         command => "bzr checkout -r $prdbrev http://bzr.linuxfoundation.org/lsb/devel/prdb",
-        cwd     => '/srv/www/modules',
+        cwd     => '/data/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => '/srv/www/modules/prdb',
-        require => File['/srv/www/modules'],
+        creates => '/data/www/modules/prdb',
+        require => File['/data/www/modules'],
     }
 
     exec { 'make-refspec-module':
         command => "bzr checkout -r $refspecrev http://bzr.linuxfoundation.org/refspec/devel/refspec",
-        cwd     => '/srv/www/modules',
+        cwd     => '/data/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => '/srv/www/modules/refspec',
-        require => File['/srv/www/modules'],
+        creates => '/data/www/modules/refspec',
+        require => File['/data/www/modules'],
     }
 
     # Also do a staging version of (some of) the above modules.
 
     exec { 'make-refspec-staging-module':
         command => "bzr checkout -r -1 http://bzr.linuxfoundation.org/refspec/devel/refspec refspec-staging",
-        cwd     => '/srv/www/modules',
+        cwd     => '/data/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => '/srv/www/modules/refspec-staging',
-        require => File['/srv/www/modules'],
+        creates => '/data/www/modules/refspec-staging',
+        require => File['/data/www/modules'],
     }
 
     # Set module configuration files.
 
-    file { '/srv/www/modules/dbadmin/config/connection.inc':
+    file { '/data/www/modules/dbadmin/config/connection.inc':
         content => template('apachehttpd/dbconfig/dbadmin.erb'),
     }
 
-    file { '/srv/www/modules/lsb-cert/config.inc.php':
+    file { '/data/www/modules/lsb-cert/config.inc.php':
         content => template('apachehttpd/dbconfig/lsb-cert.erb'),
     }
 
-    file { '/srv/www/modules/prdb/config.inc.php':
+    file { '/data/www/modules/prdb/config.inc.php':
         content => template('apachehttpd/dbconfig/prdb.erb'),
     }
 
     # Check for and pull updates for modules.
 
     exec { 'update-dbadmin-module':
-        command => "bzr update -r $dbadminrev /srv/www/modules/dbadmin",
+        command => "bzr update -r $dbadminrev /data/www/modules/dbadmin",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-dbadmin-module'],
     }
 
     exec { 'update-lsbcert-module':
-        command => "bzr update -r $certrev /srv/www/modules/lsb-cert",
+        command => "bzr update -r $certrev /data/www/modules/lsb-cert",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-lsbcert-module'],
     }
 
     exec { 'update-prdb-module':
-        command => "bzr update -r $prdbrev /srv/www/modules/prdb",
+        command => "bzr update -r $prdbrev /data/www/modules/prdb",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-prdb-module'],
     }
 
     exec { 'update-refspec-module':
-        command => "bzr update -r $refspecrev /srv/www/modules/refspec",
+        command => "bzr update -r $refspecrev /data/www/modules/refspec",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-refspec-module'],
     }
 
     exec { 'update-refspec-staging-module':
-        command => "bzr update -r -1 /srv/www/modules/refspec-staging",
+        command => "bzr update -r -1 /data/www/modules/refspec-staging",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-refspec-staging-module'],
     }
