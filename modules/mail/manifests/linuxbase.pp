@@ -2,9 +2,25 @@
 
 class mail::linuxbase inherits mail::postfix {
 
+    # Site admin email.  Use 'root' as the alias for everything
+    # else, and point 'root' at the proper site admin alias.
+
+    mailalias { 'root':
+        recipient => 'licquia@linuxfoundation.org',
+    }
+
+    mailalias { 'hostmaster':
+        recipient => 'root',
+    }
+
+    # Destination for inquiries related to signed packages
+    # or repositories.
+
     mailalias { 'gpg':
         recipient => 'lsb-discuss@lists.linux-foundation.org',
     }
+
+    # Support aliases.
 
     mailalias { 'lsb-dtk-support':
         recipient => 'lsb-discuss@lists.linux-foundation.org',
