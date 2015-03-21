@@ -367,6 +367,7 @@ class buildbot::slave inherits buildbot {
 
     service { "buildslave":
         ensure     => running,
+        enable     => true,
         hasrestart => false,
         hasstatus  => true,
         require    => [ File['/etc/init.d/buildslave'], User['buildbot'],
