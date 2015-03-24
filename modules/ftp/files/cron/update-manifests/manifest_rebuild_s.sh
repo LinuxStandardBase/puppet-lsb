@@ -8,4 +8,11 @@ cat distribution-checker/utils/Tests/templates/*.mnf.tpl distribution-checker/ut
 
 cp Manifest /srv/ftp/pub/lsb/updates/dist-checker-data/Manifest
 
+# Copy any updated test modules.  Ideally, we'd figure this out from the
+# Manifest we just generated, but for now let's just hard-code a list.
+
+for m in Core_test.pm; do
+    cp -f distribution-checker/utils/Tests/$m /srv/ftp/pub/lsb/updates/dist-checker-data
+done
+
 rm -rf distribution-checker
