@@ -20,7 +20,8 @@ class ftp {
 
     file { '/srv/ftp/incoming':
         ensure => directory,
-        mode   => 0777,
+        mode   => 0700,
+        owner  => ftp,
     }
 
     # Scripts for updating information on the FTP server.
