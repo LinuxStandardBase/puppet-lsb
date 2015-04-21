@@ -92,39 +92,39 @@ class buildbot::slave inherits buildbot {
     # Which SDKs should we use for released and beta builds?
 
     $releasedsdk = "${architecture}-${wordsize}" ? {
-        /^i386/         => 'lsb-sdk-4.1.8-1.ia32.tar.gz',
-        /^x86_64/       => 'lsb-sdk-4.1.8-1.x86_64.tar.gz',
-        /^ia64/         => 'lsb-sdk-4.1.8-1.ia64.tar.gz',
-        /^s390x-small$/ => 'lsb-sdk-4.1.8-1.s390.tar.gz',
-        /^s390x-big$/   => 'lsb-sdk-4.1.8-1.s390x.tar.gz',
-        /^ppc64-small$/ => 'lsb-sdk-4.1.8-2.ppc32.tar.gz',
-        /^ppc64-big$/   => 'lsb-sdk-4.1.8-2.ppc64.tar.gz',
+        /^i386/         => 'lsb-sdk-5.0.0-3.ia32.tar.gz',
+        /^x86_64/       => 'lsb-sdk-5.0.0-3.x86_64.tar.gz',
+        /^ia64/         => 'lsb-sdk-5.0.0-3.ia64.tar.gz',
+        /^s390x-small$/ => 'lsb-sdk-5.0.0-3.s390.tar.gz',
+        /^s390x-big$/   => 'lsb-sdk-5.0.0-3.s390x.tar.gz',
+        /^ppc64-small$/ => 'lsb-sdk-5.0.0-3.ppc32.tar.gz',
+        /^ppc64-big$/   => 'lsb-sdk-5.0.0-3.ppc64.tar.gz',
     }
 
-    $releasedsdkpath = 'bundles/released-4.1.0/sdk'
+    $releasedsdkpath = 'bundles/released-5.0.0/sdk'
 
     # For beta SDKs, most of the time we just want to use
     # the released SDK for the beta SDK.  But when they are
     # actually different, we need to specify that here.
     # Use this set of declarations for a separate beta SDK.
 
-    $betasdk = "${architecture}-${wordsize}" ? {
-        /^i386/         => 'lsb-sdk-5.0.0-2.ia32.tar.gz',
-        /^x86_64/       => 'lsb-sdk-5.0.0-2.x86_64.tar.gz',
-        /^ia64/         => 'lsb-sdk-5.0.0-2.ia64.tar.gz',
-        /^s390x-small$/ => 'lsb-sdk-5.0.0-2.s390.tar.gz',
-        /^s390x-big$/   => 'lsb-sdk-5.0.0-2.s390x.tar.gz',
-        /^ppc64-small$/ => 'lsb-sdk-5.0.0-2.ppc32.tar.gz',
-        /^ppc64-big$/   => 'lsb-sdk-5.0.0-2.ppc64.tar.gz',
-    }
+    #$betasdk = "${architecture}-${wordsize}" ? {
+    #    /^i386/         => 'lsb-sdk-5.0.0-2.ia32.tar.gz',
+    #    /^x86_64/       => 'lsb-sdk-5.0.0-2.x86_64.tar.gz',
+    #    /^ia64/         => 'lsb-sdk-5.0.0-2.ia64.tar.gz',
+    #    /^s390x-small$/ => 'lsb-sdk-5.0.0-2.s390.tar.gz',
+    #    /^s390x-big$/   => 'lsb-sdk-5.0.0-2.s390x.tar.gz',
+    #    /^ppc64-small$/ => 'lsb-sdk-5.0.0-2.ppc32.tar.gz',
+    #    /^ppc64-big$/   => 'lsb-sdk-5.0.0-2.ppc64.tar.gz',
+    #}
 
-    $betasdkpath = 'bundles/beta/sdk'
+    #$betasdkpath = 'bundles/beta/sdk'
 
     # Use this set of declarations to set the beta SDK
     # to be the same as the released SDK.
 
-    #$betasdk = $releasedsdk
-    #$betasdkpath = $releasedsdkpath
+    $betasdk = $releasedsdk
+    $betasdkpath = $releasedsdkpath
 
     # Special downloaded packages needed for builds from the LSB.
     # XXX: this should migrate to using package repositories and
