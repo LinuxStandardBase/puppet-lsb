@@ -46,6 +46,7 @@ class puppet {
             source  => [ "puppet:///modules/puppet/sysconfig/$fqdn",
                          "puppet:///modules/puppet/sysconfig/$osdefault" ],
             require => Package['puppet'],
+            notify  => Service[$puppetservice],
         }
     }
 
@@ -98,6 +99,7 @@ solver.allowVendorChange = true
             source  => [ "puppet:///modules/puppet/etcdefault/$fqdn",
                          "puppet:///modules/puppet/etcdefault/$osdefault" ],
             require => Package['puppet'],
+            notify  => Service[$puppetservice],
         }
     }
 
