@@ -1,9 +1,10 @@
 class puppet {
 
     $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
-        /^SLES-11/ => 'default-sles11',
-        /^Debian/  => 'default-debian',
-        default    => 'default-sles11',
+        /^SLES-11/  => 'default-sles11',
+        /^Debian/   => 'default-debian',
+        /^OpenSuSE/ => 'default-opensuse',
+        default     => 'default-unknown',
     }
 
     $puppetversion = "${operatingsystem}-${operatingsystemrelease}-${architecture}" ? {
@@ -40,6 +41,14 @@ class puppet {
         mode  => 644,
     }
 
+    if $operatingsystem == "SLES" or $operatingsystem == "OpenSuSE" {
+        file { '/etc/sysconfig/puppet':
+            source  => [ "puppet:///modules/puppet/sysconfig/$fqdn",
+                         "puppet:///modules/puppet/sysconfig/$osdefault" ],
+            require => Package['puppet'],
+        }
+    }
+
     if $operatingsystem == "SLES" {
         file { '/etc/zypp/repos.d/home_lserepo.repo':
             source => 'puppet:///modules/puppet/home_lserepo.repo',
@@ -58,12 +67,6 @@ class puppet {
             path        => [ '/usr/sbin', '/usr/bin', '/bin', '/sbin' ],
             refreshonly => true,
             logoutput   => true,
-        }
-
-        file { '/etc/sysconfig/puppet':
-            source  => [ "puppet:///modules/puppet/sysconfig/$fqdn",
-                         "puppet:///modules/puppet/sysconfig/$osdefault" ],
-            require => Package['puppet'],
         }
 
         # For SLES 11 systems that have the vendor puppet package,
