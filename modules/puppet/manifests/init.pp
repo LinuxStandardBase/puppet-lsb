@@ -29,7 +29,7 @@ class puppet {
     $puppetservice = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^Fedora-16/ => 'puppet',
         /^Fedora-/   => 'puppetagent',
-        /^OpenSuSE-/ => 'puppetagent',
+        /^OpenSuSE-/ => 'puppet',
         default      => 'puppet',
     }
 
