@@ -20,7 +20,7 @@ BZR_PROGRESS_BAR=none
 export BZR_PROGRESS_BAR
 
 # the current tags to export from for "beta" versions:
-BETAFHS=FHS-3.0-RC1
+BETAFHS=FHS-3.0-RC2
 BETALSB=LSB-5.0-RC1
 
 # obtain the current FHS spec from bzr
