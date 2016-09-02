@@ -1,5 +1,5 @@
 # Build slave VM on Jeff's home network.
-node 'buildslave-amd64.internal.licquia.org' {
+node 'vm178231020.pmman.net' {
 
     include ntp
 
