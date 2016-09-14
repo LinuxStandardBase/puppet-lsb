@@ -5,7 +5,7 @@ class sudo {
     $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^(CentOS|RedHat)-5\.[0-9]+$/       => 'default-el5',
         /^(CentOS|RedHat)-6(\.[0-9]+)?$/    => 'default-fedora',
-        /^(CentOS|RedHat)-7(\.[0-9]+)$/     => 'default-centos7',
+        /^(CentOS|RedHat)-7(\.[0-9]+)/      => 'default-centos7',
         /^Fedora/                           => 'default-fedora',
         /^SLES-11\.?[0-9]*$/                => 'default-sles11',
         /^OpenSuSE/                         => 'default-opensuse',
