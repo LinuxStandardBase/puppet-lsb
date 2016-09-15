@@ -140,7 +140,7 @@ class buildbot::slave inherits buildbot {
         /^ppc64-big$/   => 'http://ftp.linuxfoundation.org/pub/lsb/app-battery/released-4.1/ppc64/lsb-python-2.4.6-7.lsb4.ppc64.rpm',
     }
 
-    $appchkpyurl = 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/application/lsb-appchk-python-4.1.0-1.noarch.rpm'
+    $appchkpyurl = 'http://ftp.linuxfoundation.org/pub/lsb/test_suites/released-all/binary/application/lsb-appchk-python-5.0.0-1.noarch.rpm'
 
     # For small-word build slaves.
     if $wordsize == 'small' {
