@@ -121,11 +121,9 @@ class buildbot::slavepkgs {
     }
 
     # bison used to provide yacc for runtime-test, now it's byacc sometimes
-    $bisonpkg = $operatingsystem ? {
-        /^SLES/   => 'bison',
-        /^CentOS/ => 'byacc',
-        /^Fedora/ => 'bison',
-        default   => 'bison',
+    $bisonpkg = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^CentOS-[56]/ => 'byacc',
+        default        => 'bison',
     }
 
     # automake 1.4 is needed by the gtkvts portion of desktop-test
