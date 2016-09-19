@@ -10,7 +10,7 @@ class ntp {
     file { '/etc/ntp.conf':
         source  => 'puppet:///modules/ntp/ntp.conf',
         require => Package['ntp'],
-        notify  => Service['ntp'],
+        notify  => Service["$ntpservice"],
     }
 
     service { "$ntpservice":
