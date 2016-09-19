@@ -1,5 +1,10 @@
 class ntp {
 
+    $ntpservice = "$operatingsystem-$operatingsystemrelease" ? {
+        /^CentOS-7/   => 'ntpd',
+        default       => 'ntp',
+    }
+
     package { 'ntp': ensure => present }
 
     file { '/etc/ntp.conf':
@@ -8,7 +13,7 @@ class ntp {
         notify  => Service['ntp'],
     }
 
-    service { 'ntp':
+    service { "$ntpservice":
         ensure     => running,
         hasstatus  => true,
         hasrestart => true,
