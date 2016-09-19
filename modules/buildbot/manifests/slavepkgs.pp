@@ -128,7 +128,6 @@ class buildbot::slavepkgs {
 
     # automake 1.4 is needed by the gtkvts portion of desktop-test
     $automakepkg = $operatingsystem ? {
-        /^Fedora/ => 'automake14',
         default   => 'automake',
     }
     
