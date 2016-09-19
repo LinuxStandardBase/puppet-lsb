@@ -4,11 +4,11 @@ class mail::postfix inherits mail {
 
     package { 'postfix':
         ensure => present,
-        before => Service['mtadaemon'],
+        before => Service['postfix'],
     }
 
-    Service['mtadaemon'] {
-        restart => '/sbin/service postfix reload',
+    Service['postfix'] {
+        enable => true,
     }
 
     file { '/etc/postfix':
@@ -24,7 +24,7 @@ class mail::postfix inherits mail {
         path        => [ '/usr/sbin', '/usr/bin', '/bin' ],
         refreshonly => true,
         logoutput   => true,
-        notify      => Service['mtadaemon'],
+        notify      => Service['postfix'],
     }
 
 }

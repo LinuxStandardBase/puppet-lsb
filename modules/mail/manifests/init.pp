@@ -8,10 +8,4 @@ class mail {
         ensure => present,
     }
 
-    service { 'mtadaemon':
-        enable => true,
-        # This needs to be overriden
-        name   => undef,
-    }
-
 }
