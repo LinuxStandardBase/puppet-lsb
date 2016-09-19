@@ -4,11 +4,11 @@ class mail::postfix inherits mail {
 
     package { 'postfix':
         ensure => present,
-        before => Service['postfix'],
     }
 
-    Service['postfix'] {
+    service { 'postfix':
         enable => true,
+        require => Package['postfix'],
     }
 
     file { '/etc/postfix':
