@@ -243,6 +243,12 @@ class buildbot::slave inherits buildbot {
 
     # Set up the base infrastructure.    
 
+    file { '/opt/buildbot/.cvspass':
+        source => 'puppet:///modules/buildbot/cvspass',
+        owner  => 'buildbot',
+        mode   => 0600,
+    }
+
     file { "/opt/buildbot/lsb-slave":
         ensure => directory,
         owner  => 'buildbot',
