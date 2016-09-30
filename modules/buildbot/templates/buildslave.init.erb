@@ -19,6 +19,11 @@ PIDFILE=/opt/buildbot/lsb-slave/twistd.pid
 SMALLWORDRUN=<%= smallwordcmd %>
 <% end -%>
 
+# Need .cvspass for some builds, and cvs doesn't pick this up
+# for some reason.
+CVS_PASSFILE=/opt/buildbot/.cvspass
+export CVS_PASSFILE
+
 test -x $DAEMON || exit 0
 
 PATH=/usr/local/bin:/bin:/usr/bin:/opt/lsb/bin:/opt/lsb/appbat/bin
