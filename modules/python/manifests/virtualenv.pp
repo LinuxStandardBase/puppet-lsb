@@ -17,12 +17,17 @@ class python::virtualenv inherits python {
         default               => undef,
     }
 
+    $pythonpip = "$osid" ? {
+        /^CentOS-7/ => 'python2-pip',
+        default     => 'python-pip',
+    }
+
     package { 'python-virtualenv': 
         ensure  => present,
         require => $suseobsrepo,
     }
 
-    package { 'python-pip':
+    package { "$pythonpip":
         ensure => present,
         require => $suseobsrepo,
     }
