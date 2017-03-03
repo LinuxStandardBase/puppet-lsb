@@ -6,7 +6,7 @@ class buildbot::master inherits buildbot {
 
     $sqlalchemyversion = '0.7.10'
 
-    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20170106183512-ywtdu7uauzwu3nx5'
+    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20170301153955-mdgto5n6oj8i0fyf'
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64,s390,s390x'
 
