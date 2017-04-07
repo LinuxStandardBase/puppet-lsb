@@ -44,6 +44,7 @@ Defaults !insults
 root	ALL = (ALL) ALL
 lfadmin	ALL = (ALL) ALL
 licquia	ALL = (ALL) ALL
+dnalley ALL = (ALL) ALL
 
 nobody  ALL = (root) NOPASSWD: /usr/bin/bzr update -q
 
