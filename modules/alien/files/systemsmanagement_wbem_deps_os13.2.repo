@@ -1,0 +1,7 @@
+[systemsmanagement_wbem_deps]
+name=Runtime dependencies (openSUSE_13.2)
+type=rpm-md
+baseurl=http://download.opensuse.org/repositories/systemsmanagement:/wbem:/deps/openSUSE_13.2/
+gpgcheck=1
+gpgkey=http://download.opensuse.org/repositories/systemsmanagement:/wbem:/deps/openSUSE_13.2//repodata/repomd.xml.key
+enabled=1

@@ -2,7 +2,7 @@ class php {
 
     $osdefault = "${operatingsystem}-${operatingsystemrelease}" ? {
         /^SLES-11/       => 'default-sles11',
-        /^OpenSuSE-13.1/ => 'default-opensuse',
+        /^OpenSuSE-13/ => 'default-opensuse',
     }
 
     case $operatingsystem {

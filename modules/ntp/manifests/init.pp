@@ -2,6 +2,7 @@ class ntp {
 
     $ntpservice = "$operatingsystem-$operatingsystemrelease" ? {
         /^CentOS-7/   => 'ntpd',
+        /^OpenSuSE/   => 'ntpd',
         default       => 'ntp',
     }
 
