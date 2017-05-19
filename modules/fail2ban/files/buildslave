@@ -1,0 +1,264 @@
+#       RPH
+
+[DEFAULT]
+findtime  = 3600
+
+bantime = 3600
+
+enabled = true
+
+ignoreip = 127.0.0.1/8 10.0.0.0/8 198.178.231.0/24 198.49.244.0/24
+
+usedns = no
+
+# destemail = fail2ban@owlriver.com
+
+# sender = blocklist@owlriver.com
+
+### reporting
+
+# Report block via blocklist.de fail2ban reporting service API
+# 
+# See the IMPORTANT note in action.d/blocklist_de.conf for when to
+# use this action. Create a file jail.d/blocklist_de.local containing
+### RPH -- this needs to be keyed by each differing server
+# [Init]
+# blocklist_de_apikey = xxx 
+#
+
+
+############# this is the entire tamale
+# [sshd]
+enabled = true
+
+[sshd-ddos]
+enabled = true
+
+[dropbear]
+enabled = true
+
+[selinux-ssh]
+enabled = true
+
+[apache-auth]
+enabled = false
+
+[apache-badbots]
+enabled = false
+
+[apache-noscript]
+enabled = false
+
+[apache-overflows]
+enabled = false
+
+[apache-nohome]
+enabled = false
+
+[apache-botsearch]
+enabled = false
+
+[apache-fakegooglebot]
+enabled = false
+
+[apache-modsecurity]
+enabled = false
+
+[apache-shellshock]
+enabled = false
+
+[openhab-auth]
+enabled = false
+
+[nginx-http-auth]
+enabled = false
+
+[nginx-limit-req]
+enabled = false
+
+[nginx-botsearch]
+enabled = false
+
+[php-url-fopen]
+enabled = false
+
+[suhosin]
+enabled = false
+
+[lighttpd-auth]
+enabled = false
+
+[roundcube-auth]
+enabled = false
+
+[openwebmail]
+enabled = false
+
+[horde]
+enabled = false
+
+[groupoffice]
+enabled = false
+
+[sogo-auth]
+enabled = false
+
+[tine20]
+enabled = false
+
+[drupal-auth]
+enabled = false
+
+[guacamole]
+enabled = false
+
+[monit]
+enabled = false
+
+[webmin-auth]
+enabled = false
+
+[froxlor-auth]
+enabled = false
+
+[squid]
+enabled = false
+
+[3proxy]
+enabled = false
+
+[proftpd]
+enabled = false
+
+[pure-ftpd]
+enabled = false
+
+[gssftpd]
+enabled = false
+
+[wuftpd]
+enabled = false
+
+[vsftpd]
+enabled = false
+
+[assp]
+enabled = false
+
+[courier-smtp]
+enabled = false
+
+[postfix]
+enabled = false
+
+[postfix-rbl]
+enabled = false
+
+[sendmail-auth]
+enabled = true
+
+[sendmail-reject]
+enabled = true
+
+[qmail-rbl]
+enabled = false
+
+[dovecot]
+enabled = false
+
+[sieve]
+enabled = false
+
+[solid-pop3d]
+enabled = false
+
+[exim]
+enabled = false
+
+[exim-spam]
+enabled = false
+
+[kerio]
+enabled = false
+
+[courier-auth]
+enabled = false
+
+[postfix-sasl]
+enabled = false
+
+[perdition]
+enabled = false
+
+[squirrelmail]
+enabled = false
+
+[cyrus-imap]
+enabled = true
+
+[uwimap-auth]
+enabled = false
+
+[named-refused]
+enabled = false
+
+[nsd]
+enabled = false
+
+[asterisk]
+enabled = false
+
+[freeswitch]
+enabled = false
+
+[mysqld-auth]
+enabled = false
+
+[mongodb-auth]
+enabled = false
+
+[recidive]
+enabled = false
+
+[pam-generic]
+enabled = true
+
+[xinetd-fail]
+enabled = false
+
+[stunnel]
+enabled = false
+
+[ejabberd-auth]
+enabled = false
+
+[counter-strike]
+enabled = false
+
+[nagios]
+enabled = true
+
+[oracleims]
+enabled = false
+
+[directadmin]
+enabled = false
+
+[portsentry]
+enabled = false
+
+[pass2allow-ftp]
+enabled = false
+
+[murmur]
+enabled = false
+
+[screensharingd]
+enabled = false
+
+[haproxy-http-auth]
+enabled = false
+
+[slapd]
+enabled = false
+

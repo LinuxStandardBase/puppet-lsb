@@ -2,6 +2,9 @@ class buildbot::slave inherits buildbot {
 
     include buildbot::virtualenv
 
+    # Security precaution; we should protect all slaves this way.
+    include fail2ban
+
     # Slave package info has its own module.
     include buildbot::slavepkgs
 
