@@ -16,7 +16,7 @@ class fail2ban {
 
     service { "fail2ban":
         ensure => running,
-        require => [ Package['fail2ban'], File['/etc/fail2ban/jail.d/buildslave'] ].
+        require => [ Package['fail2ban'], File['/etc/fail2ban/jail.d/buildslave'] ],
     }
 
 }
