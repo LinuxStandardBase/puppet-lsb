@@ -1,5 +1,6 @@
 class buildbot::slave inherits buildbot {
 
+    include miscpkgs::wget
     include buildbot::virtualenv
 
     # Security precaution; we should protect all slaves this way.
@@ -236,12 +237,6 @@ class buildbot::slave inherits buildbot {
         creates => '/opt/lsb/bin/lsbappchk.py',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['download-lsbappchk-python'],
-    }
-
-    # Other packages needed by this puppet module.
-
-    package { 'wget':
-        ensure => present,
     }
 
     # Set up the base infrastructure.    
