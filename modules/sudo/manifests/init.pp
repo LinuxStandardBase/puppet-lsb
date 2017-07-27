@@ -11,7 +11,7 @@ class sudo {
         /^OpenSuSE/                         => 'default-opensuse',
     }
 
-    package { sudo: ensure => latest }
+    package { sudo: ensure => present }
 
     file { "/etc/sudoers":
         owner   => root,
