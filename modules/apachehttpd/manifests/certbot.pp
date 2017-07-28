@@ -9,7 +9,7 @@ class apachehttpd::certbot {
     }
 
     cron { "refresh-certbot":
-        command => "/usr/local/sbin/certbot-auto -n renew",
+        command => "/usr/local/sbin/certbot-auto renew -n --quiet",
         user    => "root",
         hour    => 15,
         minute  => 38,
