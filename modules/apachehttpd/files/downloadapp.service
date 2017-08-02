@@ -1,0 +1,12 @@
+[Unit]
+Description=LSB download app
+After=syslog.target
+
+[Service]
+ExecStart=/opt/download-app/bin/download_app.py runserver --port=7248
+Restart=on-abort
+WorkingDirectory=/opt/download-app
+User=downloadapp
+
+[Install]
+WantedBy=multi-user.target

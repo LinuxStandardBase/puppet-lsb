@@ -7,6 +7,11 @@ class user::virtual inherits user {
         home        => '/opt/buildbot',
     }
 
+    @user { 'downloadapp':
+        ensure      => present,
+        home        => '/opt/download-app',
+    }
+
     @user { 'supybot':
         ensure      => present,
         home        => '/opt/supybot',
