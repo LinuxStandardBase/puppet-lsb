@@ -36,7 +36,7 @@ $allow_ldap_wr = 0;
 
 $mediawiki_login = 0; # Mediawiki login integration mode
 $drupal_login = 0; # Drupal login integration mode
-
+$cas_login = 1; # CAS login integration mode
 
 # Set $tmla_autoconfirm to 1 if you trust in users and don't want 
 # to confirm each TMLA.
@@ -45,7 +45,7 @@ $tmla_autoconfirm_email_to_admin = 1;
 
 # Default certification program
 # Also, see the $cert_prog_values array in functions.inc.php!
-$default_cert_prog = '4.1';
+$default_cert_prog = '5.0';
 
 ### Placement
 
@@ -113,6 +113,13 @@ if ( $drupal_login ) {
     $drupal_login_page = 'https://www.linuxfoundation.org/user?destination=lsb-cert';
     $drupal_logout_page = 'http://www.linuxfoundation.org/logout';
 }
+if ( $cas_login ) {
+    $phpcas_path = '/var/lib/wwwrun/phpCAS';
+    $cas_cert_path = "/var/lib/ca-certificates/ca-bundle.pem";
+    $cas_host = 'identity.linuxfoundation.org';
+    $cas_port = 443;
+    $cas_context = '/cas';
+}
 
 ### E-mails configuration
 
@@ -160,7 +167,7 @@ $lettering = "\n---\nSincerely yours,\nLSB Certification System\n";
 
 $homepage = 'welcome_cert.php';
 
-$register_page = 'https://www.linuxfoundation.org/user/register';
+$register_page = 'https://identity.linuxfoundation.org/';
 $login_page = 'login.php';
 
 $login_success_return_page = 'status.php?follow=1';
