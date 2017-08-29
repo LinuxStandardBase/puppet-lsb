@@ -12,7 +12,7 @@ class apachehttpd::modules {
     # so any bzr revisionspec is allowed (revnos, tags, revids, etc.).
 
     $dbadminrev = 'revid:licquia@linuxfoundation.org-20141003153711-0xexdfw1peqxn418'
-    $certrev = 'revid:licquia@linuxfoundation.org-20150527130220-xxocfqyfs96u9e2k'
+    $certrev = 'revid:licquia@linuxfoundation.org-20170829205246-yfzfbxa7s8se52qs'
     $prdbrev = 'revid:licquia@linuxfoundation.org-20141004212651-asp228c66o90sads'
     $refspecrev = 'revid:licquia@linuxfoundation.org-20170811184208-dqd5g8y83ondfzqb'
 
