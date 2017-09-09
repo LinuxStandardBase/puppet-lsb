@@ -16,17 +16,17 @@ HOUR=`date +%H`
 [ 0${HOUR} -ge 0${ALIVE} -a 0${HOUR} -lt 0${POSTALIVE} ] && {
 	export CONTINUITY="y"
 #	toss out yesterday's temp directory
-	find /tmp -type d -name "${BAS}" -a -exec rm -rf {} \;
+	rm -rf /tmp/${BAS}.*
 	}
 #
 #	want a place to cache persistent state, save when we chirp
 # 	so don't make if we have one, and use the same 
 #	one durably all day
-HASTEMP=`find /tmp -type d -print | grep -c "${BAS}"`
+HASTEMP=`ls /tmp | grep -c "${BAS}"`
 [ 0${HASTEMP} -lt 01 ] && {
 	TEMP_PATH=$(mktemp -d --tmpdir ${BAS}.XXXXXXXXXX)
 	}
-TEMP_PATH=`find /tmp -type d -print | grep "${BAS}" | sort | tail -1 `
+TEMP_PATH=`ls /tmp | grep "${BAS}" | sort | tail -1 `
 [ "x${TEMP_PATH}" = "x" ] && {
 	echo "error: cannot see a working TEMP_PATH for ${BAS} " 1>&2
 	echo " ... bailing" 1>&2
