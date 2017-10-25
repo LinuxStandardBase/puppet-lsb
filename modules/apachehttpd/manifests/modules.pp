@@ -137,6 +137,7 @@ ssl.cert_reqs=none
     }
 
     file { '/var/lib/wwwrun/.bazaar/authentication.conf':
+        ensure  => absent,
         owner   => 'wwwrun',
         mode    => 0640,
         require => File['/var/lib/wwwrun/.bazaar'],
@@ -149,14 +150,13 @@ password=$webdb::autobuild
     }
 
     exec { 'checkout-problem-db':
-        command     => 'bzr checkout https+urllib://bzr.linuxfoundation.org/lsb/devel/problem_db /var/lib/wwwrun/problem_db',
+        command     => 'bzr checkout http://bzr.linuxfoundation.org/lsb/devel/problem_db /var/lib/wwwrun/problem_db',
         cwd         => '/var/lib/wwwrun',
         path        => [ '/bin', '/usr/bin' ],
         environment => 'BZR_HOME=/var/lib/wwwrun',
         creates     => '/var/lib/wwwrun/problem_db',
         user        => 'wwwrun',
-        require     => [ File['/var/lib/wwwrun/.bazaar/authentication.conf'],
-                         File['/var/lib/wwwrun/.bazaar/bazaar.conf'] ],
+        require     => File['/var/lib/wwwrun/.bazaar/bazaar.conf'],
         logoutput   => on_failure,
     }
 
