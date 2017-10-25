@@ -132,6 +132,7 @@ class apachehttpd::modules {
         require => File['/var/lib/wwwrun/.bazaar'],
         content => '[DEFAULT]
 email = Automatic Commit <lsb-discuss@lists.linuxfoundation.org>
+ssl.cert_reqs=none
 ',
     }
 
