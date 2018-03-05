@@ -129,7 +129,7 @@ class apachehttpd::modules {
     }
 
     exec { 'update-lanana-module':
-        command => "git fetch --all && git checkout -r $lananarev",
+        command => "git fetch --all && git checkout $lananarev",
         cwd     => '/data/www/modules/lanana',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-lanana-module'],
