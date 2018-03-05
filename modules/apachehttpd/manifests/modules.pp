@@ -132,7 +132,7 @@ class apachehttpd::modules {
         command => "git fetch --all && git checkout -r $lananarev",
         cwd     => '/data/www/modules/lanana',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        require => Exec['make-lsbcert-module'],
+        require => Exec['make-lanana-module'],
     }
 
     # The prdb app needs a way to modify and commit to the
