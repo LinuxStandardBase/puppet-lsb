@@ -15,6 +15,7 @@ class apachehttpd::modules {
     $certrev = 'revid:licquia@linuxfoundation.org-20170829205246-yfzfbxa7s8se52qs'
     $prdbrev = 'revid:licquia@linuxfoundation.org-20141004212651-asp228c66o90sads'
     $refspecrev = 'revid:licquia@linuxfoundation.org-20170811184208-dqd5g8y83ondfzqb'
+    $lananarev = '7cb62ac71c35e0fd8039a4fec31043e0201df3d1'
 
     # Revisions for dependencies.
 
@@ -60,6 +61,14 @@ class apachehttpd::modules {
         cwd     => '/data/www/modules',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         creates => '/data/www/modules/refspec',
+        require => File['/data/www/modules'],
+    }
+
+    exec { 'make-lanana-module':
+        command => "git clone https://github.com/LinuxStandardBase/lanana.git && cd lanana && git checkout $lananarev",
+        cwd     => '/data/www/modules',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        creates => '/data/www/modules/lanana',
         require => File['/data/www/modules'],
     }
 
@@ -117,6 +126,12 @@ class apachehttpd::modules {
         command => "bzr update -r -1 /data/www/modules/refspec-staging",
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-refspec-staging-module'],
+    }
+
+    exec { 'update-lanana-module':
+        command => "cd /data/www/modules/lsb-cert && git fetch --all && git checkout -r $lananarev",
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        require => Exec['make-lsbcert-module'],
     }
 
     # The prdb app needs a way to modify and commit to the
