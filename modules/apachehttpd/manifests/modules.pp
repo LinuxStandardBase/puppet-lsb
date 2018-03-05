@@ -129,7 +129,8 @@ class apachehttpd::modules {
     }
 
     exec { 'update-lanana-module':
-        command => "cd /data/www/modules/lsb-cert && git fetch --all && git checkout -r $lananarev",
+        command => "git fetch --all && git checkout -r $lananarev",
+        cwd     => '/data/www/modules/lanana',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-lsbcert-module'],
     }
