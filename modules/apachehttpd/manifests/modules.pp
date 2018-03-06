@@ -64,12 +64,23 @@ class apachehttpd::modules {
         require => File['/data/www/modules'],
     }
 
-    exec { 'make-lanana-module':
-        command => "git clone https://github.com/LinuxStandardBase/lanana.git && cd lanana && git checkout $lananarev",
-        cwd     => '/data/www/modules',
-        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        creates => '/data/www/modules/lanana',
+    file { '/data/www/modules/lanana':
+        ensure  => directory,
         require => File['/data/www/modules'],
+    }
+
+    exec { 'make-lanana-module':
+        command => "git clone https://github.com/LinuxStandardBase/lanana.git lsbreg && cd lsbreg && git checkout $lananarev",
+        cwd     => '/data/www/modules/lanana',
+        path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
+        creates => '/data/www/modules/lanana/lsbreg',
+        require => File['/data/www/modules/lanana'],
+    }
+
+    file { '/data/www/modules/lanana/index.html':
+        ensure => link,
+        target => 'lsbreg/index.html',
+        require => Exec['make-lanana-module'],
     }
 
     # Also do a staging version of (some of) the above modules.
@@ -130,7 +141,7 @@ class apachehttpd::modules {
 
     exec { 'update-lanana-module':
         command => "git fetch --all && git checkout $lananarev",
-        cwd     => '/data/www/modules/lanana',
+        cwd     => '/data/www/modules/lanana/lsbreg',
         path    => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         require => Exec['make-lanana-module'],
     }
