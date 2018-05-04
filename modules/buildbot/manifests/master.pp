@@ -6,7 +6,7 @@ class buildbot::master inherits buildbot {
 
     $sqlalchemyversion = '0.7.10'
 
-    $buildbotconfigrev = 'revid:licquia@linuxfoundation.org-20170303160240-xnpyzthge2mg6kot'
+    $buildbotconfigrev = '89edfaf'
 
     $weeklyrebuildarchs = 'x86,x86_64,ia64,ppc32,ppc64,s390,s390x'
 
@@ -44,7 +44,7 @@ class buildbot::master inherits buildbot {
     }
 
     exec { "make-buildbot-config":
-        command => "bzr checkout -r $buildbotconfigrev http://bzr.linuxfoundation.org/lsb/devel/buildbot-config",
+        command => "git clone https://github.com/LinuxStandardBase/buildbot-config.git && cd buildbot-config && git checkout -q $buildbotconfigrev",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/buildbot-config",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
@@ -229,7 +229,8 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
     }
 
     exec { 'update-buildbot-config':
-        command => "bzr update -r $buildbotconfigrev /opt/buildbot/buildbot-config",
+        command => "git fetch -q && git checkout -q $buildbotconfigrev",
+        cwd     => "/opt/buildbot/buildbot-config",
         path    => [ "/bin", "/sbin", "/usr/bin", "/usr/sbin" ],
         require => Exec['make-buildbot-config'],
     }
