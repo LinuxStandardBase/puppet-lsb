@@ -37,7 +37,7 @@ class puppet::server inherits puppet {
     # for setting up a puppet master.
 
     cron { 'update-puppet-secret':
-        command => 'cd /etc/puppet-secret && bzr up -q',
+        command => 'cd /etc/puppet-secret && git pull -q',
         user    => 'root',
         minute  => '*/5',
     }
