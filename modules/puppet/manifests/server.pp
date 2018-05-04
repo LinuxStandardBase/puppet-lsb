@@ -27,7 +27,7 @@ class puppet::server inherits puppet {
     # every few minutes, like with puppet-secret.
 
     cron { 'update-puppet':
-        command => 'cd /etc/puppet && bzr up -q',
+        command => 'cd /etc/puppet && git pull -q',
         user    => 'root',
         minute  => '*/5',
     }
