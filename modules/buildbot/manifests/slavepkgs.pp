@@ -262,7 +262,7 @@ class buildbot::slavepkgs {
         /^Fedora/ => 'libjpeg-turbo-devel',
         default   => 'libjpeg-devel',
     }
-    $GLpkg = $operatingsystem ? {
+    $glpkg = $operatingsystem ? {
         /^SLES/   => 'Mesa-devel',
         /^CentOS/ => 'mesa-libGLU-devel',
         /^Fedora/ => 'mesa-libGLU-devel',
@@ -321,7 +321,7 @@ class buildbot::slavepkgs {
     }
     $devchklist = [ "$qt4pkg", "$alsapkg", "$atkpkg", "$cairopkg",
                     "$cupspkg", "$fontconfigpkg", "$freetypepkg",
-                    "$gtk2pkg", "$gtk3pkg", "$jpegpkg", "$GLpkg",
+                    "$gtk2pkg", "$gtk3pkg", "$jpegpkg", "$glpkg",
                     'libxml2-devel', "$nsprpkg", "$nsspkg", "$pangopkg",
                     "$pngdevpkg", "$zlibpkg", "$xprotopkg", "$xrenderpkg",
                     "$kernelpkg", "$sanepkg", "$xkbpkg", 'libxslt-devel',
