@@ -4,7 +4,7 @@ class python {
         'python': ensure => present;
     }
 
-    if ($operatingsystem == "CentOS") and ($operatingsystemrelease < 7) {
+    if ($operatingsystem == "CentOS") and ($operatingsystemmajrelease == "6") {
         package { 'python-argparse': ensure => present; }
     }
 
