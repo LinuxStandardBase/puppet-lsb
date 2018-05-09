@@ -19,7 +19,7 @@ class apachehttpd::betaspecs {
     file { '/usr/local/bin/update-betaspecs':
         source => [ "puppet:///modules/apachehttpd/update-betaspecs" ],
         notify => Exec['do-update-betaspecs'],
-        mode => 0755,
+        mode => '0755',
     }
 
     file { '/srv/www/vhosts/linuxbase.org':

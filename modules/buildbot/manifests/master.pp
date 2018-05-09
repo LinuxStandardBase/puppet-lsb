@@ -67,7 +67,7 @@ class buildbot::master inherits buildbot {
         ensure  => directory,
         owner   => 'buildbot',
         group   => 'users',
-        mode    => 0700,
+        mode    => '0700',
         require => File["/opt/buildbot"],
     }
 
@@ -75,7 +75,7 @@ class buildbot::master inherits buildbot {
         ensure  => directory,
         owner   => 'buildbot',
         group   => 'users',
-        mode    => 0700,
+        mode    => '0700',
         require => File["/opt/buildbot/Maildir"],
     }
 
@@ -83,7 +83,7 @@ class buildbot::master inherits buildbot {
         ensure  => directory,
         owner   => 'buildbot',
         group   => 'users',
-        mode    => 0700,
+        mode    => '0700',
         require => File["/opt/buildbot/Maildir/cur"],
     }
 
@@ -91,7 +91,7 @@ class buildbot::master inherits buildbot {
         ensure  => directory,
         owner   => 'buildbot',
         group   => 'users',
-        mode    => 0700,
+        mode    => '0700',
         require => File["/opt/buildbot/Maildir/new"],
     }
 
@@ -152,7 +152,7 @@ class buildbot::master inherits buildbot {
     }
 
     file { "/opt/buildbot/slave_pwds":
-        mode    => 0400,
+        mode    => '0400',
         owner   => 'buildbot',
         content => "lfbuild-x86_64:$buildbotpw::x64password
 lfbuild-x86:$buildbotpw::x86password
@@ -170,13 +170,13 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         ensure => directory,
         group  => 'users',
         owner  => 'buildbot',
-        mode   => 0775,
+        mode   => '0775',
     }
 
     file { "/etc/init.d/buildbot":
         ensure => present,
         source => "puppet:///modules/buildbot/buildbot.init",
-        mode   => 0755,
+        mode   => '0755',
         notify => Service['buildbot'],
     }
 

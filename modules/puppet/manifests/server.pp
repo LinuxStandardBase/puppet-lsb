@@ -15,7 +15,7 @@ class puppet::server inherits puppet {
 
     #file { '/usr/local/bin/puppet-email-notify':
     #    source => [ "puppet:///modules/puppet/puppet-email-notify" ],
-    #    mode => 0755,
+    #    mode => '0755',
     #}
 
     #mailalias { 'puppet-notify':
@@ -46,7 +46,7 @@ class puppet::server inherits puppet {
 
     file { '/usr/local/bin/puppet-agent-health-report':
         source => [ "puppet:///modules/puppet/puppet-agent-health-report" ],
-        mode => 0755,
+        mode => '0755',
     }
 
     cron { 'report-puppet-agent-health':

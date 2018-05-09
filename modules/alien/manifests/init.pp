@@ -22,7 +22,7 @@ class alien {
 
     file { ['/opt/zypper', '/opt/zypper/alien_for_sles11']:
         ensure => directory,
-        mode   => 0755,
+        mode   => '0755',
     }
 
     if $alienrepo {

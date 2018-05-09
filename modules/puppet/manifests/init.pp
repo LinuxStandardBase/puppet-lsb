@@ -35,7 +35,7 @@ class puppet {
         source => 'puppet:///modules/puppet/puppet.conf',
         owner => 'root',
         group => 'root',
-        mode  => 644,
+        mode  => '0644',
     }
 
     if $operatingsystem == "SLES" or $operatingsystem == "OpenSuSE" {

@@ -166,7 +166,7 @@ ssl.cert_reqs=none
     file { '/var/lib/wwwrun/.bazaar/authentication.conf':
         ensure  => absent,
         owner   => 'wwwrun',
-        mode    => 0640,
+        mode    => '0640',
         require => File['/var/lib/wwwrun/.bazaar'],
         content => "[lsb]
 scheme=https

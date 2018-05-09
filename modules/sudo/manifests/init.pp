@@ -16,7 +16,7 @@ class sudo {
     file { "/etc/sudoers":
         owner   => root,
         group   => root,
-        mode    => 0440,
+        mode    => '0440',
         source  => [ "puppet:///modules/sudo/sudoers/$fqdn",
                      "puppet:///modules/sudo/sudoers/$osdefault" ],
         links   => follow,

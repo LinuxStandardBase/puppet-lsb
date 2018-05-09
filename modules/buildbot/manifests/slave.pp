@@ -244,7 +244,7 @@ class buildbot::slave inherits buildbot {
     file { '/opt/buildbot/.cvspass':
         source => 'puppet:///modules/buildbot/cvspass',
         owner  => 'buildbot',
-        mode   => 0600,
+        mode   => '0600',
     }
 
     file { "/opt/buildbot/lsb-slave":
@@ -314,17 +314,17 @@ class buildbot::slave inherits buildbot {
 
     file { "/usr/local/bin/reset-sdk":
         source => "puppet:///modules/buildbot/slavescripts/reset-sdk",
-        mode   => 0755,
+        mode   => '0755',
     }
 
     file { "/usr/local/bin/update-sdk":
         source => "puppet:///modules/buildbot/slavescripts/update-sdk",
-        mode   => 0755,
+        mode   => '0755',
     }
 
     file { "/usr/local/bin/run-appbat-tests":
         source => "puppet:///modules/buildbot/slavescripts/run-appbat-tests",
-        mode   => 0755,
+        mode   => '0755',
     }
 
     exec { 'download-released-sdk':
@@ -365,7 +365,7 @@ class buildbot::slave inherits buildbot {
     file { "/etc/init.d/buildslave":
         ensure  => present,
         content => template("buildbot/buildslave.init.erb"),
-        mode    => 0755,
+        mode    => '0755',
         notify  => Service['buildslave'],
     }
 
@@ -397,12 +397,12 @@ class buildbot::slave inherits buildbot {
 
         file { '/usr/bin/gcc-wrapper':
             source => 'puppet:///modules/buildbot/gcc-wrapper',
-            mode   => 0755,
+            mode   => '0755',
         }
 
         file { '/usr/bin/ld-wrapper':
             source => 'puppet:///modules/buildbot/ld-wrapper',
-            mode   => 0755,
+            mode   => '0755',
         }
 
         file { '/usr/bin/gcc':
@@ -479,12 +479,12 @@ class buildbot::slave inherits buildbot {
 
         file { '/usr/local/bin/gcc-wrapper':
             content => template('buildbot/gcc-wrapper.erb'),
-            mode    => 0755,
+            mode    => '0755',
         }
 
         file { '/usr/local/bin/ld-wrapper':
             content => template('buildbot/ld-wrapper.erb'),
-            mode    => 0755,
+            mode    => '0755',
         }
 
         file { '/usr/local/bin/gcc':

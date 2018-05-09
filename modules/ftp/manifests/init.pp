@@ -6,7 +6,7 @@ class ftp {
 
     file { '/etc/vsftpd.conf':
         source  => 'puppet:///modules/ftp/vsftpd.conf',
-        mode    => 0600,
+        mode    => '0600',
         require => Package['vsftpd'],
         notify  => Service['vsftpd'],
     }
@@ -20,7 +20,7 @@ class ftp {
 
     file { '/srv/ftp/incoming':
         ensure => directory,
-        mode   => 0700,
+        mode   => '0700',
         owner  => ftp,
     }
 
@@ -34,7 +34,7 @@ class ftp {
     file { '/usr/local/bin/update-manifests':
         source => [ "puppet:///modules/ftp/cron/update-manifests/$fqdn",
                     "puppet:///modules/ftp/cron/update-manifests/default" ],
-        mode   => 0755,
+        mode   => '0755',
         notify => Exec['do-update-manifests'],
     }
 
@@ -49,7 +49,7 @@ class ftp {
 
     file { '/opt/ftp-maint/cron.sh':
         source  => 'puppet:///modules/ftp/ftp-maint/cron.sh',
-        mode    => 0755,
+        mode    => '0755',
         group   => 'users',
         owner   => 'lfadmin',
         require => File['/opt/ftp-maint'],
@@ -57,7 +57,7 @@ class ftp {
 
     file { '/opt/ftp-maint/problem_db_update.sh':
         source  => 'puppet:///modules/ftp/ftp-maint/problem_db_update.sh',
-        mode    => 0755,
+        mode    => '0755',
         group   => 'users',
         owner   => 'lfadmin',
         require => File['/opt/ftp-maint'],
@@ -65,7 +65,7 @@ class ftp {
 
     file { '/opt/ftp-maint/manifest/manifest_rebuild_s.sh':
         source  => "puppet:///modules/ftp/cron/update-manifests/manifest_rebuild_s.sh",
-        mode    => 0755,
+        mode    => '0755',
         group   => 'users',
         owner   => 'lfadmin',
         require => File['/opt/ftp-maint'],
@@ -75,7 +75,7 @@ class ftp {
     file { '/usr/local/bin/update-problem-db2':
         source => [ "puppet:///modules/ftp/cron/update-problem-db2/$fqdn",
                     "puppet:///modules/ftp/cron/update-problem-db2/default" ],
-        mode   => 0755,
+        mode   => '0755',
         notify => Exec['do-update-problem-db2'],
     }
 

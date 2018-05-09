@@ -37,7 +37,7 @@ class supybot {
     file { '/etc/init.d/supybot':
         ensure => present,
         source => 'puppet:///modules/supybot/supybot.init',
-        mode   => 0755,
+        mode   => '0755',
         notify => Service['supybot'],
     }
 

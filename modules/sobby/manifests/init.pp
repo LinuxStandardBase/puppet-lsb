@@ -9,7 +9,7 @@ class sobby {
 
     file { "/etc/init.d/sobby":
         source => "puppet:///modules/sobby/sobby.init",
-        mode   => 0755,
+        mode   => '0755',
         notify => Service['sobby'],
     }
 
