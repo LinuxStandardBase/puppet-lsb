@@ -170,20 +170,20 @@ class buildbot::slave inherits buildbot {
         'lsb-build-libbat': ensure => absent;
     }
 
-    define install-pkglist() {
+    define installpkglist() {
         package { "${name}": ensure => installed }
     }
 
     # Declare most of the package dependencies from buildbot::slavepkgs
     # in one fell swoop.
 
-    install-pkglist { $buildbot::slavepkgs::lsbpkg: }
+    installpkglist { $buildbot::slavepkgs::lsbpkg: }
 
-    install-pkglist { $buildbot::slavepkgs::xdevelpkg: }
+    installpkglist { $buildbot::slavepkgs::xdevelpkg: }
 
-    install-pkglist { $buildbot::slavepkgs::fontutilpkg: }
+    installpkglist { $buildbot::slavepkgs::fontutilpkg: }
 
-    install-pkglist { $buildbot::slavepkgs::pkglist: }
+    installpkglist { $buildbot::slavepkgs::pkglist: }
 
     # 32-bit cross-built arch packages.
 
