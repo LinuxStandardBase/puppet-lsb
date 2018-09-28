@@ -64,11 +64,8 @@ class alien {
     # the native 'deb' package also provides dpkg, use the new one
     package { 'dpkg':
         ensure => $dpkgversion,
-        require => File["/etc/zypp/repos.d/alien.repo"],
     }
     package { ['alien', 'debhelper', 'fakeroot']:
         ensure => present,
-        require => [ File["/etc/zypp/repos.d/alien.repo"],
-                     File["/etc/zypp/repos.d/fakeroot.repo"] ],
     }
 }
