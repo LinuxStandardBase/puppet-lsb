@@ -12,4 +12,6 @@ node 'vm3.linuxbase.org' {
 
     include alien
 
+    include mariadb::server
+
 }
