@@ -48,17 +48,17 @@ class alien {
 
     # dependencies I needed to build the packages
     # not needed long term, from existing repos
-    package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config', 'util-linux']:
-        ensure => present,
-    }
+    # package { ['zlib-devel', 'perl-SGMLS', 'perl-Text-CharWidth', 'automake', 'autoconf', 'pkg-config', 'util-linux']:
+    #     ensure => present,
+    # }
 
     # custom-built packages - src.rpms are in
     # http://bzr.linuxfoundation.org/lsb/devel/src_rpms_for_alien 
 
     # more build dependencies, had to build/provide these
-    package { ['perl-Text-WrapI18N', 'po4a']:
-        ensure => present,
-    }
+    # package { ['perl-Text-WrapI18N', 'po4a']:
+    #     ensure => present,
+    # }
 
     # the bits we really want
     # the native 'deb' package also provides dpkg, use the new one
