@@ -18,10 +18,15 @@ class ftp {
         require    => [ Package['vsftpd'], File['/etc/vsftpd.conf'] ],
     }
 
-    file { '/srv/ftp/incoming':
+    file { '/srv/ftp':
         ensure => directory,
-        mode   => '0700',
-        owner  => ftp,
+    }
+
+    file { '/srv/ftp/incoming':
+        ensure  => directory,
+        mode    => '0700',
+        owner   => ftp,
+        require => File['/srv/ftp'],
     }
 
     # Scripts for updating information on the FTP server.
