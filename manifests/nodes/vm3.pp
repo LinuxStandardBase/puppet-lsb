@@ -1,7 +1,5 @@
 node 'vm3.linuxbase.org' {
 
-    include puppet
-
     include user::lfadmin, user::licquia, user::mats
 
     include ntp
@@ -9,6 +7,18 @@ node 'vm3.linuxbase.org' {
     include sudo
 
     include ldap
+
+    include puppet
+
+    include mail::linuxbase
+
+    include apachehttpd
+
+    include apachehttpd::qa
+
+    include php
+
+    include ftp
 
     include alien
 
