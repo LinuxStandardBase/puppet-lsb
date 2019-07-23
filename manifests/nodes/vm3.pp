@@ -12,7 +12,7 @@ node 'vm3.linuxbase.org' {
 
     include mail::linuxbase
 
-    include apachehttpd
+    include apachehttpd, apachehttpd::certbot
 
     include apachehttpd::qa
 
