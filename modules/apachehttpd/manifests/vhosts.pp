@@ -12,8 +12,8 @@ class apachehttpd::vhosts {
         recurselimit => 1,
         links        => follow,
         purge        => true,
-        require      => Package['apache2'],
-        notify       => Service['apache2'],
+        require      => Package["$apachehttpd::pkgname"],
+        notify       => Service["$apachehttpd::pkgname"],
     }
 
     file { '/srv/www/vhosts':
