@@ -6,14 +6,26 @@ class apachehttpd {
         /^CentOS-7/      => 'default-rhel7',
     }
 
+    $configpath = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^SLES-11/       => '/etc/apache2',
+        /^OpenSuSE-13/   => '/etc/apache2',
+        /^CentOS-7/      => '/etc/httpd',
+    }
+
+    $pkgname = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^SLES-11/       => 'apache2',
+        /^OpenSuSE-13/   => 'apache2',
+        /^CentOS-7/      => 'httpd',
+    }
+
+    package { '$pkgname': ensure => present; }
+
     case $operatingsystem {
         /^(SLES|OpenSuSE)$/: {
             service { 'apache2':
                 enable  => true,
                 require => File['/etc/apache2/httpd.conf'],
             }
-
-            package { 'apache2': ensure => present; }
 
             file { '/etc/apache2/httpd.conf':
                 source  => [ "puppet:///modules/apachehttpd/httpd.conf/$fqdn", "puppet:///modules/apachehttpd/httpd.conf/$osdefault" ],
@@ -36,8 +48,6 @@ class apachehttpd {
                 enable  => true,
                 require => File['/etc/httpd/conf/httpd.conf'],
             }
-
-            package { 'httpd': ensure => present; }
 
             file { '/etc/httpd/conf/httpd.conf':
                 source  => [ "puppet:///modules/apachehttpd/httpd.conf/$fqdn", "puppet:///modules/apachehttpd/httpd.conf/$osdefault" ],

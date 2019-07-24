@@ -4,7 +4,7 @@ class apachehttpd::vhosts {
 
     include logrotate::web
 
-    file { '/etc/apache2/vhosts.d':
+    file { '$apachehttpd::configpath/vhosts.d':
         ensure       => directory,
         source       => "puppet:///modules/apachehttpd/vhosts.d/$fqdn",
         recurse      => true,
