@@ -18,7 +18,7 @@ class apachehttpd {
         /^CentOS-7/      => 'httpd',
     }
 
-    package { '$pkgname': ensure => present; }
+    package { "$pkgname": ensure => present; }
 
     case $operatingsystem {
         /^(SLES|OpenSuSE)$/: {
