@@ -16,7 +16,7 @@ $cas_port = 443;
 $cas_context = "/cas";
 $cas_cert_path = "/var/lib/ca-certificates/ca-bundle.pem";
 $cas_pattern_name = "/^licquia$/";
-$phpcas_path = "/var/lib/wwwrun/phpCAS";
+$phpcas_path = "<%= scope.lookupvar('apachehttpd::modules::apachehomedir') %>/local/phpCAS";
 
 $testsuites = array('alsa-t2c', 'apache', 'cmdchk', 'core', 'core-t2c', 'cpp-t2c', 'desktop', 'desktop-t2c', 'expect', 'groff', 'libchk', 'libstdcpp', 'olver', 'perl', 'printing', 'python', 'python_app', 'qt3-azov', 'qt4-azov', 'raptor', 'rsync', 'samba', 'tcl', 'vsw4', 'xml2-azov', 'xpdf', 'xts5');
 

@@ -166,6 +166,11 @@ class apachehttpd::modules {
         owner  => $apacheuser,
     }
 
+    file { "$apachehomedir/local":
+        ensure => directory,
+        owner  => $apacheuser,
+    }
+
     file { "$apachehomedir/.bazaar/bazaar.conf":
         owner   => $apacheuser,
         require => File["$apachehomedir/.bazaar"],
@@ -189,19 +194,19 @@ password=$webdb::autobuild
     }
 
     exec { 'checkout-problem-db':
-        command     => "bzr checkout http://bzr.linuxfoundation.org/lsb/devel/problem_db $apachehomedir/problem_db",
+        command     => "bzr checkout http://bzr.linuxfoundation.org/lsb/devel/problem_db $apachehomedir/local/problem_db",
         cwd         => $apachehomedir,
         path        => [ '/bin', '/usr/bin' ],
         environment => "BZR_HOME=$apachehomedir",
-        creates     => "$apachehomedir/problem_db",
+        creates     => "$apachehomedir/local/problem_db",
         user        => $apacheuser,
-        require     => File["$apachehomedir/.bazaar/bazaar.conf"],
+        require     => [File["$apachehomedir/.bazaar/bazaar.conf"], File["$apachehomedir/local"]],
         logoutput   => on_failure,
     }
 
     exec { 'update-problem-db':
-        command     => "bzr update $apachehomedir/problem_db",
-        cwd         => "$apachehomedir/problem_db",
+        command     => "bzr update $apachehomedir/local/problem_db",
+        cwd         => "$apachehomedir/local/problem_db",
         path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
         environment => "BZR_HOME=$apachehomedir",
         user        => $apacheuser,
@@ -211,16 +216,17 @@ password=$webdb::autobuild
 
     exec { 'checkout-phpcas':
         command   => "git clone -n https://github.com/Jasig/phpCAS.git",
-        cwd       => $apachehomedir,
+        cwd       => "$apachehomedir/local",
         path      => [ '/bin', '/usr/bin' ],
         creates   => "$apachehomedir/phpCAS",
+        require   => File["$apachehomedir/local"],
         user      => $apacheuser,
         logoutput => on_failure,
     }
 
     exec { 'update-phpcas':
         command => "git fetch && git checkout $phpcastag",
-        cwd     => "$apachehomedir/phpCAS",
+        cwd     => "$apachehomedir/local/phpCAS",
         path    => [ '/bin', '/usr/bin' ],
         user    => $apacheuser,
         require => Exec['checkout-phpcas'],
