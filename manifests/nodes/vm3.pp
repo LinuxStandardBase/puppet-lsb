@@ -26,6 +26,8 @@ node 'vm3.linuxbase.org' {
 
     include alien
 
+    include buildbot::master
+
     include mariadb::server
 
 }
