@@ -34,7 +34,7 @@ class buildbot::master inherits buildbot {
     }
 
     exec { "make-buildbot":
-        command => "/opt/buildbot/bin/pip install buildbot==$buildbotversion",
+        command => "/opt/buildbot/bin/pip install --no-deps buildbot==$buildbotversion",
         cwd     => "/opt/buildbot",
         creates => "/opt/buildbot/lib/python${pythonversion}/site-packages/buildbot-${buildbotversion}-py${pythonversion}.dist-info",
         path    => [ "/opt/buildbot/bin", "/bin", "/sbin", "/usr/bin",
