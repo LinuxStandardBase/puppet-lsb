@@ -22,6 +22,8 @@ node 'vm3.linuxbase.org' {
 
     include ftp
 
+    include supybot
+
     include alien
 
     include mariadb::server
