@@ -216,19 +216,18 @@ password=$webdb::autobuild
 
     exec { 'checkout-phpcas':
         command   => "git clone -n https://github.com/Jasig/phpCAS.git",
-        cwd       => "$apachehomedir/local",
+        cwd       => '/usr/local/lib',
         path      => [ '/bin', '/usr/bin' ],
-        creates   => "$apachehomedir/phpCAS",
-        require   => File["$apachehomedir/local"],
-        user      => $apacheuser,
+        creates   => "/usr/local/lib/phpCAS",
+        user      => 'root',
         logoutput => on_failure,
     }
 
     exec { 'update-phpcas':
         command => "git fetch && git checkout $phpcastag",
-        cwd     => "$apachehomedir/local/phpCAS",
+        cwd     => '/usr/local/lib/phpCAS',
         path    => [ '/bin', '/usr/bin' ],
-        user    => $apacheuser,
+        user    => 'root',
         require => Exec['checkout-phpcas'],
         logoutput => on_failure,
     }
