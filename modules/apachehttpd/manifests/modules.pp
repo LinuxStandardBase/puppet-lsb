@@ -149,25 +149,37 @@ class apachehttpd::modules {
     # The prdb app needs a way to modify and commit to the
     # problem_db bzr repository.
 
-    file { '/var/lib/wwwrun/.bazaar':
-        ensure => directory,
-        owner  => 'wwwrun',
+    $apacheuser = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^SLES-11/       => 'wwwrun',
+        /^OpenSuSE-13/   => 'wwwrun',
+        /^CentOS-7/      => 'apache',
     }
 
-    file { '/var/lib/wwwrun/.bazaar/bazaar.conf':
-        owner   => 'wwwrun',
-        require => File['/var/lib/wwwrun/.bazaar'],
+    $apachehomedir = "${operatingsystem}-${operatingsystemrelease}" ? {
+        /^SLES-11/       => '/var/lib/wwwrun',
+        /^OpenSuSE-13/   => '/var/lib/wwwrun',
+        /^CentOS-7/      => '/usr/share/httpd',
+    }
+
+    file { "$apachehomedir/.bazaar":
+        ensure => directory,
+        owner  => $apacheuser,
+    }
+
+    file { "$apachehomedir/.bazaar/bazaar.conf":
+        owner   => $apacheuser,
+        require => File["$apachehomedir/.bazaar"],
         content => '[DEFAULT]
 email = Automatic Commit <lsb-discuss@lists.linuxfoundation.org>
 ssl.cert_reqs=none
 ',
     }
 
-    file { '/var/lib/wwwrun/.bazaar/authentication.conf':
+    file { "$apachehomedir/.bazaar/authentication.conf":
         ensure  => absent,
-        owner   => 'wwwrun',
+        owner   => $apacheuser,
         mode    => '0640',
-        require => File['/var/lib/wwwrun/.bazaar'],
+        require => File["$apachehomedir/.bazaar"],
         content => "[lsb]
 scheme=https
 host=bzr.linuxfoundation.org
@@ -177,40 +189,40 @@ password=$webdb::autobuild
     }
 
     exec { 'checkout-problem-db':
-        command     => 'bzr checkout http://bzr.linuxfoundation.org/lsb/devel/problem_db /var/lib/wwwrun/problem_db',
-        cwd         => '/var/lib/wwwrun',
+        command     => "bzr checkout http://bzr.linuxfoundation.org/lsb/devel/problem_db $apachehomedir/problem_db",
+        cwd         => $apachehomedir,
         path        => [ '/bin', '/usr/bin' ],
-        environment => 'BZR_HOME=/var/lib/wwwrun',
-        creates     => '/var/lib/wwwrun/problem_db',
-        user        => 'wwwrun',
-        require     => File['/var/lib/wwwrun/.bazaar/bazaar.conf'],
+        environment => "BZR_HOME=$apachehomedir",
+        creates     => "$apachehomedir/problem_db",
+        user        => $apacheuser,
+        require     => File["$apachehomedir/.bazaar/bazaar.conf"],
         logoutput   => on_failure,
     }
 
     exec { 'update-problem-db':
-        command     => "bzr update /var/lib/wwwrun/problem_db",
-        cwd         => '/var/lib/wwwrun/problem_db',
+        command     => "bzr update $apachehomedir/problem_db",
+        cwd         => "$apachehomedir/problem_db",
         path        => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin' ],
-        environment => 'BZR_HOME=/var/lib/wwwrun',
-        user        => 'wwwrun',
+        environment => "BZR_HOME=$apachehomedir",
+        user        => $apacheuser,
         require     => Exec['checkout-problem-db'],
         logoutput   => on_failure,
     }
 
     exec { 'checkout-phpcas':
         command   => "git clone -n https://github.com/Jasig/phpCAS.git",
-        cwd       => '/var/lib/wwwrun',
+        cwd       => $apachehomedir,
         path      => [ '/bin', '/usr/bin' ],
-        creates   => '/var/lib/wwwrun/phpCAS',
-        user      => 'wwwrun',
+        creates   => "$apachehomedir/phpCAS",
+        user      => $apacheuser,
         logoutput => on_failure,
     }
 
     exec { 'update-phpcas':
         command => "git fetch && git checkout $phpcastag",
-        cwd     => '/var/lib/wwwrun/phpCAS',
+        cwd     => "$apachehomedir/phpCAS",
         path    => [ '/bin', '/usr/bin' ],
-        user    => 'wwwrun',
+        user    => $apacheuser,
         require => Exec['checkout-phpcas'],
         logoutput => on_failure,
     }
