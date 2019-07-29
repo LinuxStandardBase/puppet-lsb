@@ -179,7 +179,7 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         ensure => present,
         source => 'puppet:///modules/buildbot/buildbot.service',
         mode   => '0644',
-        notify => [Service['systemd-reload'], Service['supybot']],
+        notify => [Exec['systemd-reload'], Service['supybot']],
     }
 
     file { "/usr/local/bin/start_lsb_build":

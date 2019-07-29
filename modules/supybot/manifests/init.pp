@@ -40,7 +40,7 @@ class supybot {
         ensure => present,
         source => 'puppet:///modules/supybot/supybot.service',
         mode   => '0644',
-        notify => [Service['systemd-reload'], Service['supybot']],
+        notify => [Exec['systemd-reload'], Service['supybot']],
     }
 
     service { 'supybot':
