@@ -1,4 +1,4 @@
-class systemd {
+class systemctl {
 
     exec { 'systemd-reload':
         command     => 'systemctl daemon-reload',
