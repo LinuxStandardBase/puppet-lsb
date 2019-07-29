@@ -1,0 +1,15 @@
+[Unit]
+Description=Buildbot master
+After=network.target
+
+[Service]
+Type=forking
+ExecStartPre=/opt/buildbot/bin/buildbot checkconfig /opt/buildbot/lsb-master
+ExecStart=/opt/buildbot/bin/buildbot start /opt/buildbot/lsb-master
+ExecStop=/opt/buildbot/bin/buildbot stop /opt/buildbot/lsb-master
+User=buildbot
+PIDFile=/opt/buildbot/lsb-master/twistd.pid
+
+[Install]
+WantedBy=multi-user.target
+Alias=buildbot.service

@@ -1,0 +1,13 @@
+[Unit]
+Description=Supybot IRC bot
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/opt/supybot/bin/supybot -d /opt/supybot/config/lsbbot.conf
+User=supybot
+PIDFile=/opt/supybot/config/tmp/supybot.pid
+
+[Install]
+WantedBy=multi-user.target
+Alias=supybot.service

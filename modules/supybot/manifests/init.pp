@@ -1,5 +1,7 @@
 class supybot {
 
+    include systemd
+
     include user::supybot
 
     include python::virtualenv
@@ -34,17 +36,17 @@ class supybot {
                      Exec['checkout-supybot'], ],
     }
 
-    file { '/etc/init.d/supybot':
+    file { '/etc/systemd/system/supybot.service':
         ensure => present,
-        source => 'puppet:///modules/supybot/supybot.init',
-        mode   => '0755',
-        notify => Service['supybot'],
+        source => 'puppet:///modules/supybot/supybot.service',
+        mode   => '0644',
+        notify => [Service['systemd-reload'], Service['supybot']],
     }
 
     service { 'supybot':
         ensure     => running,
         hasrestart => false,
-        require    => [ File['/etc/init.d/supybot'],
+        require    => [ File['/etc/systemd/system/supybot.service'],
                         Exec['install-supybot'] ],
     }
 

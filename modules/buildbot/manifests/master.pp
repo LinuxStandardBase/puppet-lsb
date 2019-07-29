@@ -1,5 +1,7 @@
 class buildbot::master inherits buildbot {
 
+    include systemd
+
     include buildbot::virtualenv
 
     include buildbotpw
@@ -173,11 +175,11 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         mode   => '0775',
     }
 
-    file { "/etc/init.d/buildbot":
+    file { '/etc/systemd/system/buildbot.service':
         ensure => present,
-        source => "puppet:///modules/buildbot/buildbot.init",
-        mode   => '0755',
-        notify => Service['buildbot'],
+        source => 'puppet:///modules/buildbot/buildbot.service',
+        mode   => '0644',
+        notify => [Service['systemd-reload'], Service['supybot']],
     }
 
     file { "/usr/local/bin/start_lsb_build":
@@ -190,9 +192,10 @@ devchk-fedora-x86_64:$buildbotpw::x64fedora
         hasrestart => false,
         hasstatus  => false,
         require    => 
-            [ File['/etc/init.d/buildbot'], File['/opt/buildbot/slave_pwds'], 
-              File['/opt/buildbot/lsb-master/master.cfg'], 
-              File['/opt/buildbot/lsb-master/lfbuildbot.py'], 
+            [ File['/etc/systemd/system/buildbot.service'],
+              File['/opt/buildbot/slave_pwds'],
+              File['/opt/buildbot/lsb-master/master.cfg'],
+              File['/opt/buildbot/lsb-master/lfbuildbot.py'],
               File['/opt/buildbot/lsb-master/bzr_buildbot.py'],
               File['/opt/buildbot/Maildir/tmp'],
               User['buildbot'], Exec['make-master'], Exec['make-htpasswd'] ],
