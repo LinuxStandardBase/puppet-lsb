@@ -1,6 +1,6 @@
 class supybot {
 
-    include systemd
+    include systemctl
 
     include user::supybot
 

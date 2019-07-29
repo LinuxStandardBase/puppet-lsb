@@ -1,6 +1,6 @@
 class buildbot::master inherits buildbot {
 
-    include systemd
+    include systemctl
 
     include buildbot::virtualenv
 
