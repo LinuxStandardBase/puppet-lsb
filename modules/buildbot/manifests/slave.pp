@@ -23,7 +23,7 @@ class buildbot::slave inherits buildbot {
 
     # Where's the master?
 
-    $buildbotmaster = 'vm2.linuxbase.org'
+    $buildbotmaster = 'vm3.linuxbase.org'
     $buildbotport = '9989'
 
     # 32-bit versions of some architectures don't exist as

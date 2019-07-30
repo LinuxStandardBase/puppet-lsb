@@ -24,6 +24,4 @@ node 'lsb2.linux-foundation.org' {
 
     include alien
 
-    include buildbot::master
-
 }
