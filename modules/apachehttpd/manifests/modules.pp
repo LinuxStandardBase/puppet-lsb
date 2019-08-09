@@ -15,7 +15,7 @@ class apachehttpd::modules {
     $certrev = 'revid:licquia@linuxfoundation.org-20170829205246-yfzfbxa7s8se52qs'
     $prdbrev = 'revid:licquia@linuxfoundation.org-20141004212651-asp228c66o90sads'
     $refspecrev = 'revid:licquia@linuxfoundation.org-20170811184208-dqd5g8y83ondfzqb'
-    $lananarev = '4d2d4ac2e4f6606bec277165ddb34a641b2c86f0'
+    $lananarev = '6c8986cb03c3637ff2fc6d22c45e4b6c11f51611'
 
     # Revisions for dependencies.
 
